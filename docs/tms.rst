@@ -2,6 +2,8 @@
 Tile Map Service (TMS) 
 ***********************
 
+toevoeging
+
 
 The TMS resolutions are defined on page 7 of the `PDOK Manual (PDF) <https://www.pdok.nl/sites/default/files/bibliotheek/handleiding_pdok_gebruik_10_dec_2012_v1_1.pdf>`_.
 
