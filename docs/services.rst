@@ -45,7 +45,7 @@ Allereerst dien je op LAYER niveau (dus niet perse op de map options) onderstaan
   var resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 
     6.72, 3.36, 1.68, 0.84, 0.42, 0.21];
 
-Vervolgens kun je dan een tms laag definieren als:
+Vervolgens kun je dan een TMS laag definieren als:
 
 .. code-block:: javascript
   
@@ -73,8 +73,6 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
 
 .. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
     :width: 800px
-
-.. _wfs:
 
 
 ****************************
