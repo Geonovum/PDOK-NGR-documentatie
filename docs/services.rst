@@ -2,180 +2,27 @@
 OGC Services
 ############
 
+*************************
+Web Feature Service (WFS)
+*************************
 
-******************
-CSW Webservice NGR
-******************
-
-De developer pagina van het Nationaal Georegister (NGR) bevat een aantal tips om met data en services uit het register aan de slag te gaan. Deze pagina bevat meer informatie over de CSW interface van het NGR.
-
-Het register is een catalogus met informatie over vooral ruimtelijke datasets en services die door voornamelijk overheden ter beschikking gesteld worden. OGC:CSW is de catalogus standaard van OGC. De CSW requests kunnen via HTTP GET of XMl over HTTP POST verstuurd worden.
-
-De CSW specificatie is vrij groot en bescrhijft veel functionaliteit. Deze pagina beschrijft hoe je de meest voorkomende operaties kan uitvoeren. Meer info over CSW vind je op (http://www.opengeospatial.org/standards/cat).
-
-
-CSW requests
-============
-De belangrijkste operaties om metadata op te vragen zijn:
-
-1. `GetCapabilities`_: voor het bekijken van de mogelijkheden van de service. Deze operatie kan handig zijn om te zien welke filters ondersteund worden bijvorrbeeld.
-2. `GetRecords`_: om meerdere metadata documenten (records) op te vragen, bijvoorbeeld met een zoekfilter.
-3. `GetRecordById`_: om 1 metadata document op te vragen, via het metadata ID.
-
-De CSW requests kunnen via HTTP GET of XML over HTTP POST verstuurd worden. Hieronder volgen praktische voorbeelden voor het NGR.
-
-Op de website van GeoNetwork is meer informatie te vinden over CSW: 
-
-http://www.geonetwork-opensource.org/manuals/2.8.0/eng/developer/xml_services/csw_services.html
+Web Feature Services is een rest-api om vector data uit te wisselen. Een volledige beschrijving van WFS staat hier (http://www.opengeospatial.org/standards/wfs). Belangrijke operaties zijn GetCapabilities, DescribeFeatureType, GetFeature. Een getFeature request initieert de feature download. Deze operatie kan gecombineerd worden met ruimtelijke of attribuut filters en een output-formaat keuze (afhankelijk van implementatie: bv GML, Shp, json, kml, csv)
 
 GetCapabilities
----------------
-Middels een GetCapabilities request kan opgevraagd worden wat de server kan. Door het volgende HTTP GET request te versturen, kan je zien wat de server aan functionaliteit biedt:
+===============
 
-::
+TODO
 
-    http://nationaalgeoregister.nl/geonetwork/srv/dut/csw?
-    request=GetCapabilities&
-    service=CSW
+GetFeature
+==========
 
-Het `antwoord <http://nationaalgeoregister.nl/geonetwork/srv/dut/csw?request=GetCapabilities&service=CSW>`_ is een XML document, conform de CSW 2.0.2 specificatie. Het somt de operaties en filters op die de CSW ondersteunt en de URLs voor het versturen van de requests. Daarnaast bevat het document de beschikbare formaten om metadata op te vragen. Het voert te ver de gehele structuur van het document uit te leggen.
+TODO
 
-GetRecords
-----------
-Doorzoeken en opvragen van metadata records. Om metadata op te vragen met GetRecords, kan je bijvoorbeeld dit HTTP GET request gebruiken:
+*********************
+Web Map Service (WMS)
+*********************
 
-::
-
-    http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?
-    service=CSW&
-    version=2.0.2&
-    request=GetRecords&
-    namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&
-    resultType=results&
-    outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&
-    maxRecords=10&
-    typeNames=csw:Record&
-    elementSetName=full&
-    constraintLanguage=CQL_TEXT&
-    constraint_language_version=1.1.0&
-    constraint=AnyText+LIKE+%27%25water%25%27
-
-Dit geeft `metadata terug <http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27>`_ die over "water" gaat. In een standaard CSW formaat, dat Dublin Core elementen bevat.
-
-Het request bevat veel parameters. De CSW specificatie beschrijft al deze parameters. Hieronder volgt een behandeling van de belangrijkste parameters als je zelf via HTTP requests metadata wilt doorzoeken / opvragen:
-
-**Parameters**
-De volgende parameters kunnen handig zijn om aan te passen, voor andere zoekopdrachten:
-
-* outputSchema=http://www.opengis.net/cat/csw/2.0.2 --> gebruik outputSchema=http://www.isotc211.org/2005/gmd voor ISO metadata
-* typeNames=csw:Record --> typenames=gmd:MD_Metadata is nodig voor het verkrijgen van ISO metadata
-* maxRecords=10 --> het maximum aantal records als zoekresultaten
-* elementSetName=full (of: summary)
-* constraintLanguage=CQL_TEXT --> er is ook de mogelijkheid XML Filters conform de OGC Filter encoding te gebruiken. CQL_TEXT is vaak handiger in GET-requests, omdat de notatie korter is.
-* constraint=AnyText+LIKE+%27%25water%25%27 --> dit is de zoekterm. Hier wordt een filter gebruikt dat door alle tekst van de metadata zoekt (AnyText), op de term "water". De waarde van het veld constraint moet URL encoded zijn. "AnyText+LIKE+%27%25water%25%27" is  URL gecodeerd van "AnyText LIKE '%water%'". De percentage-tekens zijn wildcards. Het online tooltje: http://meyerweb.com/eric/tools/dencoder/ kan helpen bij het coderen/decoderen van de waardes.
-
-**Optioneel**
-* resultType=results --> "results" levert de zoekresultaten zelf (metadata records) op, "hits" levert alleen de aantallen zoekresultaten op.
-* startPosition=<integer> --> in combinatie met maxrecords te gebruiken, om door grotere hoeveelheden records te lopen. Zie hieronder bij **Paginering van zoekresultaten**.
-
-Parameters die niet aangepast hoeven te worden:
-
-* outputFormat=application/xml --> Hoe de metadata gecodeerd wordt. Dit is voor NGR altijd application/xml (zie de Capabilities bij het stukje over GetRecords).
-* request=GetRecords
-* service=CSW
-* version=2.0.2
-
-
-**Paginering van zoekresultaten: maxRecords en startPosition**
-Het NGR bevat veel metadata records. Door de maxRecords en startPosition parameters te gebruiken kan je in delen metadata records opvragen. Dus bijvoorbeeld eerst de eerste 10 (maxRecords=10&startposition=1), dan de volgende 10 (maxRecords=10&startposition=11) en weer de volgende 10 (maxRecords=10&startposition=21).
-
-
-Zoeken via filters
-^^^^^^^^^^^^^^^^^^
-Het NGR staat allerlei zoekopdrachten toe, ook via de CSW. De meestgebruikte is alle tekst doorzoeken.
-
-Zie de bespreking van de parameter "constraint" voor een eenvoudig voorbeeld.
-
-Naast AnyText ondersteunt het NGR vele andere zoekparameters, die heel gericht op een bepaald metadata element zoeken. De Capabilities sommen deze op in de lijsten met Queryables (SupportedISOQueryables en AdditionalQueryables). Bijvoorbeeld: ServiceType om te zoeken op het type services, zoals op een zogenaamde "view" service:
-constraint=ServiceType='view'
-Gecodeerd:constraint=ServiceType%3D%27view%27
-
-Of de titel moet een term bevatten:
-constraint=Title LIKE '%dijken%'
-Gecodeerd:constraint=Title LIKE '%25dijken%25'
-
-Request: http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?request=GetRecords&service=CSW&version=2.0.2&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=Title%20LIKE%20%27%25dijken%25%27&nextRecord=20
-
-Het voert te ver hier alle zoekparameters te bespreken. Zie daarvoor de CSW specificatie.
-
-
-GetRecordById
--------------
-Het request GetRecordById kan handig zijn om naar 1 specifiek metadata record te verwijzen. Het request is korter dan GetRecords. Een voorbeeld is:
-
-http://nationaalgeoregister.nl/geonetwork/srv/dut/csw?SERVICE=CSW&version=2.0.2&REQUEST=GetRecordById&elementSetName=full&OutputSchema=http://www.isotc211.org/2005/gmd&ID=85fdc4ee-05fa-455d-bf11-eb0b927e6f77
-
-Dit request vraagt in ISO formaat de metadata op van het record met ID=85fdc4ee-05fa-455d-bf11-eb0b927e6f77. Dit ID is te vinden door de resultaten van GetRecords te bestuderen.
-
-Voorbeelden
------------
-
-* Eerste 10 records (1 t/m 10):
-
-  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&startposition=1&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
-
-* 10 volgende records (11 t/m 20):
-
-  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&startposition=11&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
-
-
-* Vraag om Dublin Core metadata (beperkte set).
-  Opvragen van Dublin Core metadata gaat met de parameters::
-
-    &outputSchema=http://www.opengis.net/cat/csw/2.0.2&typeNames=csw:Record
-
-  Dus bijvoorbeeld een geheel request:
-
-  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputFormat=application/xml&maxRecords=10&outputSchema=http://www.opengis.net/cat/csw/2.0.2&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
-
-* Vraag om ISO-metadata 
-  Opvragen van ISO metadata (meer gegevens dan Dublin Core) gaat met de parameters::
-
-    &outputSchema=http://www.isotc211.org/2005/gmd&typeNames=gmd:MD_Metadata
-
-  Dus bijvoorbeeld een geheel request:
-
-  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputFormat=application/xml&maxRecords=10&outputSchema=http://www.isotc211.org/2005/gmd&typeNames=gmd:MD_Metadata&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
-
-INSPIRE metadata
-----------------
-Op zoek naar alleen INSPIRE metadata (en niet alle Nederlandse metadata)? Gebruik dan in plaats van de URL:
-
-http://nationaalgeoregister.nl/geonetwork/srv/dut/csw
-
-
-De URL van het INSPIRE endpoint:
-
-http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire
-
-Deze laatste URL is ook van een gewone CSW, maar de inhoud betreft alleen de metadata voor INSPIRE.
-
-
-
-Tooling met CSW ondersteuning 
-=============================
-
-In veel gevallen ben je sneller af als je een bestaande bibliotheek gebruikt om CSW te ontsluiten:
-
-* `OpenLayers <http://dev.openlayers.org/docs/files/OpenLayers/Protocol/CSW/v2_0_2-js.html>`_
-* `GXP <http://gxp.opengeo.org/master/examples/catalogue.html>`_
-* `Geonetwork Widgets <http://nationaalgeoregister.nl/geonetwork/apps/js/GeoNetwork/examples>`_
-
-Veel GIS pakketten bieden ondersteuning voor CSW via open source plug-ins. 
-
-* `esri <https://github.com/Esri/geoportal-server/tree/master/components/desktop/CswClient/trunk>`_
-* `QGIS <http://hub.qgis.org/projects/cswclient>`_
-
+Web Map Services is een rest-api om kaartbeelden uit te wisselen als bitmap. Een volledige beschrijving van WMS staat hier (http://www.opengeospatial.org/standards/wms). WMS kent (minimaal) 3 operaties: GetCapabilities (retourneert een lijst van beschikbare kaartlagen, projecties, formaten enz), GetMap (retourneert een kaart afbeelding) en getFeatureInfo (geeft attribuutgegevens van het aangeklikte object). Daarnaast wordt optioneel ondersteund: GetLegendGraphic. WMS is eenvoudig te consumeren met bibliotheken als OpenLayers(http://www.openlayers.org), Flamingo, Leaflet. Ook is WMS standaard te openen in QGIS, Esri, Udig, Mapwindow enz.
 
 ***********************
 Tile Map Service (TMS) 
@@ -229,16 +76,196 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
 
 .. _wfs:
 
-*************************
-Web Feature Service (WFS)
-*************************
+
+****************************
+Web Map Tile Services (WMTS)
+****************************
+
+Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik.
+http://www.opengeospatial.org/standards/wmts. De operaties zijn vergelijkbaar, echter het capabilities document is uitgebreid met het gebruikte grid (per projectie). WMTS wordt ondersteund door het overgrote deel van de hierboven genoemde WMS clients. Voor Esri is er een plug-in beschikbaar voor wmts arcbrutile(http://arcbrutile.codeplex.com/). Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn voor RD_new (epsg:28992) vastgesteld (http://www.geonovum.nl/sites/default/files/Nederlandse_richtlijn_tiling_-_versie_1.0.pdf).
+
+
+***********************************
+Catalogue Service for the Web (CSW)
+***********************************
+
+De developer pagina van het Nationaal Georegister (NGR) bevat een aantal tips om met data en services uit het register aan de slag te gaan. Deze pagina bevat meer informatie over de CSW interface van het NGR.
+
+Het register is een catalogus met informatie over vooral ruimtelijke datasets en services die door voornamelijk overheden ter beschikking gesteld worden. OGC:CSW is de catalogus standaard van OGC. De CSW requests kunnen via HTTP GET of XMl over HTTP POST verstuurd worden.
+
+De CSW specificatie is vrij groot en bescrhijft veel functionaliteit. Deze pagina beschrijft hoe je de meest voorkomende operaties kan uitvoeren. Meer info over CSW vind je op (http://www.opengeospatial.org/standards/cat). In veel gevallen ben je echter sneller af als je een bestaande bibliotheek gebruikt om CSW te ontsluiten: OpenLayers(http://dev.openlayers.org/docs/files/OpenLayers/Protocol/CSW/v2_0_2-js.html) of GXP(http://gxp.opengeo.org/master/examples/catalogue.html) of Geonetwork Widgets(http://nationaalgeoregister.nl/geonetwork/apps/js/GeoNetwork/examples).
+Ook Esri(https://github.com/Esri/geoportal-server/tree/master/components/desktop/CswClient/trunk) en QGIS(http://hub.qgis.org/projects/cswclient) kennen CSW-ondersteuning via het laden van een plug-in, beide plug-ins zijn beschikbaar als opensource.
+
+De belangrijkste operaties om metadata op te vragen zijn:
+
+1. `GetCapabilities`_: voor het bekijken van de mogelijkheden van de service. Deze operatie kan handig zijn om te zien welke filters ondersteund worden bijvorrbeeld.
+2. `GetRecords`_: om meerdere metadata documenten (records) op te vragen, bijvoorbeeld met een zoekfilter.
+3. `GetRecordById`_: om 1 metadata document op te vragen, via het metadata ID.
+
+De CSW requests kunnen via HTTP GET of XML over HTTP POST verstuurd worden. Hieronder volgen praktische voorbeelden voor het NGR.
+
+Op de website van GeoNetwork is meer informatie te vinden over CSW: 
+
+http://www.geonetwork-opensource.org/manuals/2.8.0/eng/developer/xml_services/csw_services.html
 
 GetCapabilities
 ===============
+Middels een GetCapabilities request kan opgevraagd worden wat de server kan. Door het volgende HTTP GET request te versturen, kan je zien wat de server aan functionaliteit biedt:
 
-TODO
+::
 
-GetFeature
+    http://nationaalgeoregister.nl/geonetwork/srv/dut/csw?
+    request=GetCapabilities&
+    service=CSW
+
+Het `antwoord <http://nationaalgeoregister.nl/geonetwork/srv/dut/csw?request=GetCapabilities&service=CSW>`_ is een XML document, conform de CSW 2.0.2 specificatie. Het somt de operaties en filters op die de CSW ondersteunt en de URLs voor het versturen van de requests. Daarnaast bevat het document de beschikbare formaten om metadata op te vragen. Het voert te ver de gehele structuur van het document uit te leggen.
+
+GetRecords
 ==========
+Doorzoeken en opvragen van metadata records. Om metadata op te vragen met GetRecords, kan je bijvoorbeeld dit HTTP GET request gebruiken:
 
-TODO
+::
+
+    http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?
+    service=CSW&
+    version=2.0.2&
+    request=GetRecords&
+    namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&
+    resultType=results&
+    outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&
+    maxRecords=10&
+    typeNames=csw:Record&
+    elementSetName=full&
+    constraintLanguage=CQL_TEXT&
+    constraint_language_version=1.1.0&
+    constraint=AnyText+LIKE+%27%25water%25%27
+
+Dit geeft `metadata terug <http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27>`_ die over "water" gaat. In een standaard CSW formaat, dat Dublin Core elementen bevat.
+
+Het request bevat veel parameters. De CSW specificatie beschrijft al deze parameters. Hieronder volgt een behandeling van de belangrijkste parameters als je zelf via HTTP requests metadata wilt doorzoeken / opvragen:
+
+**Parameters**
+De volgende parameters kunnen handig zijn om aan te passen, voor andere zoekopdrachten:
+
+* outputSchema=http://www.opengis.net/cat/csw/2.0.2 --> gebruik outputSchema=http://www.isotc211.org/2005/gmd voor ISO metadata
+* typeNames=csw:Record --> typenames=gmd:MD_Metadata is nodig voor het verkrijgen van ISO metadata
+* maxRecords=10 --> het maximum aantal records als zoekresultaten
+* elementSetName=full (of: summary)
+* constraintLanguage=CQL_TEXT --> er is ook de mogelijkheid XML Filters conform de OGC Filter encoding te gebruiken. CQL_TEXT is vaak handiger in GET-requests, omdat de notatie korter is.
+* constraint=AnyText+LIKE+%27%25water%25%27 --> dit is de zoekterm. Hier wordt een filter gebruikt dat door alle tekst van de metadata zoekt (AnyText), op de term "water". De waarde van het veld constraint moet URL encoded zijn. "AnyText+LIKE+%27%25water%25%27" is  URL gecodeerd van "AnyText LIKE '%water%'". De percentage-tekens zijn wildcards. Het online tooltje: http://meyerweb.com/eric/tools/dencoder/ kan helpen bij het coderen/decoderen van de waardes.
+
+**Optioneel**
+* resultType=results --> "results" levert de zoekresultaten zelf (metadata records) op, "hits" levert alleen de aantallen zoekresultaten op.
+* startPosition=<integer> --> in combinatie met maxrecords te gebruiken, om door grotere hoeveelheden records te lopen. Zie hieronder bij **Paginering van zoekresultaten**.
+
+Parameters die niet aangepast hoeven te worden:
+
+* outputFormat=application/xml --> Hoe de metadata gecodeerd wordt. Dit is voor NGR altijd application/xml (zie de Capabilities bij het stukje over GetRecords).
+* request=GetRecords
+* service=CSW
+* version=2.0.2
+
+
+**Paginering van zoekresultaten: maxRecords en startPosition**
+Het NGR bevat veel metadata records. Door de maxRecords en startPosition parameters te gebruiken kan je in delen metadata records opvragen. Dus bijvoorbeeld eerst de eerste 10 (maxRecords=10&startposition=1), dan de volgende 10 (maxRecords=10&startposition=11) en weer de volgende 10 (maxRecords=10&startposition=21).
+
+
+Zoeken via filters
+------------------
+Het NGR staat allerlei zoekopdrachten toe, ook via de CSW. De meestgebruikte is alle tekst doorzoeken.
+
+Zie de bespreking van de parameter "constraint" voor een eenvoudig voorbeeld.
+
+Naast AnyText ondersteunt het NGR vele andere zoekparameters, die heel gericht op een bepaald metadata element zoeken. De Capabilities sommen deze op in de lijsten met Queryables (SupportedISOQueryables en AdditionalQueryables). Bijvoorbeeld: ServiceType om te zoeken op het type services, zoals op een zogenaamde "view" service:
+constraint=ServiceType='view'
+Gecodeerd:constraint=ServiceType%3D%27view%27
+
+Of de titel moet een term bevatten:
+constraint=Title LIKE '%dijken%'
+Gecodeerd:constraint=Title LIKE '%25dijken%25'
+
+Request: http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?request=GetRecords&service=CSW&version=2.0.2&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=Title%20LIKE%20%27%25dijken%25%27&nextRecord=20
+
+Het voert te ver hier alle zoekparameters te bespreken. Zie daarvoor de CSW specificatie.
+
+
+GetRecordById
+=============
+Het request GetRecordById kan handig zijn om naar 1 specifiek metadata record te verwijzen. Het request is korter dan GetRecords. Een voorbeeld is:
+
+http://nationaalgeoregister.nl/geonetwork/srv/dut/csw?SERVICE=CSW&version=2.0.2&REQUEST=GetRecordById&elementSetName=full&OutputSchema=http://www.isotc211.org/2005/gmd&ID=85fdc4ee-05fa-455d-bf11-eb0b927e6f77
+
+Dit request vraagt in ISO formaat de metadata op van het record met ID=85fdc4ee-05fa-455d-bf11-eb0b927e6f77. Dit ID is te vinden door de resultaten van GetRecords te bestuderen.
+
+Voorbeelden
+===========
+
+* `Eerste 10 records (1 t/m 10) <http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&startposition=1&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27>`_
+
+::
+
+    http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?
+    service=CSW&
+    version=2.0.2&
+    request=GetRecords&
+    namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&
+    resultType=results&
+    outputSchema=http://www.opengis.net/cat/csw/2.0.2&
+    outputFormat=application/xml&
+    maxRecords=10&
+    startposition=1&
+    typeNames=csw:Record&
+    elementSetName=full&
+    constraintLanguage=CQL_TEXT&
+    constraint_language_version=1.1.0&
+    constraint=AnyText+LIKE+%27%25water%25%27
+
+* 10 volgende records (11 t/m 20):
+
+  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&startposition=11&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
+
+
+* Vraag om Dublin Core metadata (beperkte set).
+  Opvragen van Dublin Core metadata gaat met de parameters::
+
+    &outputSchema=http://www.opengis.net/cat/csw/2.0.2&typeNames=csw:Record
+
+  Dus bijvoorbeeld een geheel request:
+
+  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputFormat=application/xml&maxRecords=10&outputSchema=http://www.opengis.net/cat/csw/2.0.2&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
+
+* Vraag om ISO-metadata 
+  Opvragen van ISO metadata (meer gegevens dan Dublin Core) gaat met de parameters::
+
+    &outputSchema=http://www.isotc211.org/2005/gmd&typeNames=gmd:MD_Metadata
+
+  Dus bijvoorbeeld een geheel request:
+
+  http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputFormat=application/xml&maxRecords=10&outputSchema=http://www.isotc211.org/2005/gmd&typeNames=gmd:MD_Metadata&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27
+
+INSPIRE metadata
+----------------
+Op zoek naar alleen INSPIRE metadata (en niet alle Nederlandse metadata)? Gebruik dan in plaats van de URL:
+
+http://nationaalgeoregister.nl/geonetwork/srv/dut/csw
+
+
+De URL van het INSPIRE endpoint:
+
+http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire
+
+Deze laatste URL is ook van een gewone CSW, maar de inhoud betreft alleen de metadata voor INSPIRE.
+
+Tooling met CSW ondersteuning 
+=============================
+
+In veel gevallen ben je sneller af als je een bestaande bibliotheek gebruikt om CSW te ontsluiten:
+
+* `OpenLayers <http://dev.openlayers.org/docs/files/OpenLayers/Protocol/CSW/v2_0_2-js.html>`_
+* `GXP <http://gxp.opengeo.org/master/examples/catalogue.html>`_
+* `Geonetwork Widgets <http://nationaalgeoregister.nl/geonetwork/apps/js/GeoNetwork/examples>`_
+
+Veel GIS pakketten bieden ondersteuning voor CSW via open source plug-ins. 
+
+* `esri <https://github.com/Esri/geoportal-server/tree/master/components/desktop/CswClient/trunk>`_
+* `QGIS <http://hub.qgis.org/projects/cswclient>`_
