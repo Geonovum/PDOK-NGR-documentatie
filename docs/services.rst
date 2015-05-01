@@ -2,6 +2,7 @@
 OGC Services
 ############
 
+.. _wfs:
 *************************
 Web Feature Service (WFS)
 *************************
@@ -72,7 +73,7 @@ Met de GetFeature request is het mogelijk om gegevens op te halen.
     count=100&
     outputFormat=json
 
-`Het resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=100&outputFormat=json>`_ is een GeoJSON document met daarin de coordinaten van de voetafdruk en attributen van elk gebouw.
+`Het resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_ is een GeoJSON document met daarin de coordinaten van de voetafdruk en attributen van elk gebouw.
 
 .. code-block:: javascript
 
