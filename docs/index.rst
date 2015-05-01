@@ -1,14 +1,14 @@
-NationaalGeoRegister Documentatie
-=================================
+PDOK / NGR documentatie
+=======================
 
 Welkom op de documentatiepagina van het NationaalGeoRegister. 
 
 .. toctree::
    :maxdepth: 3
 
-   ngr-dev-page
    services
    tutorials
+   ngr-dev-page
    data
 
 Indices and tables

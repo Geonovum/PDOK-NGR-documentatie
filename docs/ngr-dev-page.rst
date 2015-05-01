@@ -1,8 +1,8 @@
-######################################
-Nationaal GeoRegister Developer pagina
-######################################
+#######################
+PDOK / NGR documentatie
+#######################
 
-De developer pagina van het nationaal georegister bevat een aantal tips om met data en services uit het register aan de slag te gaan.
+De developer pagina van het Nationaal GeoRegister bevat een aantal tips om met data en services uit het register aan de slag te gaan.
 
 Het register is een catalogus met informatie over vooral ruimtelijke datasets en services die door voornamelijk overheden ter beschikking gesteld worden.
 

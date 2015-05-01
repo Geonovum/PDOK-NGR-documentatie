@@ -6,28 +6,204 @@ OGC Services
 Web Feature Service (WFS)
 *************************
 
-Web Feature Services is een rest-api om vector data uit te wisselen. Een volledige beschrijving van WFS staat hier (http://www.opengeospatial.org/standards/wfs). Belangrijke operaties zijn GetCapabilities, DescribeFeatureType, GetFeature. Een getFeature request initieert de feature download. Deze operatie kan gecombineerd worden met ruimtelijke of attribuut filters en een output-formaat keuze (afhankelijk van implementatie: bv GML, Shp, json, kml, csv)
+Web Feature Service is een webservice voor het opvragen van geografische vector data en de bijbehorende administratieve gegevens. Belangrijke requests zijn 
+
+- **GetCapabilities**: voor het bekijken van de mogelijkheden van de service
+- **DescribeFeatureType**: haalt de beschrijving op van een of meerdere objecten
+- **GetFeature**: haalt een of meerdere geometrieeen en de bijbehorende attributen op. Deze operatie kan gecombineerd worden met ruimtelijke of attribuut filters en een output-formaat keuze (afhankelijk van implementatie: bijv. GML, SHP, JSON, KML, CSV)
+
+Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een volledige beschrijving van WFS.
+
+GetCapabilities
+===============
+
+De functionaliteit van een WFS endpoint wordt beschreven in een Capabilities document die middels een GetCapabilities request opgehaald kan worden:
+
+::
+
+    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    service=WFS&
+    request=GetCapabilities
+
+Het resultaat is een XML document waarin de o.a. de opgeslagen data types en lagen beschreven worden
+
+.. code-block:: xml
+
+    <wfs:WFS_Capabilities version="2.0.0" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://geodata.nationaalgeoregister.nl/schemas/wfs/2.0/wfs.xsd http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd" updateSequence="1943">
+        <ows:ServiceIdentification>...</ows:ServiceIdentification>
+        <ows:ServiceProvider>...</ows:ServiceProvider>
+        <ows:OperationsMetadata>...</ows:OperationsMetadata>
+        <FeatureTypeList>
+            <FeatureType></FeatureType>
+            <FeatureType>
+                <Name>bag:pand</Name>
+                <Title>pand</Title>
+                <Abstract>pand</Abstract>
+                <ows:Keywords>
+                    <ows:Keyword>pand</ows:Keyword>
+                    <ows:Keyword>features</ows:Keyword>
+                </ows:Keywords>
+                <DefaultCRS>urn:ogc:def:crs:EPSG::28992</DefaultCRS>
+                <ows:WGS84BoundingBox>
+                    <ows:LowerCorner>3.2800546964714012 50.748745396375774</ows:LowerCorner>
+                    <ows:UpperCorner>7.224161199744223 53.48515806526503</ows:UpperCorner>
+                </ows:WGS84BoundingBox>
+                <MetadataURL xlink:href="http://www.nationaalgeoregister.nl/geonetwork/srv/dut/xml.metadata.get?uuid=aa3b5e6e-7baa-40c0-8972-3353e927ec2f"/>
+            </FeatureType>
+            <FeatureType>...</FeatureType>
+            <FeatureType>...</FeatureType>
+            <FeatureType>...</FeatureType>
+        </FeatureTypeList>
+        <fes:Filter_Capabilities>...</fes:Filter_Capabilities>
+    </wfs:WFS_Capabilities>
+
+
+GetFeature
+==========
+
+Met de GetFeature request is het mogelijk om gegevens op te halen.  
+
+:: 
+
+    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    service=WFS&
+    request=GetFeature&
+    typeName=bag:pand&
+    count=100&
+    outputFormat=json
+
+`Het resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=100&outputFormat=json>`_ is een GeoJSON document met daarin de coordinaten van de voetafdruk en attributen van elk gebouw.
+
+.. code-block:: javascript
+
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "id": "pand.7871844",
+                "geometry_name": "geometrie",
+                "properties": {
+                    "identificatie": 856100000350209,
+                    "bouwjaar": 1941,
+                    "status": "Pand in gebruik",
+                    "gebruiksdoel": "woonfunctie",
+                    "oppervlakte_min": 147,
+                    "oppervlakte_max": 147,
+                    "aantal_verblijfsobjecten": 1,
+                    "actualiteitsdatum": null
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                179753.466,
+                                405278.319
+                            ],
+                            [
+                                179750.226,
+                                405277.631
+                            ],
+
+                            ...
+
+                            [
+                                179753.466,
+                                405278.319
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {...}
+        ]
+    }
+
+*********************
+Web Map Service (WMS)
+*********************
+
+Web Map Service is een webservice voor het ophalen van kaartbeelden als bitmap. WMS kent minimaal 3 operaties: 
+
+1. **GetCapabilities**: retourneert een lijst van beschikbare kaartlagen, projecties, formaten enz)
+2. **GetMap**: retourneert een kaart afbeelding 
+3. **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde locatie
+
+Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS.
 
 GetCapabilities
 ===============
 
 TODO
 
-GetFeature
-==========
+GetMap
+======
 
-TODO
+De GetMap request haalt een kaartbeeld op.
 
-*********************
-Web Map Service (WMS)
-*********************
+::
 
-Web Map Services is een rest-api om kaartbeelden uit te wisselen als bitmap. Een volledige beschrijving van WMS staat hier (http://www.opengeospatial.org/standards/wms). WMS kent (minimaal) 3 operaties: GetCapabilities (retourneert een lijst van beschikbare kaartlagen, projecties, formaten enz), GetMap (retourneert een kaart afbeelding) en getFeatureInfo (geeft attribuutgegevens van het aangeklikte object). Daarnaast wordt optioneel ondersteund: GetLegendGraphic. WMS is eenvoudig te consumeren met bibliotheken als OpenLayers(http://www.openlayers.org), Flamingo, Leaflet. Ook is WMS standaard te openen in QGIS, Esri, Udig, Mapwindow enz.
+  http://geodata.nationaalgeoregister.nl/ahn2/wms?
+  service=WMS&
+  request=GetMap&
+  layers=ahn2_5m&
+  bbox=13014,306243,286599,623492&
+  width=400&
+  height=500&
+  format=image/png&
+  srs=EPSG:28992
+
+
+Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&request=getmap&layers=ahn2_5m&bbox=13014,306243,286599,623492&width=400&height=500&format=image/png&srs=EPSG:28992>`_ in een PNG afbeelding.
+
+.. image:: images/ahn2.png
+    :height: 300
+    :width: 400
+    :align: center
+
+GetFeatureInfo
+==============
+
+::
+
+  http://geodata.nationaalgeoregister.nl/ahn2/wms?
+  service=wms&
+  request=getfeatureinfo&
+  layers=ahn2_5m&
+  bbox=13014,306243,286599,623492&
+  width=400&
+  height=500&
+  format=image/png&
+  srs=EPSG:28992&
+  query_layers=ahn2_5m&
+  info_format=application/json&
+  x=353&
+  y=145
+
+Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&request=getfeatureinfo&layers=ahn2_5m&bbox=13014,306243,286599,623492&width=400&height=500&format=image/png&srs=EPSG:28992&query_layers=ahn2_5m&info_format=application/json&x=353&y=145>`_ in een JSON document. 
+
+.. code-block:: javascript
+
+    {
+        "type": "FeatureCollection",
+        "totalFeatures": "unknown",
+        "features": [
+            {
+                "type": "Feature",
+                "id": "",
+                "geometry": null,
+                "properties": {
+                    "GRAY_INDEX": 17.51810073852539
+                }
+            }
+        ],
+        "crs": null
+    }
 
 ***********************
 Tile Map Service (TMS) 
 ***********************
-
 
 The TMS resolutions are defined on page 7 of the `PDOK Manual (PDF) <https://www.pdok.nl/sites/default/files/bibliotheek/handleiding_pdok_gebruik_10_dec_2012_v1_1.pdf>`_.
 
