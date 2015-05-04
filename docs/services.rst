@@ -2,12 +2,30 @@
 OGC Services
 ############
 
+De Open Geospatial Consortium (OGC) is een internationale organisatie die de leiding heeft in de ontwikkeling van interoperabele standaarden voor georuimtelijke en plaatsgebonden diensten. De belangrijkste OGC standaarden in gebruik in Nederland zijn de 
+
+- de **Web Map Service** (WMS) - de zogenaamde *view* service genereert een statische kaartuitsnedes van geo-informatie in een raster formaat zoals PNG, GIF of JPEG. 
+- de **Web Feature Service** (WFS) - de zogenaamde *download* service is een protocol voor het opvragen van geografische vector data, al dan niet via een ruimtelijk filter.
+
+De W*S diensten worden via HTTP GET en POST requests bevraagd. De mogelijkheden van elk service worden in een *Capabilities* document beschreven
+
+::
+
+    http://geo.data.nl/ogc-service?
+    service=WMS/WFS/WMTS/WCS
+    request=GetCapabilities
+
+Hierin staat in welke coordinatenstelsels de gegevens beschikbaar zijn, welke lagen beschikbaar zijn, welke data formats ondersteunt worden, etc.
+
+In de praktijk worden de diensten zelden op deze manier bevraagd. Het is gebruikelijker om ze via OpenLayers, Leaflet, QGIS, ogr2ogr, `Python <https://pypi.python.org/pypi/OWSLib>`_, etc te benaderen.
+
 .. _wfs:
+
 *************************
 Web Feature Service (WFS)
 *************************
 
-Web Feature Service is een webservice voor het opvragen van geografische vector data en de bijbehorende administratieve gegevens. Belangrijke requests zijn 
+Web Feature Service is een webservice voor het opvragen van geografische vector data en de bijbehorende administratieve gegevens. Belangrijke requests zijn:
 
 - **GetCapabilities**: voor het bekijken van de mogelijkheden van de service
 - **DescribeFeatureType**: haalt de beschrijving op van een of meerdere objecten
@@ -18,7 +36,7 @@ Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een vo
 GetCapabilities
 ===============
 
-De functionaliteit van een WFS endpoint wordt beschreven in een Capabilities document die middels een GetCapabilities request opgehaald kan worden:
+De functionaliteit van een WFS endpoint wordt beschreven in een *Capabilities* document die middels een GetCapabilities request opgehaald kan worden:
 
 ::
 
@@ -26,7 +44,7 @@ De functionaliteit van een WFS endpoint wordt beschreven in een Capabilities doc
     service=WFS&
     request=GetCapabilities
 
-Het resultaat is een XML document waarin de o.a. de opgeslagen data types en lagen beschreven worden
+Het resultaat is een XML document waarin o.a. de opgeslagen data types, lagen beschreven worden, ondersteunde coordinatenstelsels, etc.
 
 .. code-block:: xml
 
@@ -62,7 +80,7 @@ Het resultaat is een XML document waarin de o.a. de opgeslagen data types en lag
 GetFeature
 ==========
 
-Met de GetFeature request is het mogelijk om gegevens op te halen.  
+Met de GetFeature request is het mogelijk om geometrieen en attributen op te halen. De volgende reuest haalt 100 gebouwen op uit de Basisregistratie Adressen en Gebouwen
 
 :: 
 
@@ -73,7 +91,7 @@ Met de GetFeature request is het mogelijk om gegevens op te halen.
     count=100&
     outputFormat=json
 
-`Het resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_ is een GeoJSON document met daarin de coordinaten van de voetafdruk en attributen van elk gebouw.
+`Het resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_ is een GeoJSON document met daarin de polygonen van de voetafdruk en attributen van elk gebouw.
 
 .. code-block:: javascript
 
@@ -121,15 +139,25 @@ Met de GetFeature request is het mogelijk om gegevens op te halen.
         ]
     }
 
+.. _wms:
+
 *********************
 Web Map Service (WMS)
 *********************
 
-Web Map Service is een webservice voor het ophalen van kaartbeelden als bitmap. WMS kent minimaal 3 operaties: 
+De Web Map Service is een webservice voor het ophalen van kaartbeelden in een raster formaat zoals PNG, JPEG en GIF. Het is te vergelijken met de *static maps* APIs van `Mapbox <https://www.mapbox.com/developers/api/static/>`_ en `Google Maps <https://developers.google.com/maps/documentation/staticmaps/#quick_example>`_ 
 
-1. **GetCapabilities**: retourneert een lijst van beschikbare kaartlagen, projecties, formaten enz)
-2. **GetMap**: retourneert een kaart afbeelding 
-3. **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde locatie
+.. image:: images/brt.png
+    :height: 315
+    :width: 680
+    :align: center
+
+
+WMS kent minimaal 3 operaties: 
+
+- **GetCapabilities**: retourneert een lijst van beschikbare kaartlagen, projecties, formaten enz)
+- **GetMap**: retourneert een statische kaart afbeelding 
+- **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde locatie
 
 Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS.
 
@@ -141,7 +169,7 @@ TODO
 GetMap
 ======
 
-De GetMap request haalt een kaartbeeld op.
+De *GetMap* request haalt een statisch kaartbeeld op.
 
 ::
 
@@ -165,6 +193,8 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
 
 GetFeatureInfo
 ==============
+
+TODO
 
 ::
 
@@ -202,9 +232,25 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
         "crs": null
     }
 
+
+****************************
+Web Map Tile Services (WMTS)
+****************************
+
+Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik. De WMTS operaties zijn vergelijkbaar met de overige OGC diensten, echter het *Capabilities* document is uitgebreid met het gebruikte grid (per projectie). 
+
+
+
+
+WMTS wordt ondersteund door het overgrote deel van de hierboven genoemde WMS clients. Voor Esri is er een plug-in beschikbaar voor wmts arcbrutile(http://arcbrutile.codeplex.com/). Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn voor RD_new (epsg:28992) vastgesteld (http://www.geonovum.nl/sites/default/files/Nederlandse_richtlijn_tiling_-_versie_1.0.pdf).
+
+Zie de `speficitatie <http://www.opengeospatial.org/standards/wmts.>`_ voor meer informatie. 
+
 ***********************
 Tile Map Service (TMS) 
 ***********************
+
+TODO
 
 The TMS resolutions are defined on page 7 of the `PDOK Manual (PDF) <https://www.pdok.nl/sites/default/files/bibliotheek/handleiding_pdok_gebruik_10_dec_2012_v1_1.pdf>`_.
 
@@ -250,15 +296,6 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
 
 .. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
     :width: 800px
-
-
-****************************
-Web Map Tile Services (WMTS)
-****************************
-
-Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik.
-http://www.opengeospatial.org/standards/wmts. De operaties zijn vergelijkbaar, echter het capabilities document is uitgebreid met het gebruikte grid (per projectie). WMTS wordt ondersteund door het overgrote deel van de hierboven genoemde WMS clients. Voor Esri is er een plug-in beschikbaar voor wmts arcbrutile(http://arcbrutile.codeplex.com/). Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn voor RD_new (epsg:28992) vastgesteld (http://www.geonovum.nl/sites/default/files/Nederlandse_richtlijn_tiling_-_versie_1.0.pdf).
-
 
 ***********************************
 Catalogue Service for the Web (CSW)
