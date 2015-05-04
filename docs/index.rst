@@ -17,7 +17,7 @@ De documentatie wordt beheerd door `Geonovum <http://www.geonovum.nl/>`_ op `Git
    :maxdepth: 3
 
    services
-   tutorials
+   handleidingen
    ngr-dev-page
    data
 
