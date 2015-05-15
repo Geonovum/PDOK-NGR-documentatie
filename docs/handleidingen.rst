@@ -34,7 +34,7 @@ BAG
 
 In this tutorial we will work with the :ref:`Bassisregistratie Adressen en Gebouwen dataset <bag>`. It contains, amongst others, the footrpints of all the Dutch buildings. It's the basis for this `CitySDK <http://citysdk.waag.nl/buildings/>`_ visualisation. The BAG WFS endpoint is located at::
 
-    http://geodatan.nationaalgeoregister.nl/bagviewer/wfs
+    http://geodata.nationaalgeoregister.nl/bagviewer/wfs
 
 .. WARNING::
 
@@ -79,7 +79,7 @@ which results in::
 
 where the enumerated items represent the available layers and their type. The building footprints are contained in the 2nd layer and are of type *Polygon*. We can use *ogrinfo* to investigate a specific layer by appending its name at the end of the previous command as::
 
-    $ ogrinfo -so WFS:"http://geodatan.nationaalgeoregister.nl/bagviewer/wfs" bagviewer:pand
+    $ ogrinfo -so WFS:"http://geodata.nationaalgeoregister.nl/bagviewer/wfs" bagviewer:pand
 
 The result is the number of features contained in the layer, a listing of their attributes, the coordinate reference system of the layer and a bounding box of the features.
 
@@ -119,7 +119,7 @@ Filtering
 ogr2ogr supports filtering of datasources through a simple *-where* clause as well as sophisticated SQL queries. Retrieving a single column from the footprints dataset through SQL is done as::
 
     $ ogr2ogr -f GeoJSON gemeenten_2011_84.geojson 
-    WFS:"http://geodatan.nationaalgeoregister.nl/bagviewer/wfs" 
+    WFS:"http://geodata.nationaalgeoregister.nl/bagviewer/wfs" 
     -sql "SELECT CAST('bouwjaar') AS integer 
     FROM 'bagviewer:pand'" 
     -t_srs EPSG:4326
