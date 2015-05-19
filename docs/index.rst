@@ -14,17 +14,13 @@ De documentatie wordt beheerd door `Geonovum <http://www.geonovum.nl/>`_ op `Git
 - Uitbreidingen aan de documentatie, voorbeelden, handleidingen, etc. kunnen via pull requests ingediend worden.
 
 .. toctree::
-   :maxdepth: 3
+   :hidden:
+   :maxdepth: 2
 
    services
+   bekijken
+   visualiseren
+   downloaden
    handleidingen
    ngr-dev-page
    data
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
