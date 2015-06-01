@@ -17,6 +17,7 @@ De documentatie wordt beheerd door `Geonovum <http://www.geonovum.nl/>`_ op `Git
    :hidden:
    :maxdepth: 2
 
+   quickstart
    services
    bekijken
    visualiseren
