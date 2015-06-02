@@ -1,5 +1,3 @@
-## PDOK-NGR-documentatie
-
 Deze repository bevat de broncode van de [PDOK/NGR documentatie](http://pdok-ngr.readthedocs.org/). De docs zijn geschreven in reStructuredText, Sphinx bundelt en zet ze om naar HTML.
 
 De documentatie wordt automatisch op [ReadTheDocs gepubliceerd](http://pdok-ngr.readthedocs.org/).
