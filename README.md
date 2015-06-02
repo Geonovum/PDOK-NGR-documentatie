@@ -6,4 +6,4 @@ De documentatie wordt automatisch op [ReadTheDocs gepubliceerd](http://pdok-ngr.
 
 Bugs, tekortkomingen, suggesties, e.a. kunt u melden in de [issue tracker](https://www.github.com/geonovum/pdok-ngr-documentatie/issues).
 
-Bijdrages aan de tekst worden zeer prijs gesteld! We zijn altijd op zoek naar verbeteringen, uitbreidingen, voorbeelden en handleidingen. Stuur een **pull request** en we zullen er z.s.m. naar kijken.
+Bijdrages aan de tekst worden zeer op prijs gesteld! We zijn altijd op zoek naar verbeteringen, uitbreidingen, voorbeelden en handleidingen. Stuur een **pull request** en we zullen er z.s.m. naar kijken.
