@@ -20,8 +20,9 @@ Hierin staat in welke coordinatenstelsels de gegevens beschikbaar zijn, welke la
 In de praktijk worden de diensten zelden op deze manier bevraagd. Het is gebruikelijker om ze via OpenLayers, Leaflet, QGIS, ogr2ogr, `Python <https://pypi.python.org/pypi/OWSLib>`_, etc te benaderen.
 
 .. _wfs:
+.. _OGC-WFS:
 
-*************************<a name="OGC:WFS"></a><a name="OGC-WFS"></a>
+*************************
 Web Feature Service (WFS)
 *************************
 
@@ -140,8 +141,10 @@ Met de GetFeature request is het mogelijk om geometrieen en attributen op te hal
     }
 
 .. _wms:
+.. _OGC-WMS:
+.. _OGC_WMS-1.1.1-http-get-map:
 
-*********************<a name="OGC:WMS"></a><a name="OGC-WMS"></a><a name="OGC:WMS-1.1.1-http-get-map"></a>
+*********************
 Web Map Service (WMS)
 *********************
 
@@ -232,8 +235,9 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
         "crs": null
     }
 
+.. _OGC-WMTS:
 
-****************************<a name="OGC:WMTS"></a>
+****************************
 Web Map Tile Services (WMTS)
 ****************************
 
@@ -296,8 +300,10 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
 
 .. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
     :width: 800px
+    
+.. _OGC-CSW:
 
-***********************************<a name="OGC:CSW"></a>
+***********************************
 Catalogue Service for the Web (CSW)
 ***********************************
 
