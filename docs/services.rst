@@ -21,7 +21,7 @@ In de praktijk worden de diensten zelden op deze manier bevraagd. Het is gebruik
 
 .. _wfs:
 
-*************************
+*************************<a name="OGC:WFS"></a><a name="OGC-WFS"></a>
 Web Feature Service (WFS)
 *************************
 
@@ -141,7 +141,7 @@ Met de GetFeature request is het mogelijk om geometrieen en attributen op te hal
 
 .. _wms:
 
-*********************
+*********************<a name="OGC:WMS"></a><a name="OGC-WMS"></a><a name="OGC:WMS-1.1.1-http-get-map"></a>
 Web Map Service (WMS)
 *********************
 
@@ -233,7 +233,7 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
     }
 
 
-****************************
+****************************<a name="OGC:WMTS"></a>
 Web Map Tile Services (WMTS)
 ****************************
 
@@ -297,7 +297,7 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
 .. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
     :width: 800px
 
-***********************************
+***********************************<a name="OGC:CSW"></a>
 Catalogue Service for the Web (CSW)
 ***********************************
 
