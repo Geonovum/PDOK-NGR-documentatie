@@ -23,5 +23,4 @@ De documentatie wordt beheerd door `Geonovum <http://www.geonovum.nl/>`_ op `Git
    visualiseren
    downloaden
    handleidingen
-   ngr-dev-page
    data
