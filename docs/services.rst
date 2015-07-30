@@ -45,7 +45,7 @@ De functionaliteit van een WFS endpoint wordt beschreven in een *Capabilities* d
     service=WFS&
     request=GetCapabilities
 
-Het resultaat is een XML document waarin o.a. de opgeslagen data types, lagen beschreven worden, ondersteunde coordinatenstelsels, etc.
+`Resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetCapabilities>`_: een XML document waarin o.a. de opgeslagen data types, lagen beschreven worden, ondersteunde coordinatenstelsels, etc.
 
 .. code-block:: xml
 
@@ -92,7 +92,7 @@ Met de GetFeature request is het mogelijk om geometrieen en attributen op te hal
     count=100&
     outputFormat=json
 
-`Het resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_ is een GeoJSON document met daarin de polygonen van de voetafdruk en attributen van elk gebouw.
+`Resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_: een GeoJSON document met daarin de polygonen van de voetafdruk en attributen van elk gebouw.
 
 .. code-block:: javascript
 
@@ -158,17 +158,77 @@ De Web Map Service is een webservice voor het ophalen van kaartbeelden in een ra
 
 WMS kent minimaal 3 operaties: 
 
-- **GetCapabilities**: retourneert een lijst van beschikbare kaartlagen, projecties, formaten enz)
-- **GetMap**: retourneert een statische kaart afbeelding 
-- **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde locatie
+- **GetCapabilities**: retourneert een lijst van beschikbare kaartlagen, projecties, formaten, enz.
+- **GetMap**: retourneert een statisch afbeelding van een kaart
+- **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde plek op de kaart
 
 Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS.
 
 GetCapabilities
 ===============
 
-TODO
+De functionaliteit van een WMS endpoint wordt beschreven in een *Capabilities* document die middels een GetCapabilities request opgehaald kan worden:
 
+::
+
+    http://geodata.nationaalgeoregister.nl/ahn2/wms?
+    service=WMS&
+    request=GetCapabilities
+
+`Resultaat <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=WMS&request=GetCapabilities>`_: een XML document waarin o.a. de opgeslagen data types, lagen beschreven worden, ondersteunde coordinatenstelsels, etc.
+
+.. code-block:: xml
+    :linenos:
+
+    <WMS_Capabilities xmlns="http://www.opengis.net/wms" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3.0" updateSequence="1913" xsi:schemaLocation="http://www.opengis.net/wms http://geodata.nationaalgeoregister.nl/schemas/wms/1.3.0/capabilities_1_3_0.xsd">
+    
+    <Service>...</Service>
+    <Capability>
+        <Request>
+            <GetCapabilities>...</GetCapabilities>
+            <GetMap>...</GetMap>
+            <GetFeatureInfo>...</GetFeatureInfo>
+        </Request>
+        <Exception>...</Exception>
+        <Layer>
+            <Title>Actueel Hoogtebestand Nederland 2</Title>
+            <Abstract>Actueel Hoogtebestand Nederland 2</Abstract>
+            <!-- Limited list of EPSG projections: -->
+            <CRS>EPSG:25831</CRS>
+            <CRS>EPSG:25832</CRS>
+            <CRS>EPSG:28992</CRS>
+            <CRS>EPSG:3034</CRS>
+            <CRS>EPSG:3035</CRS>
+            <CRS>EPSG:3857</CRS>
+            <CRS>EPSG:4258</CRS>
+            <CRS>EPSG:4326</CRS>
+            <CRS>CRS:84</CRS>
+            <EX_GeographicBoundingBox>...</EX_GeographicBoundingBox>
+            <BoundingBox CRS="CRS:84" minx="3.2012587672031283" miny="50.72814376700224" maxx="7.273799656562079" maxy="53.55490608251144"/>
+            <BoundingBox CRS="EPSG:4326" minx="50.72814376700224" miny="3.2012587672031283" maxx="53.55490608251144" maxy="7.273799656562079"/>
+            ...
+            <Layer queryable="1" opaque="0">...</Layer>
+            <Layer queryable="1" opaque="0">...</Layer>
+            <Layer queryable="1" opaque="0">...</Layer>
+            <Layer queryable="1" opaque="0">
+                <Name>ahn2_5m</Name>
+                <Title>ahn2_5m</Title>
+                <Abstract/>
+                <KeywordList>...</KeywordList>
+                <CRS>EPSG:28992</CRS>
+                <CRS>CRS:84</CRS>
+                <EX_GeographicBoundingBox>...</EX_GeographicBoundingBox>
+                <BoundingBox CRS="CRS:84" minx="3.2012587672391843" miny="50.72814376700224" maxx="7.273799656530975" maxy="53.554906081805136"/>
+                <BoundingBox CRS="EPSG:28992" minx="10000.0" miny="306250.0" maxx="280000.0" maxy="618750.0"/>
+                ...
+                <MetadataURL type="TC211">...</MetadataURL>
+                <Style>...</Style>
+            </Layer>
+            <Layer queryable="1" opaque="0">...</Layer>
+        </Layer>
+    </Capability>
+    </WMS_Capabilities>
+    
 GetMap
 ======
 
@@ -197,7 +257,7 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
 GetFeatureInfo
 ==============
 
-TODO
+De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bepaalde plek op de kaart. Onderstaande request haalt 
 
 ::
 
@@ -215,7 +275,7 @@ TODO
   x=353&
   y=145
 
-Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&request=getfeatureinfo&layers=ahn2_5m&bbox=13014,306243,286599,623492&width=400&height=500&format=image/png&srs=EPSG:28992&query_layers=ahn2_5m&info_format=application/json&x=353&y=145>`_ in een JSON document. 
+`Resultaat <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&request=getfeatureinfo&layers=ahn2_5m&bbox=13014,306243,286599,623492&width=400&height=500&format=image/png&srs=EPSG:28992&query_layers=ahn2_5m&info_format=application/json&x=353&y=145>`_: een JSON document met daarin de waarde van de pixel op de gespecificeerde positie. De waarde van de pixel op ``x = 353, y = 145`` stelt in dit geval een hoogte voor en is gelijk aan 17.518 m.
 
 .. code-block:: javascript
 
