@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+        <style>
+            #map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+
+        <script type="text/javascript">
+            var map;
+
+            window.onload = function() {
+                map = L.map('map');
+                
+                // load OpenStreetMap basemap
+                var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+                basemap.addTo(map);
+
+                // fetch GeoJSON data from WFS endpoint
+                // parameters 
+                //      typeName - bag:pand
+                //      count - 100
+                //      outputFormat - json
+                //      srsName - EPSG:4326 (lat/lng)
+                $.getJSON('http://geodata.nationaalgeoregister.nl/bag/wfs?request=GetFeature&service=WFS&typeName=bag:pand&count=100&outputFormat=json&srsName=EPSG:4326', function(data) {
+                    loadGeometry(data);
+                });
+            };
+
+            function loadGeometry(data) {
+                // data contains a FeatureCollection, hence we need to 
+                // fetch the features contained herein explicitely
+                $.each(data.features, function(index, geometry) {
+                    L.geoJson(geometry).addTo(map);
+                });
+
+                var center = data.features[0].geometry.coordinates[0][0];
+
+                // setView expects lat, lng whereas GeoJSON stores coordinates as lng, lat
+                map.setView([center[1], center[0]], 17);
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="map"></div>
+    </body>
+</html>
