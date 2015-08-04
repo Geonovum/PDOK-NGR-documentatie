@@ -1,6 +1,6 @@
-############
-Visualiseren
-############
+#####################
+Publiceren op het web
+#####################
 
 
 *******
@@ -15,7 +15,42 @@ TODO
 WFS
 ===
 
-TODO
+.. code-block:: javascript
+
+    var map;
+
+    window.onload = function() {
+        map = L.map('map');
+        
+        // load OpenStreetMap basemap
+        var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+        basemap.addTo(map);
+
+        var url = 'http://geodata.nationaalgeoregister.nl/bag/wfs?';
+        var params = 'request=GetFeature&';
+        params += 'service=WFS&';
+        params += 'typeName=bag:pand&';
+        params += 'count=100&';
+        params += 'outputFormat=json&';
+        params += 'srsName=EPSG:4326';
+
+        $.getJSON(url + params, function(data) {
+            loadGeometry(data);
+        });
+    };
+
+    function loadGeometry(data) {
+        $.each(data.features, function(index, geometry) {
+            L.geoJson(geometry).addTo(map);
+        });
+
+        var center = data.features[0].geometry.coordinates[0][0];
+
+        // setView expects lat, lng whereas GeoJSON stores coordinates as lng, lat
+        map.setView([center[1], center[0]], 17);
+    }
+
+Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
 
 TMS
 ===
@@ -114,3 +149,18 @@ TMS
 	});
 
 Met dank aan `@6artvde <https://github.com/bartvde/PDOK-OpenLayers3>`_.
+
+
+*******
+CartoDB
+*******
+
+WMS
+===
+
+
+TMS
+===
+
+
+

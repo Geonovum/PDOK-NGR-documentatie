@@ -1,9 +1,11 @@
 .. _CSW specificatie: http://www.opengeospatial.org/standards/cat
 
 
-############
-OGC Services
-############
+####################
+Geo services en APIs
+####################
+
+TODO Beginnen met links naar PDOK en NGR APIs
 
 De Open Geospatial Consortium (OGC) is een internationale organisatie die de leiding heeft in de ontwikkeling van interoperabele standaarden voor georuimtelijke en plaatsgebonden diensten. De belangrijkste OGC standaarden in gebruik in Nederland zijn de 
 
@@ -170,7 +172,7 @@ Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een vo
 GetCapabilities
 ===============
 
-De functionaliteit van een WMS endpoint wordt beschreven in een *Capabilities* document die middels een GetCapabilities request opgehaald kan worden:
+De functionaliteit van een WMS endpoint wordt beschreven in een *Capabilities* document die middels een GetCapabilities request opgehaald wordt:
 
 ::
 

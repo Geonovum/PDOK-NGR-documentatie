@@ -2,6 +2,20 @@
 Handleidingen
 #############
 
+*************************
+Coördinatentransformaties
+*************************
+
+proj4js
+=======
+
+
+QGIS
+====
+
+ogr2ogr
+=======
+
 ******************************************
 WFS 2.0 pagination and GeoJSON output (NL)
 ******************************************
@@ -109,5 +123,31 @@ Tot slot: een PDOK WFS steunt nog meer formaten. Zie daarvoor het stukje XML ove
 Gebruik EPSG:4326 voor lat/long-coordinaten
 ===========================================
 Update, met een tip van Edward MacGillavry (Webmapper): Voeg voor GeoJSON ook toe dat je data wilt in WGS84, met de volgende parameter: *srsName=EPSG:4326*. De meeste software gaat namelijk uit van lat/long coordinaten in WGS84 in GeoJSON.
+
+
+
+
+
+
+
+
+
+
+
+
+*************************
+Coördinatentransformaties
+*************************
+
+proj4js
+=======
+
+
+QGIS
+====
+
+ogr2ogr
+=======
+
 
 
