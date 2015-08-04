@@ -2,5 +2,87 @@
 Maak een kaart!
 ###############
 
+De webservices en APIs van PDOK, NGR, e.a. zijn op verschillende manieren te bekijken en downloaden. Deze pagina laat een aantal manieren zien.
 
-TODO
+**********
+PDOK Kaart
+**********
+
+Met `PDOK Kaart <http://kaart.pdok.nl/>`_ kun je met een aantal klikken een eenvoudig kaartje maken met gegevens uit PDOK, NGR, de geo services van data.overheid.nl e.a. PDOK Kaart stelt je in staat om markers en lijnen te tekenen en van labels te voorzien of deze uit een kommagescheiden (CSV) of KML bestand te laden.
+
+De gegenereerde PDOK Kaart kunt u opslaan en het bijv. mailen naar vrienden en collega's of embedden in uw blog, website, CMS, etc.
+
+PDOK Kaart Wizard is uitermate geschikt voor het maken van eenvoudige kaartjes voor bijv. contactpagina's en routebeschrijving, of voor het visualiseren van basisregistraties en -datasets bijv. de Lange-afstandswandelroutes. 
+
+.. raw:: html
+
+    <iframe width="100%" height="350" frameborder="0" scrolling=no marginheight="0" marginwidth="0" src="http://kaart.pdok.nl/api/api.html?zoom=6&baselayer=BRTGRIJSTIJDELIJK&showlayerswitcher=false&loc=90621.6%2C%20462688.64&pdoklayers=BRT%2CBRTTIJDELIJK%2CBRTGRIJSTIJDELIJK%2CBRTPASTEL%2CLUFO%2CLAWROUTES&markersdef=http%3A%2F%2Fkaart.pdok.nl%2Fapi%2Fjs%2Fpdok-markers.js&layersdef=http%3A%2F%2Fkaart.pdok.nl%2Fapi%2Fjs%2Fpdok-layers.js&features=%3Ckml%20xmlns%3D%22http%3A%2F%2Fearth.google.com%2Fkml%2F2.0%22%3E%3CFolder%3E%3CPlacemark%3E%3Cname%3EStart%20van%20de%20tocht%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E4.347603352739405%2C52.098504305194744%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt6%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3CPlacemark%3E%3Cname%3EEinde%20van%20de%20tocht%3C%2Fname%3E%3Cdescription%3E%26amp%3Bnbsp%3B%3C%2Fdescription%3E%3CPoint%3E%3Ccoordinates%3E4.5002143142411%2C52.157737731671766%3C%2Fcoordinates%3E%3C%2FPoint%3E%3CExtendedData%3E%3CData%20name%3D%22styletype%22%3E%3Cvalue%3Emt8%3C%2Fvalue%3E%3C%2FData%3E%3C%2FExtendedData%3E%3C%2FPlacemark%3E%3C%2FFolder%3E%3C%2Fkml%3E" title="PDOK Kaart"></iframe>
+
+
+Zie de PDOK Kaart `handleiding <http://pdokkaart.readthedocs.org/>`_ voor meer informatie.
+
+****************************
+Leaflet - pandend uit de BAG
+****************************
+
+WFS endpoint in Leaflet kan inlezen
+
+In onderstaande voorbeeld wordt de Basisregistratie Adressen en Gebouwen vector data endpoint (WFS) aangesproken. De URL van deze endpoint is::
+
+	http://geodata.nationaalgeoregister.nl/bag/wfs    
+
+.. raw:: html
+
+    <iframe width="100%" height="350" frameborder="0" marginheight="0" marginwidth="0" src="http://geonovum.github.io/PDOK-NGR-documentatie/examples/quickstart-leaflet.html"></iframe>
+
+.. code-block:: javascript
+
+    var map;
+
+    window.onload = function() {
+        map = L.map('map');
+        
+        // load OpenStreetMap basemap
+        var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+        basemap.addTo(map);
+
+        var url = 'http://geodata.nationaalgeoregister.nl/bag/wfs?';
+        var params = 'request=GetFeature&';
+        params += 'service=WFS&';
+        params += 'typeName=bag:pand&';
+        params += 'count=100&';
+        params += 'outputFormat=json&';
+        params += 'srsName=EPSG:4326';
+
+        $.getJSON(url + params, function(data) {
+            loadGeometry(data);
+        });
+    };
+
+    function loadGeometry(data) {
+        $.each(data.features, function(index, geometry) {
+            L.geoJson(geometry).addTo(map);
+        });
+
+        var center = data.features[0].geometry.coordinates[0][0];
+
+        // setView expects lat, lng whereas GeoJSON stores coordinates as lng, lat
+        map.setView([center[1], center[0]], 17);
+    }
+
+Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
+
+Vector gegevens kun je in het NGR vinden door ``download bare`` data 
+
+WFS, zie de
+
+****
+QGIS
+****
+
+
+Korte QGIS tutorial hoe WFS/WMS in te laden. 
+
+*******
+ogr2ogr
+*******
