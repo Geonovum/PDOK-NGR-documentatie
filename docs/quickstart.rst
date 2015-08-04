@@ -48,41 +48,55 @@ Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te
 
 Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is via de ``L.geoJson()`` functie.
 
-.. code-block:: javascript
+.. code-block:: html
 
-    var map;
+    <!DOCTYPE html>
 
-    window.onload = function() {
-        map = L.map('map');
-        
-        // load OpenStreetMap basemap
-        var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-        basemap.addTo(map);
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+            <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-        var url = 'http://geodata.nationaalgeoregister.nl/bag/wfs?';
-        var params = 'request=GetFeature&';
-        params += 'service=WFS&';
-        params += 'typeName=bag:pand&';
-        params += 'count=100&';
-        params += 'outputFormat=json&';
-        params += 'srsName=EPSG:4326';
-        params += 'bbox=232425,583269,234365,584240';
+            <style>
+                #map {
+                    position: absolute;
+                    top: 0px;
+                    bottom: 0px;
+                    width: 100%;
+                }
+            </style>
+        </head>
 
-        $.getJSON(url + params, function(data) {
-            loadGeometry(data);
-        });
-    };
+        <body>
+            <div id="map"></div>
+            
+            <script type="text/javascript">
+                var map = L.map('map');
+                map.setView([53.2359, 6.555], 17);
+                
+                // load OpenStreetMap basemap
+                var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+                basemap.addTo(map);
 
-    function loadGeometry(data) {
-        $.each(data.features, function(index, geometry) {
-            L.geoJson(geometry).addTo(map);
-        });
+                var url = 'https://geodata.nationaalgeoregister.nl/bag/wfs?';
+                var params = 'request=GetFeature&';
+                params += 'service=WFS&';
+                params += 'typeName=bag:pand&';
+                params += 'count=100&';
+                params += 'outputFormat=json&';
+                params += 'srsName=EPSG:4326&';
+                params += 'bbox=232425,583269,234365,584240';
 
-        var center = data.features[0].geometry.coordinates[0][0];
-
-        // setView expects lat, lng whereas GeoJSON stores coordinates as lng, lat
-        map.setView([center[1], center[0]], 17);
-    }
+                $.getJSON(url + params, function(data) {
+                    $.each(data.features, function(index, geometry) {
+                        L.geoJson(geometry).addTo(map);
+                    });
+                });
+            </script>
+        </body>
+    </html>
 
 De broncode van dit voorbeeld `staat op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
 
