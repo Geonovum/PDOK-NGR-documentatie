@@ -66,6 +66,7 @@ Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is
         params += 'count=100&';
         params += 'outputFormat=json&';
         params += 'srsName=EPSG:4326';
+        params += 'bbox=232425,583269,234365,584240';
 
         $.getJSON(url + params, function(data) {
             loadGeometry(data);
@@ -88,14 +89,62 @@ De broncode van dit voorbeeld `staat op GitHub <https://github.com/Geonovum/PDOK
 Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
 ****
-QGIS
+QGIS - 
 ****
 
+QGIS is een open source geografisch informatiesysteem (GIS) welk geografische gegevens kan visualiseren, bewerken en analyseren. QGIS ondersteunt de gangbare geo bestandsformaten zoals Shapefiles, KML, GML, GeoJSON, etc. en de geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. Gegevens kunnen gevisualiseerd, getransformeerd en gedownload worden zodat ze te gebruiken zijn in Mapbox, CartoDB, Google Maps/Earth, e.a.
+
+PDOK plugin - achtergrondkaart
+==============================
+
+De QGIS PDOK plugin geeft toegang tot de landsdekkende geo services van die door PDOK beheerd worden. Installer de plugin via het ``Plugins`` -> ``Manage and Install Plugins`` menu. Klik op het oranje ``+PDOK`` knopje links van het ``PDOK Geocoder`` veld om de beschikbare PDOK datasets te zien. Zoek op ``achtergrond`` om een lijst van de beschikbare achtergrondkaarte te zien. 
+
+WFS - Zeer kwetsbare gebieden
+=============================
+
+Ga als volgt te werk om services die niet door PDOK beheerd worden (bijv. `Zeer kwetsbare gebieden <https://data.overheid.nl/data/dataset/zeer-kwetsbare-gebieden>`_) aan te spreken: 
+
+1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WFS Layer``
+2. Klik op ``New``
+3. Vul een naam in in bij ``Name`` 
+4. Plak de WFS URL (``http://ags101.prvgld.nl/arcgis/services/INSPIRE_ov/MapServer/WFSServer``) in het ``URL`` veld en klik op ``OK``
+5. Klik op ``Connect``
+6. Kies een van de lagen en klik op ``Add`` 
+7. De gekozen laag verschijnt in de ``Layers`` pane
+8. Klik met de rechtermuisknop op de laag en selecteer ``Zoom to layer``
+
+WMS / WMTS - Actueel Hoogtebestand Nederland
+============================================
+
+1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WMS / WMTS Layer``
+2. Klik op ``New``
+3. Vul een naam in in bij ``Name`` 
+4. Plak de WMS URL (``http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms``) in het ``URL`` veld en klik op ``OK``
+5. Klik op ``Connect``
+6. Kies een van de lagen en klik op ``Add``
+
+QGIS ondersteunt de WMS GetFeatureInfo request. Hiermee kun je de waarde van een pixel (in dit geval de hoogte uit de AHN) opvragen. Klik op ``View`` -> ``Identify Features`` -> locatie op de kaart.
 
 
+***********************************************************
+Mapbox en CartoDB - downloaden en coördinaten transformeren
+***********************************************************
 
-Korte QGIS tutorial hoe WFS/WMS in te laden. 
+De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. moeten ze getransformeerd worden naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel. 
 
-*******
+QGIS
+====
+
+In QGIS gaat dit als volgt:
+
+1. Klik met de rechtermuisknop op de WFS dataset die je wilt downloaden en transformeren en selecteer ``Save As..``
+2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
+3. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu
+4. Klik op ``OK``
+
+Het nieuwe bestand kun je uploaden in CartoDB, gebruiken als databron in Mapbox Studio of visualiseren in Google Earth. 
+
 ogr2ogr
-*******
+=======
+
+TODO
