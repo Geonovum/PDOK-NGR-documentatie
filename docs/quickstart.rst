@@ -22,18 +22,31 @@ PDOK Kaart Wizard is uitermate geschikt voor het maken van eenvoudige kaartjes v
 Zie de PDOK Kaart `handleiding <http://pdokkaart.readthedocs.org/>`_ voor meer informatie.
 
 ****************************
-Leaflet - pandend uit de BAG
+Leaflet - panden uit de BAG
 ****************************
 
-WFS endpoint in Leaflet kan inlezen
+De geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. komen in twee smaken. De *view* services (WMS, WMTS en TMS) leveren statische kaarbeelden (PNG, JPG) en zijn geschikt voor het visualiseren van achtergrondkaarten. De *download* service - voluit: :ref:`OGC-WFS` - levert geografische vector data (GeoJSON, GML) en de bijbehorende administratieve gegevens.
 
-In onderstaande voorbeeld wordt de Basisregistratie Adressen en Gebouwen vector data endpoint (WFS) aangesproken. De URL van deze endpoint is::
-
-	http://geodata.nationaalgeoregister.nl/bag/wfs    
+De download service kunnen we gebruiken om bijv. 100 panden uit de Basisregistratie Adressen en Gebouwen (BAG) op een Leaflet kaart te tonen. 
 
 .. raw:: html
 
-    <iframe width="100%" height="350" frameborder="0" marginheight="0" marginwidth="0" src="http://geonovum.github.io/PDOK-NGR-documentatie/examples/quickstart-leaflet.html"></iframe>
+    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="http://geonovum.github.io/PDOK-NGR-documentatie/examples/quickstart-leaflet.html"></iframe>
+
+De URL van de BAG WFS API is::
+
+    http://geodata.nationaalgeoregister.nl/bag/wfs
+
+Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te filtreren op ``Downloadbare data``. De eerste 100 gebouwen uit de BAG halen we middels een HTTP GET request op in combinatie met de volgende query parameters::
+
+    service = WFS
+    request = GetFeature
+    typeName = bag:pand
+    count = 100
+    srsName = EPSG:4326
+    outputFormat = json
+
+Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is via de ``L.geoJson()`` functie.
 
 .. code-block:: javascript
 
@@ -70,15 +83,15 @@ In onderstaande voorbeeld wordt de Basisregistratie Adressen en Gebouwen vector 
         map.setView([center[1], center[0]], 17);
     }
 
-Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
+De broncode van dit voorbeeld `staat op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
 
-Vector gegevens kun je in het NGR vinden door ``download bare`` data 
-
-WFS, zie de
+Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
 ****
 QGIS
 ****
+
+
 
 
 Korte QGIS tutorial hoe WFS/WMS in te laden. 
