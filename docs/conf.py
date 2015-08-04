@@ -12,7 +12,7 @@
 # serve to show the default.
 
 import sys, os
-import cloud_sptheme as csp
+# import cloud_sptheme as csp
 
 # use Read The Docs theme locally
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
