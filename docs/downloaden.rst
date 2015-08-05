@@ -2,6 +2,8 @@
 Downloaden
 ##########
 
+.. _ogr2ogr tutorial:
+
 *******
 ogr2ogr
 *******
@@ -125,10 +127,10 @@ ogr2ogr supports filtering of datasources through a simple *-where* clause as we
 
 TODO: add bounding box query
 
-Next steps: visualising and publishing data  
+Next steps: visualising and publishing data
 ===========================================
 
-You can now load the vector file in a popular GIS pacakge for furhter analysis, load it in a PostGIS databasem, publish it to Mapbox or CartoDB, etc. 
+You can now load the vector file in a popular GIS pacakge for furhter analysis, load it in a PostGIS database, publish it to Mapbox or CartoDB, etc.
 
 TODO examples
 
@@ -136,4 +138,14 @@ TODO examples
 QGIS
 ****
 
-TODO
+In QGIS gaat het downloaden en transformeren van gegevens uit een WFS endpoint als volgt:
+
+1. Klik met de rechtermuisknop op de WFS dataset die je wilt downloaden en transformeren en selecteer ``Save As..``
+2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
+3. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu
+4. Klik op ``OK``
+
+.. image:: images/qgis-vector-save.png
+    :align: center
+
+Het nieuwe bestand kun je uploaden in CartoDB, gebruiken als databron in Mapbox Studio of visualiseren in Google Earth. 
