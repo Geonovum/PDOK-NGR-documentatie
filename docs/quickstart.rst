@@ -21,17 +21,13 @@ PDOK Kaart Wizard is uitermate geschikt voor het maken van eenvoudige kaartjes v
 
 Zie de PDOK Kaart `handleiding <http://pdokkaart.readthedocs.org/>`_ voor meer informatie.
 
-****************************
-Leaflet - panden uit de BAG
-****************************
+*******
+Leaflet
+*******
 
 De geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. komen in twee smaken. De *view* services (WMS, WMTS en TMS) leveren statische kaarbeelden (PNG, JPG) en zijn geschikt voor het visualiseren van achtergrondkaarten. De *download* service - voluit: :ref:`OGC-WFS` - levert geografische vector data (GeoJSON, GML) en de bijbehorende administratieve gegevens.
 
 De download service kunnen we gebruiken om bijv. 100 panden uit de Basisregistratie Adressen en Gebouwen (BAG) op een Leaflet kaart te tonen. 
-
-.. raw:: html
-
-    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="http://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/"></iframe>
 
 De URL van de BAG WFS API is::
 
@@ -46,7 +42,11 @@ Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te
     srsName = EPSG:4326
     outputFormat = json
 
-Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is via de ``L.geoJson()`` functie.
+Het GeoJSON resultaat is eenvoudige te visualiseren in Leaflet via de ``L.geoJson()`` functie.
+
+.. raw:: html
+
+    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="http://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/"></iframe>
 
 .. raw:: html
 
@@ -55,15 +55,22 @@ Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is
 Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
 ****
-QGIS - 
+QGIS
 ****
 
 QGIS is een open source geografisch informatiesysteem (GIS) welk geografische gegevens kan visualiseren, bewerken en analyseren. QGIS ondersteunt de gangbare geo bestandsformaten zoals Shapefiles, KML, GML, GeoJSON, etc. en de geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. Gegevens kunnen gevisualiseerd, getransformeerd en gedownload worden zodat ze te gebruiken zijn in Mapbox, CartoDB, Google Maps/Earth, e.a.
+
+.. image:: images/qgis-bag-age.png
+    :align: center
+
 
 PDOK plugin - achtergrondkaart
 ==============================
 
 De QGIS PDOK plugin geeft toegang tot de landsdekkende geo services van die door PDOK beheerd worden. Installer de plugin via het ``Plugins`` -> ``Manage and Install Plugins`` menu. Klik op het oranje ``+PDOK`` knopje links van het ``PDOK Geocoder`` veld om de beschikbare PDOK datasets te zien. Zoek op ``achtergrond`` om een lijst van de beschikbare achtergrondkaarte te zien. 
+
+.. image:: images/pdok-plugin.png
+    :align: center
 
 WFS - Zeer kwetsbare gebieden
 =============================
@@ -92,9 +99,9 @@ WMS / WMTS - Actueel Hoogtebestand Nederland
 QGIS ondersteunt de WMS GetFeatureInfo request. Hiermee kun je de waarde van een pixel (in dit geval de hoogte uit de AHN) opvragen. Klik op ``View`` -> ``Identify Features`` -> locatie op de kaart.
 
 
-***********************************************************
-Mapbox en CartoDB - downloaden en coördinaten transformeren
-***********************************************************
+*****************
+Mapbox en CartoDB
+*****************
 
 De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. moeten ze getransformeerd worden naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel. 
 
@@ -107,6 +114,9 @@ In QGIS gaat dit als volgt:
 2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
 3. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu
 4. Klik op ``OK``
+
+.. image:: images/qgis-vector-save.png
+    :align: center
 
 Het nieuwe bestand kun je uploaden in CartoDB, gebruiken als databron in Mapbox Studio of visualiseren in Google Earth. 
 
