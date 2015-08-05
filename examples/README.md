@@ -1,9 +1,10 @@
-De voorbeelden worden als gists opgeslagen. 
+De voorbeelden worden in GitHub Gist beheerd. 
 
+### Lijst van gists
 
-leaflet-wfs-bag https://gist.github.com/a9f903c1579ff7609638.git
+leaflet-wfs-bag https://gist.github.com/a9f903c1579ff7609638
 
-
+### Voorbeelden toevoegen
 
 Om voorbeelden toe te vogen ga je als volgt te werk
 
