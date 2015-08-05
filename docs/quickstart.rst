@@ -31,7 +31,7 @@ De download service kunnen we gebruiken om bijv. 100 panden uit de Basisregistra
 
 .. raw:: html
 
-    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="http://geonovum.github.io/PDOK-NGR-documentatie/examples/quickstart-leaflet.html"></iframe>
+    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw//19c972d794c44dacc745c52b8583ff063d1b895c"></iframe>
 
 De URL van de BAG WFS API is::
 
@@ -48,57 +48,9 @@ Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te
 
 Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is via de ``L.geoJson()`` functie.
 
-.. code-block:: html
+.. raw:: html
 
-    <!DOCTYPE html>
-
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-            <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-
-            <style>
-                #map {
-                    position: absolute;
-                    top: 0px;
-                    bottom: 0px;
-                    width: 100%;
-                }
-            </style>
-        </head>
-
-        <body>
-            <div id="map"></div>
-            
-            <script type="text/javascript">
-                var map = L.map('map');
-                map.setView([53.2359, 6.555], 17);
-                
-                // load OpenStreetMap basemap
-                var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-                basemap.addTo(map);
-
-                var url = 'https://geodata.nationaalgeoregister.nl/bag/wfs?';
-                var params = 'request=GetFeature&';
-                params += 'service=WFS&';
-                params += 'typeName=bag:pand&';
-                params += 'count=100&';
-                params += 'outputFormat=json&';
-                params += 'srsName=EPSG:4326&';
-                params += 'bbox=232425,583269,234365,584240';
-
-                $.getJSON(url + params, function(data) {
-                    $.each(data.features, function(index, geometry) {
-                        L.geoJson(geometry).addTo(map);
-                    });
-                });
-            </script>
-        </body>
-    </html>
-
-De broncode van dit voorbeeld `staat op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
+    <script src="https://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
 
 Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
