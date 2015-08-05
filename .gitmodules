@@ -1,0 +1,3 @@
+[submodule "examples/leaflet-wfs-bag"]
+	path = examples/leaflet-wfs-bag
+	url = https://gist.github.com/a9f903c1579ff7609638.git
