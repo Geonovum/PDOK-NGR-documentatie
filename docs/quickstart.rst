@@ -31,7 +31,7 @@ De download service kunnen we gebruiken om bijv. 100 panden uit de Basisregistra
 
 .. raw:: html
 
-    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw//19c972d794c44dacc745c52b8583ff063d1b895c"></iframe>
+    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="http://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/"></iframe>
 
 De URL van de BAG WFS API is::
 
@@ -50,7 +50,7 @@ Het resultaat is een GeoJSON bestand die eenvoudig in Leaflet te visualiseren is
 
 .. raw:: html
 
-    <script src="https://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
+    <script src="http://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
 
 Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
