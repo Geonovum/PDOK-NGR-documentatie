@@ -368,6 +368,39 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
     
 .. _OGC-CSW:
 
+
+**********
+Atom feeds
+**********
+Een aantal landsdekkende datasets worden als downloadbare bestanden aangeboden via Atom feeds. Atom feeds zijn webfeeds die, net zoals RSS feeds, geabonneerde gebruikers automatisch op de hoogte brengen van nieuwe dataset release brengen.
+
+Open de Atom feed in een feed reader (bijv. `Feedly <https://feedly.com>`_) of Firefox om de bijgesloten ZIP bestand te downloaden. Indien deze niet beschikbaar zijn is het bestand ook via het ``entry`` -> ``link`` element te downloaden, zie regels 9-10 in onderstaand voorbeeld.
+
+.. code-block:: xml
+    :linenos:
+    :emphasize-lines: 9,10
+
+    <?xml version='1.0' encoding='UTF-8'?>
+    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:georss="http://www.georss.org/georss">
+        ...
+        <entry>
+            <id>inspireadressen.zip</id>
+            <title type="text" xml:lang="nl">inspireadressen.zip</title>
+            <content type="text">Downloadgrootte: 1.4 GB</content>
+            <updated>2015-07-07T22:00:00.000Z</updated>
+            <link href="http://geodata.nationaalgeoregister.nl/inspireadressen/extract/inspireadressen.zip" rel="alternate" type="application/x-compressed" hreflang="nl" length="1517044532"/>
+            <link href="http://geodata.nationaalgeoregister.nl/inspireadressen/extract/inspireadressen.zip" hreflang="nl"/>
+            <rights type="text">Copyright (c) 2012, Kadaster en Openbare Registers</rights>
+            <category term="http://www.opengis.net/def/crs/EPSG/0/28992" label="Amersfoort / RD New"/>
+            <georss:polygon>50.6 3.1 50.6 7.3 53.7 7.3 53.7 3.1 50.6 3.1</georss:polygon>
+        </entry>
+    </feed>
+
+De Atom feeds van PDOK zijn te vinden op https://www.pdok.nl/en/products/pdok-downloads/atomfeeds
+
+Atom feeds in het NGR zijn te vinden door het Online Bronnen filter ``Atom`` te gebruiken en/of het zoekresultaat te filtreren op ``Downloadbare bestanden``.
+
+
 ***********************************
 Catalogue Service for the Web (CSW)
 ***********************************
