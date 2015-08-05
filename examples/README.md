@@ -1,5 +1,13 @@
 De voorbeelden worden in GitHub Gist beheerd. 
 
+### Voorbeelden in documentatie opnemen
+
+Je kan Gists als volgt in de documentatie opnemen.
+
+    .. raw:: html
+    
+        <script src="<URL van gist>"></script>
+
 ### Lijst van gists
 
 leaflet-wfs-bag https://gist.github.com/a9f903c1579ff7609638
