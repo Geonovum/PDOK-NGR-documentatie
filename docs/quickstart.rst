@@ -103,7 +103,11 @@ QGIS ondersteunt de WMS GetFeatureInfo request. Hiermee kun je de waarde van een
 Mapbox en CartoDB
 *****************
 
-De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. moeten ze getransformeerd worden naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel. 
+De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. moeten ze getransformeerd worden naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel.
+
+.. raw:: html
+
+    <iframe width="100%" height="400" frameborder="0" src="https://simeon.cartodb.com/viz/f1f469ec-3b73-11e5-a93c-0e4fddd5de28/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 QGIS
 ====
