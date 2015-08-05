@@ -1,6 +1,6 @@
-###############
-Maak een kaart!
-###############
+######################
+Maak een kaart met ...
+######################
 
 De webservices en APIs van PDOK, NGR, e.a. zijn op verschillende manieren te bekijken en downloaden. Deze pagina laat een aantal manieren zien.
 
@@ -99,9 +99,9 @@ WMS / WMTS - Actueel Hoogtebestand Nederland
 QGIS ondersteunt de WMS GetFeatureInfo request. Hiermee kun je de waarde van een pixel (in dit geval de hoogte uit de AHN) opvragen. Klik op ``View`` -> ``Identify Features`` -> locatie op de kaart.
 
 
-*****************
-Mapbox en CartoDB
-*****************
+*******************
+CartoDB (en Mapbox)
+*******************
 
 De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. moeten ze getransformeerd worden naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel.
 
@@ -112,7 +112,7 @@ De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, ge
 QGIS
 ====
 
-In QGIS gaat dit als volgt:
+In QGIS gaat het downloaden en transformeren als volgt:
 
 1. Klik met de rechtermuisknop op de WFS dataset die je wilt downloaden en transformeren en selecteer ``Save As..``
 2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
@@ -127,4 +127,11 @@ Het nieuwe bestand kun je uploaden in CartoDB, gebruiken als databron in Mapbox 
 ogr2ogr
 =======
 
-TODO
+ogr2ogr is een *command line utility* waarmee gegevens uit een groot aantal bronnen gelezen en getransformeerd kunnen worden.
+
+::
+
+    ogr2ogr -f GeoJSON bag.geojson WFS:"http://geodata.nationaalgeoregister.nl/bagviewer/wfs" \
+    -t_srs EPSG:4326 bagviewer:pand
+
+Zie de :ref:`ogr2ogr handleiding <ogr2ogr tutorial>` voor meer informatie. 
