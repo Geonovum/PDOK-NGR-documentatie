@@ -1,28 +1,26 @@
 .. _CSW specificatie: http://www.opengeospatial.org/standards/cat
 
-
 ####################
 Geo services en APIs
 ####################
 
-TODO Beginnen met links naar PDOK en NGR APIs
+De Nederlandse geo-infrastructuur ontsluit gegevens middels een aantal Open Geospatial Consortium (OGC) standaarden. De Open Geospatial Consortium (OGC) is een internationale organisatie die de leiding heeft in de ontwikkeling van interoperabele standaarden voor georuimtelijke en plaatsgebonden diensten. De belangrijkste OGC standaarden in gebruik in Nederland zijn de 
 
-De Open Geospatial Consortium (OGC) is een internationale organisatie die de leiding heeft in de ontwikkeling van interoperabele standaarden voor georuimtelijke en plaatsgebonden diensten. De belangrijkste OGC standaarden in gebruik in Nederland zijn de 
+- de **Web Map Service** (WMS) - deze zogenaamde *view* service genereert een statische kaartuitsnedes van geo-informatie in een raster formaat zoals PNG, GIF of JPEG. 
+- de **Web Feature Service** (WFS) - deze zogenaamde *download* service is een protocol voor het opvragen van geografische vector data en de daarbij behorende attributen, al dan niet via een ruimtelijk filter.
 
-- de **Web Map Service** (WMS) - de zogenaamde *view* service genereert een statische kaartuitsnedes van geo-informatie in een raster formaat zoals PNG, GIF of JPEG. 
-- de **Web Feature Service** (WFS) - de zogenaamde *download* service is een protocol voor het opvragen van geografische vector data, al dan niet via een ruimtelijk filter.
-
-De W*S diensten worden via HTTP GET en POST requests bevraagd. De mogelijkheden van elk service worden in een *Capabilities* document beschreven
-
-::
+Elk W*S dienst heeft een URL die met HTTP GET en POST requests bevraagd wordt. De services ondersteunen een aantal requests waarmee het mogelijk is om kaartbeelden en vector data op te vragen, filters toe te passen en ruimtelijke analyses uit te voeren. De eigenschappen van een service zijn in de *Capabilities* document beschreven. De ``GetCapabitlies`` request haalt deze als volgt op::
 
     http://geo.data.nl/ogc-service?
     service=WMS/WFS/WMTS/WCS
     request=GetCapabilities
 
-Hierin staat in welke coordinatenstelsels de gegevens beschikbaar zijn, welke lagen beschikbaar zijn, welke data formats ondersteunt worden, etc.
+In de praktijk worden de services zelden direct bevraagd. Het is gebruikelijker om ze via bijv. OpenLayers, :ref:`Leaflet <quickstart-leaflet>`, QGIS, ogr2ogr, `Python <https://pypi.python.org/pypi/OWSLib>`_, etc. te benaderen.
 
-In de praktijk worden de diensten zelden op deze manier bevraagd. Het is gebruikelijker om ze via OpenLayers, Leaflet, QGIS, ogr2ogr, `Python <https://pypi.python.org/pypi/OWSLib>`_, etc te benaderen.
+**Het overgrote deel van de gegevens in het** `NGR <http://www.nationaalgeoregister.nl>`_ **is als WMS/WFS beschikbaar, evenals de** `landsdekkende datasets <https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls>`_ **die door** `PDOK <https://www.pdok.nl>`_ **beheerd worden.**
+
+W*S services en APIs worden ook aangeboden door `data.overheid.nl <https://data.overheid.nl>`_, `Atlas Leefomgeving <http://www.atlasleefomgeving.nl/>`_, `Geoportaal Waterschappen <http://waterschapservices.webgispublisher.nl/Choosemap.aspx>`_, `Ruimtelijkeplannen.nl <http://www.ruimtelijkeplannen.nl/web-roo/roo/?>`_ e.a.
+
 
 .. _wfs:
 .. _OGC-WFS:
@@ -31,7 +29,7 @@ In de praktijk worden de diensten zelden op deze manier bevraagd. Het is gebruik
 Web Feature Service (WFS)
 *************************
 
-Web Feature Service is een webservice voor het opvragen van geografische vector data en de bijbehorende administratieve gegevens. Belangrijke requests zijn:
+De Web Feature Service is een webservice voor het opvragen van geografische vector data en de bijbehorende administratieve gegevens. De belangrijke requests zijn:
 
 - **GetCapabilities**: voor het bekijken van de mogelijkheden van de service
 - **DescribeFeatureType**: haalt de beschrijving op van een of meerdere objecten
@@ -308,63 +306,15 @@ Web Map Tile Services (WMTS)
 
 Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik. De WMTS operaties zijn vergelijkbaar met de overige OGC diensten, echter het *Capabilities* document is uitgebreid met het gebruikte grid (per projectie). 
 
+Zie de `WMTS speficitatie <http://www.opengeospatial.org/standards/wmts>`_ voor meer informatie. 
 
-
-
-WMTS wordt ondersteund door het overgrote deel van de hierboven genoemde WMS clients. Voor Esri is er een plug-in beschikbaar voor wmts arcbrutile(http://arcbrutile.codeplex.com/). Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn voor RD_new (epsg:28992) vastgesteld (http://www.geonovum.nl/sites/default/files/Nederlandse_richtlijn_tiling_-_versie_1.0.pdf).
-
-Zie de `speficitatie <http://www.opengeospatial.org/standards/wmts>`_ voor meer informatie. 
+Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn [`PDF <(http://www.geonovum.nl/sites/default/files/Nederlandse_richtlijn_tiling_-_versie_1.0.pdf>`_] voor RD_New (EPGS:28992) vastgesteld.
 
 ***********************
 Tile Map Service (TMS) 
 ***********************
 
 TODO
-
-The TMS resolutions are defined on page 7 of the `PDOK Manual (PDF) <https://www.pdok.nl/sites/default/files/bibliotheek/handleiding_pdok_gebruik_10_dec_2012_v1_1.pdf>`_.
-
-OpenLayers
-==========
-Allereerst dien je op LAYER niveau (dus niet perse op de map options) onderstaande "randvoorwaarden" te definieren. Deze zullen worden gebruikt door ALLE pdok tms lagen
-
-.. code-block:: javascript
-
-  var matrixIds = [];
-  for(var i=0; i<15; ++i) { 
-     matrixIds[i]='EPSG:28992:'+i;
-  }
-  
-  var resolutions = [3440.64, 1720.32, 860.16, 430.08, 215.04, 107.52, 53.76, 26.88, 13.44, 
-    6.72, 3.36, 1.68, 0.84, 0.42, 0.21];
-
-Vervolgens kun je dan een TMS laag definieren als:
-
-.. code-block:: javascript
-  
-  var mijnlaag = new OpenLayers.Layer.TMS(
-    'Topografische kaart 1:10.000',
-    'http://geodata.nationaalgeoregister.nl/tms/',
-     {
-       layername: 'top10nl', 
-       isBaseLayer: true
-       displayInLayerSwitcher: true,
-       type: 'png8',
-       matrixSet: 'EPSG:28992',
-       matrixIds: matrixIds,
-       tileOrigin: new OpenLayers.LonLat(-285401.92,22598.08),
-       serverResolutions: resolutions,
-       tileFulExtent: new OpenLayers.Bounds (-285401.92, 22598.08, 595401.9199999999, 903401.9199999999)
-     }
-  );
-
-En deze laag dan uiteraard toevoegen aan je OpenLayers.Map
-
-Flamingo 4
-==========
-Configuration parameters for the geo content management solution `Flamingo 4 <http://flamingo.b3p.nl/trac/>`_.
-
-.. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
-    :width: 800px
     
 .. _OGC-CSW:
 
@@ -372,6 +322,7 @@ Configuration parameters for the geo content management solution `Flamingo 4 <ht
 **********
 Atom feeds
 **********
+
 Een aantal landsdekkende datasets worden als downloadbare bestanden aangeboden via Atom feeds. Atom feeds zijn webfeeds die, net zoals RSS feeds, geabonneerde gebruikers automatisch op de hoogte brengen van nieuwe dataset release brengen.
 
 Open de Atom feed in een feed reader (bijv. `Feedly <https://feedly.com>`_) of Firefox om de bijgesloten ZIP bestand te downloaden. Indien deze niet beschikbaar zijn is het bestand ook via het ``entry`` -> ``link`` element te downloaden, zie regels 9-10 in onderstaand voorbeeld.
@@ -526,6 +477,33 @@ Het request *GetRecordById* kan handig zijn om naar 1 specifiek metadata record 
     ID=85fdc4ee-05fa-455d-bf11-eb0b927e6f77
 
 Dit request vraagt in ISO formaat de metadata op van het record met ID ``85fdc4ee-05fa-455d-bf11-eb0b927e6f77``. Dit ID is te vinden door de resultaten van de `GetRecords`_ request te bestuderen.
+ 
+
+INSPIRE metadata
+================
+Op zoek naar alleen INSPIRE metadata (en niet alle Nederlandse metadata)? Gebruik dan in plaats van de URL:
+
+http://nationaalgeoregister.nl/geonetwork/srv/dut/csw
+
+De URL van het INSPIRE endpoint:
+
+http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire
+
+Deze laatste URL is ook van een gewone CSW, maar de inhoud betreft alleen de metadata voor INSPIRE.
+
+Tooling met CSW ondersteuning 
+=============================
+
+In veel gevallen is de CSW endpoint effectiever te bevragen middels een bestaande bijv.
+
+* `OpenLayers <http://dev.openlayers.org/docs/files/OpenLayers/Protocol/CSW/v2_0_2-js.html>`_
+* `GXP <http://gxp.opengeo.org/master/examples/catalogue.html>`_
+* `Geonetwork Widgets <http://nationaalgeoregister.nl/geonetwork/apps/js/GeoNetwork/examples>`_
+
+Veel GIS pakketten bieden ondersteuning voor CSW via plug-ins. 
+
+* `esri <https://github.com/Esri/geoportal-server/tree/master/components/desktop/CswClient/trunk>`_
+* `QGIS <http://hub.qgis.org/projects/cswclient>`_
 
 Voorbeelden
 ===========
@@ -593,31 +571,3 @@ Vervang de waardes van de ``outputSchema`` en ``typeNames`` parameters met::
     typeNames=gmd:MD_Metadata
 
 om metadata records in `ISO formaat op te vragen <http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputFormat=application/xml&maxRecords=10&outputSchema=http://www.isotc211.org/2005/gmd&typeNames=gmd:MD_Metadata&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27>`_.
-  
-
-INSPIRE metadata
-================
-Op zoek naar alleen INSPIRE metadata (en niet alle Nederlandse metadata)? Gebruik dan in plaats van de URL:
-
-http://nationaalgeoregister.nl/geonetwork/srv/dut/csw
-
-
-De URL van het INSPIRE endpoint:
-
-http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire
-
-Deze laatste URL is ook van een gewone CSW, maar de inhoud betreft alleen de metadata voor INSPIRE.
-
-Tooling met CSW ondersteuning 
-=============================
-
-In veel gevallen is de CSW endpoint effectiever te bevragen middels een bestaande bijv.
-
-* `OpenLayers <http://dev.openlayers.org/docs/files/OpenLayers/Protocol/CSW/v2_0_2-js.html>`_
-* `GXP <http://gxp.opengeo.org/master/examples/catalogue.html>`_
-* `Geonetwork Widgets <http://nationaalgeoregister.nl/geonetwork/apps/js/GeoNetwork/examples>`_
-
-Veel GIS pakketten bieden ondersteuning voor CSW via plug-ins. 
-
-* `esri <https://github.com/Esri/geoportal-server/tree/master/components/desktop/CswClient/trunk>`_
-* `QGIS <http://hub.qgis.org/projects/cswclient>`_

@@ -84,9 +84,9 @@ TMS
 
 Met dank aan `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_.
 
-**********
-OpenLayers
-**********
+************
+OpenLayers 3
+************
 
 WMS
 ===
@@ -158,9 +158,21 @@ CartoDB
 WMS
 ===
 
+TODO
 
 TMS
 ===
 
+TODO
 
+********
+Flamingo
+********
 
+TMS
+===
+
+Configuration parameters for the geo content management solution `Flamingo 4 <http://flamingo.b3p.nl/trac/>`_.
+
+.. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
+    :width: 800px

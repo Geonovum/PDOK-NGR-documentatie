@@ -21,6 +21,8 @@ PDOK Kaart Wizard is uitermate geschikt voor het maken van eenvoudige kaartjes v
 
 Zie de PDOK Kaart `handleiding <http://pdokkaart.readthedocs.org/>`_ voor meer informatie.
 
+.. _quickstart-leaflet:
+
 *******
 Leaflet
 *******
