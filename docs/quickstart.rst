@@ -44,15 +44,13 @@ Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te
     srsName = EPSG:4326
     outputFormat = json
 
-Het GeoJSON resultaat is eenvoudige te visualiseren in Leaflet via de ``L.geoJson()`` functie.
+Het GeoJSON resultaat is `eenvoudig te visualiseren <https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html>`_ in bijv. Leaflet via de ``L.geoJson()`` functie.
+
+.. <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html"></iframe>
 
 .. raw:: html
 
-    <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="http://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/"></iframe>
-
-.. raw:: html
-
-    <script src="http://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
+    <script src="https://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
 
 Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
