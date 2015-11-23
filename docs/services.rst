@@ -9,7 +9,16 @@ De Nederlandse geo-infrastructuur ontsluit gegevens middels een aantal Open Geos
 - de **Web Map Service** (WMS) - deze zogenaamde *view* service genereert een statische kaartuitsnedes van geo-informatie in een raster formaat zoals PNG, GIF of JPEG. 
 - de **Web Feature Service** (WFS) - deze zogenaamde *download* service is een protocol voor het opvragen van geografische vector data en de daarbij behorende attributen, al dan niet via een ruimtelijk filter.
 
-Elk W*S dienst heeft een URL die met HTTP GET en POST requests bevraagd wordt. De services ondersteunen een aantal requests waarmee het mogelijk is om kaartbeelden en vector data op te vragen, filters toe te passen en ruimtelijke analyses uit te voeren. De eigenschappen van een service zijn in de *Capabilities* document beschreven. De ``GetCapabitlies`` request haalt deze als volgt op::
+Elk W*S dienst heeft een URL die met HTTP GET en POST requests bevraagd wordt. De WMS `GetMap request <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&request=getmap&layers=ahn2_5m&bbox=13014,306243,286599,623492&width=400&height=500&format=image/png&srs=EPSG:28992>`_ haalt bijv. een kaartbeeld op.
+
+.. image:: images/ahn2.png
+    :height: 200
+    :width: 300
+    :align: center
+
+De services ondersteunen een aantal requests waarmee het mogelijk is om kaartbeelden en vector data op te vragen, filters toe te passen en ruimtelijke analyses uit te voeren. 
+
+De eigenschappen van een service zijn in de *Capabilities* document beschreven. De ``GetCapabitlies`` request haalt deze als volgt op::
 
     http://geo.data.nl/ogc-service?
     service=WMS/WFS/WMTS/WCS
