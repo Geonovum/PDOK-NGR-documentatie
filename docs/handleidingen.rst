@@ -6,12 +6,20 @@ Handleidingen
 Coördinatentransformaties
 *************************
 
-proj4js
-=======
-
-
 QGIS
 ====
+
+1. Klik met de rechtermuisknop op de laag die je wilt transformeren en selecteer ``Save As..``
+2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
+3. Klik op de ``Browse`` knop en geef aan waar het bestand opgeslagen moet worden
+4. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coordinaten naar ``lat/lng`` te transformeren
+5. Klik op ``OK``
+
+.. image:: images/qgis-vector-save.png
+    :align: center
+
+proj4js
+=======
 
 ogr2ogr
 =======
@@ -123,31 +131,3 @@ Tot slot: een PDOK WFS steunt nog meer formaten. Zie daarvoor het stukje XML ove
 Gebruik EPSG:4326 voor lat/long-coordinaten
 ===========================================
 Update, met een tip van Edward MacGillavry (Webmapper): Voeg voor GeoJSON ook toe dat je data wilt in WGS84, met de volgende parameter: *srsName=EPSG:4326*. De meeste software gaat namelijk uit van lat/long coordinaten in WGS84 in GeoJSON.
-
-
-
-
-
-
-
-
-
-
-
-
-*************************
-Coördinatentransformaties
-*************************
-
-proj4js
-=======
-
-
-QGIS
-====
-
-ogr2ogr
-=======
-
-
-
