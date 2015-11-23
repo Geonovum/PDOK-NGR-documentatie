@@ -1,19 +1,36 @@
-##########
-Downloaden
-##########
+##################
+Geodata downloaden
+##################
+
+****
+QGIS
+****
+
+Ga als volgt te werk om een deel van de BAG in QGIS te laden en lokaal in een ander coordinatenstelsel op te slaan.
+
+1. Klik op ``Layer``-> ``Add Layer`` -> ``Add WFS Layer`` in het hoofdmenu van QGIS
+2. Klik op ``New``
+3. Vul een makkelijk te onthouden naam in het ``Name`` veld
+4. Plak de BAG WFS URL (``https://geodata.nationaalgeoregister.nl/bag/wfs``) in het ``URL`` veld en klik op ``OK``
+5. Klik op ``Connect``
+6. Kies een van de lagen uit de lijst bijv. ``pand`` en klik op ``Add`` 
+7. De gekozen laag verschijnt in de ``Layers`` pane (links van de kaart) als ``bag:panden``
+8. Klik met de rechtermuisknop op ``bag:panden`` en selecteer ``Save As..``
+9. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
+10. Klik op de ``Browse`` knop en geef aan waar het bestand opgeslagen moet worden
+11. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coordinaten naar ``lat/lng`` te transformeren
+12. Klik op ``OK``
+
+.. image:: images/qgis-vector-save.png
+    :align: center
+
+Het nieuwe bestand kun je in CartoDB of Mapbox Studio gebruiken. KML bestanden kun je rechtstreeks in Google Earth visualiseren.
 
 .. _ogr2ogr tutorial:
 
 *******
 ogr2ogr
 *******
-
-TODO: convert `this presentation <https://speakerdeck.com/ndkv/open-geo-data-in-the-netherlands-and-beyond>`_ to a tutorial. Aim for the style of e.g. `OpenLayers 3 documentation <http://ol3js.org/en/master/doc/tutorials/concepts.html>`_.
-
-* Nationaalgeoregister is a registry, it does not contain datasets itself but links to other sources. 
-* Natioaalgeoregister holds links to `services <OGC Services>`_.
-
-TODO: Include image that depicts how NGR is connected to databases.
 
 This tutorial shows how to get datasets from the Dutch national geoportal through WFS using the GDAL/OGR toolset.  
 
@@ -133,19 +150,3 @@ Next steps: visualising and publishing data
 You can now load the vector file in a popular GIS pacakge for furhter analysis, load it in a PostGIS database, publish it to Mapbox or CartoDB, etc.
 
 TODO examples
-
-****
-QGIS
-****
-
-In QGIS gaat het downloaden en transformeren van gegevens uit een WFS endpoint als volgt:
-
-1. Klik met de rechtermuisknop op de WFS dataset die je wilt downloaden en transformeren en selecteer ``Save As..``
-2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
-3. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu
-4. Klik op ``OK``
-
-.. image:: images/qgis-vector-save.png
-    :align: center
-
-Het nieuwe bestand kun je uploaden in CartoDB, gebruiken als databron in Mapbox Studio of visualiseren in Google Earth. 
