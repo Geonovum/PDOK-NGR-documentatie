@@ -6,8 +6,8 @@ Handleidingen
 Coördinatentransformaties
 *************************
 
-QGIS
-====
+Op de desktop: QGIS
+===================
 
 1. Klik met de rechtermuisknop op de laag die je wilt transformeren en selecteer ``Save As..``
 2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
@@ -18,11 +18,26 @@ QGIS
 .. image:: images/qgis-vector-save.png
     :align: center
 
-proj4js
-=======
+In de browser: proj4js
+======================
 
-ogr2ogr
-=======
+`proj4js <http://proj4js.org/>`_ is een JavaScript bibliotheek voor het transformeren van coördinaten. 
+
+.. code-block:: javascript
+
+    // definitie van de Nederlandse coordinatenstelsel
+    var RD = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs";
+
+    // World Geodetic System, in gebruik door Google Maps, Mapbox, CartoDB, e.a.
+    var WGS84 = "WGS84";
+    
+    var transformed = proj4(RD,WGS84,[0,0]);
+    // Array [ 3.3135577051498664, 47.974765849805124 ]
+    
+
+In de terminal: ogr2ogr
+=======================
+
 
 ******************
 WFS 2.0 pagination
