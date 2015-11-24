@@ -24,9 +24,9 @@ proj4js
 ogr2ogr
 =======
 
-******************************************
-WFS 2.0 pagination and GeoJSON output (NL)
-******************************************
+******************
+WFS 2.0 pagination
+******************
 .. NOTE:: Dit is een `bijdrage <http://www.brentjensgeoict.nl/index.php?post=haal-meer-data-en-geojson-uit-een-pdok-wfs>`_ van Thijs Brentjens.
 
 De Web Feature Services van PDOK bieden toegang tot allerlei (vector)data. De data van de BAG, natura2000, het NWB wegennet, bestuurlijke grenzen en wat dan ook kan je ophalen voor gebruik in eigen applicaties. Bijvoorbeeld in QGIS, OpenLayers of andere tooling. Voor de service URLs kan je kijken op de PDOK `services <https://www.pdok.nl/nl/producten/pdok-services>`_ pagina.
@@ -97,8 +97,9 @@ Of slimmer nog, vraag voordat je daadwerkelijk data gaat ophalen met *resulttype
 
 In dit geval is het `antwoord <http://geodata.nationaalgeoregister.nl/bagviewer/wfs?service=WFS&version=2.0.0&request=GetFeature&typename=bagviewer:ligplaats&resulttype=hits>`_ 11757.
 
-(Geo)JSON en andere formaten
-============================
+****************************
+WFS - JSON als output format
+****************************
 
 GML is voor veel webontwikkelaars niet de eerste keus. JSON en GeoJSON voor geodata lijken de standaard te worden. Maar een WFS geeft standaard (keurig conform de specs) GML terug op een GetFeature reques. Wederom niet getreurd. Ook het GeoJSON formaat is beschikbaar bij de WFSen die PDOK aanbiedt. Gebruik daarvoor de parameter *outputformat=json* bij een GetFeature request en je krijgt GeoJSON terug. Voorbeeld:
 
@@ -113,13 +114,6 @@ GML is voor veel webontwikkelaars niet de eerste keus. JSON en GeoJSON voor geod
     startindex=100&
     outputformat=json 
     
-    
-.. NOTE::
-
-    Let op, zie ook de tip over lat/long-coordinaten hieronder.
-
-Handig in webapplicaties als OpenLayers en Leaflet. Of ook deskop pakketten.
-
 Tot slot: een PDOK WFS steunt nog meer formaten. Zie daarvoor het stukje XML over het outputFormat van het GetFeature-deel in uit de Capabilities van een WFS. Dit Capabilities document is op te vragen via bijvoorbeeld:
 
 ::
@@ -128,6 +122,8 @@ Tot slot: een PDOK WFS steunt nog meer formaten. Zie daarvoor het stukje XML ove
     service=WFS&
     request=GetCapabilities
 
-Gebruik EPSG:4326 voor lat/long-coordinaten
-===========================================
-Update, met een tip van Edward MacGillavry (Webmapper): Voeg voor GeoJSON ook toe dat je data wilt in WGS84, met de volgende parameter: *srsName=EPSG:4326*. De meeste software gaat namelijk uit van lat/long coordinaten in WGS84 in GeoJSON.
+****************************
+WFS - coördinaten in lat/lng
+****************************
+
+Tip van Edward MacGillavry (Webmapper): voeg ``srsName=EPSG:4326`` parameter aan je WFS request toe om de coördinaten naar lat/lng (WGS84) te transformeren.
