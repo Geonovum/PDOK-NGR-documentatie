@@ -38,6 +38,11 @@ In de browser: proj4js
 In de terminal: ogr2ogr
 =======================
 
+ogr2ogr is een command line utility die een groot aantal geodata formats kan lezen en schrijven. Omzetten van coordinaten in het Nederlandse coordinatenstelsel naar WGS84 gaat als volgt 
+
+::
+
+    ogr2ogr -f GeoJSON target.geojson source_RD.geojson -s_src EPSG:28992 -t_srs EPSG:4326
 
 ******************
 WFS 2.0 pagination
