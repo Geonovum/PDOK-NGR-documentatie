@@ -10,7 +10,18 @@ Leaflet
 WMS
 ===
 
-TODO
+.. code-block:: javascript
+
+	var map = L.map('map').setView([52, 5.3], 7);
+
+  	var leefbaro = L.tileLayer.wms("https://services.geodan.nl/public/data/ows/MBIZ4280LEEF/org/wms/MBIZ4280LEEF/wms", {
+  	    layers: 'schaalafhankelijke_leefbaarheidskaart',
+  	    format:'image/png',
+  	    transparent: true
+  	});
+
+  	leefbaro.addTo(map);  
+
 
 WFS
 ===
