@@ -2,6 +2,22 @@
 Handleidingen
 #############
 
+**************************************
+Geocoderen - van adres naar cöordinaat
+**************************************
+
+Op de desktop: QGIS
+===================
+
+De PDOK BAG Geocoder plugin voor QGIS is zet adressen om naar coordinaten op de kaart. De plugin leest een CSV bestand in bijv. adressen.csv en geeft je een geogerefereerd Shapefile terug (adressen.shp). De plugin spreekt de `PDOK Geocoder <https://www.pdok.nl/nl/service/openls-bag-geocodeerservice>`_ aan.
+
+.. image:: images/qgis-geocoder.png
+    :align: center
+
+Klein nadeeltje van de PDOK Geocoder is dat ie coordinaten in het Nederlandse coordinatenstelsel retourneert. CartoDB, Mapbox, Google Maps, etc. verwachten coordinaten in lat/lng. In :ref:`coord-trans` lees je hoe je coördinaten kan transformeren in o.a. QGIS.
+
+.. _coord-trans:
+
 *************************
 Coördinatentransformaties
 *************************
