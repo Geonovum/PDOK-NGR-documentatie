@@ -2,25 +2,55 @@
 Handleidingen
 #############
 
+Hoe zet je adressen om naar coördinaten? Hoe maak je Nederlandse geodata geschikt om te plotten in bijv. Leaflet of CartoDB? Hoe download je grote hoeveelheden data uit een WFS endpoint? 
+
 **************************************
-Geocoderen - van adres naar cöordinaat
+Geocoderen - van adres naar coördinaat
 **************************************
+
+Het omzetten van adressen naar geografische cöordinaten heet `geocoderen <https://en.wikipedia.org/wiki/Geocoding>`_. Gebruik QGIS om eenmalig kleine datasets te geocoderen; gebruik een van de vele APIs als je grotere datasets hebt of regelmatig moet geocoderen. 
 
 Op de desktop: QGIS
 ===================
 
-De PDOK BAG Geocoder plugin voor QGIS is zet adressen om naar coordinaten op de kaart. De plugin leest een CSV bestand in bijv. adressen.csv en geeft je een geogerefereerd Shapefile terug (adressen.shp). De plugin spreekt de `PDOK Geocoder <https://www.pdok.nl/nl/service/openls-bag-geocodeerservice>`_ aan.
+De PDOK BAG Geocoder plugin voor QGIS is zet adressen om naar coördinaten op de kaart. De plugin leest een CSV bestand in bijv. adressen.csv en geeft je een geogerefereerd Shapefile terug (adressen.shp). De plugin spreekt de `PDOK Geocoder <https://www.pdok.nl/nl/service/openls-bag-geocodeerservice>`_ aan.
 
 .. image:: images/qgis-geocoder.png
     :align: center
 
 Klein nadeeltje van de PDOK Geocoder is dat ie coordinaten in het Nederlandse coordinatenstelsel retourneert. CartoDB, Mapbox, Google Maps, etc. verwachten coordinaten in lat/lng. In :ref:`coord-trans` lees je hoe je coördinaten kan transformeren in o.a. QGIS.
 
+Via een API
+===========
+
+Nederland telt een aantal Geocodeer APIs waarmee je (betaald) adressen kan geocoderen. 
+
+- `PDOK Geocoder <https://www.pdok.nl/nl/service/openls-bag-geocodeerservice>`_
+- `Postcode API <http://www.postcodeapi.nu/>`_ van `Apiwise <http://www.apiwise.nl/>`_
+- `Overheid.io <https://overheid.io/documentatie/bag>`_ 
+
+Op http://openaddresses.io/ vindt je geodata waarmee je je eigen geocodeer API kan bouwen. 
+
 .. _coord-trans:
 
 *************************
 Coördinatentransformaties
 *************************
+
+Nederlandse geodata gebruiken het `Rijksdriehoekscoördinatenstelsel <https://nl.wikipedia.org/wiki/Rijksdriehoeksco%C3%B6rdinaten>`_, ook wel bekend als ``Amersfoort / RD New``. RD-coördinaten worden niet (out-of-the-box) door Google Maps, Mapbox, CartoDB, e.a. ondersteund. Deze diensten gebruiken de `WGS84 / Pseudo-Mercator <https://en.wikipedia.org/wiki/Web_Mercator>`_ projectie. Om Nederlandse data in bijv. Mapbox te visualiseren moet je de RD-coördinaten transformeren naar de Pseudo-Mercator projectie. 
+
+Op `mapschool.io <http://mapschool.io/>`_ lees je meer over coordinatenstelsels.
+
+Het transformeren van coördinaten kan in de desktop met :ref:`QGIS <coord-trans-qgis>`, in de browser met :ref:`proj4js <coord-trans-proj4js>` en in de *command line* met :ref:`ogr2ogr <coord-trans-ogr2ogr>`. Om deze tools te gebruiken moet je de EPSG (European Petroleum Survey Group) codes van de coordinatenstelsels weten waartussen je wil transformeren. Deze vindt je op `epsg.io <http://epsg.io/>`_:
+
+- ``Amersfoort / RD New`` heeft `EPSG code 28992 <http://epsg.io/28992>`_
+- ``Pseudo-Mercator`` is bekend als `EPSG:3857 <http://epsg.io/3857>`_
+
+**Let op**: Hoewel ``Pseudo-Mercator`` meter als eenheid heeft, gebruiken Google Maps, Mapbox, CartoDB e.a. coördinaten om features op de kaart te tekenen. Hoe zit dat en hoe ga je van RD in meters naar Pseudo-Mercator in graden?
+
+TODO 
+
+.. _coord-trans-qgis:
 
 Op de desktop: QGIS
 ===================
@@ -33,6 +63,8 @@ Op de desktop: QGIS
 
 .. image:: images/qgis-vector-save.png
     :align: center
+
+.. _coord-trans-proj4js:
 
 In de browser: proj4js
 ======================
@@ -50,6 +82,7 @@ In de browser: proj4js
     var transformed = proj4(RD,WGS84,[0,0]);
     // Array [ 3.3135577051498664, 47.974765849805124 ]
     
+.. _coord-trans-ogr2ogr:
 
 In de terminal: ogr2ogr
 =======================
