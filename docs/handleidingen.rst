@@ -29,7 +29,7 @@ Nederland telt een aantal Geocodeer APIs waarmee je (betaald) adressen kan geoco
 - `Postcode API <http://www.postcodeapi.nu/>`_ van `Apiwise <http://www.apiwise.nl/>`_
 - `Overheid.io <https://overheid.io/documentatie/bag>`_ 
 
-Op http://openaddresses.io/ vindt je geodata waarmee je je eigen geocodeer API kan bouwen. 
+Op http://openaddresses.io/ vindt je geodata waarmee je je eigen geocodeer (API) kan bouwen. 
 
 .. _coord-trans:
 
@@ -37,18 +37,15 @@ Op http://openaddresses.io/ vindt je geodata waarmee je je eigen geocodeer API k
 Coördinatentransformaties
 *************************
 
-Nederlandse geodata gebruiken het `Rijksdriehoekscoördinatenstelsel <https://nl.wikipedia.org/wiki/Rijksdriehoeksco%C3%B6rdinaten>`_, ook wel bekend als ``Amersfoort / RD New``. RD-coördinaten worden niet (out-of-the-box) door Google Maps, Mapbox, CartoDB, e.a. ondersteund. Deze diensten gebruiken de `WGS84 / Pseudo-Mercator <https://en.wikipedia.org/wiki/Web_Mercator>`_ projectie. Om Nederlandse data in bijv. Mapbox te visualiseren moet je de RD-coördinaten transformeren naar de Pseudo-Mercator projectie. 
+Nederlandse geodata gebruiken het `Rijksdriehoekscoördinatenstelsel <https://nl.wikipedia.org/wiki/Rijksdriehoeksco%C3%B6rdinaten>`_, ook wel bekend als ``Amersfoort / RD New``. RD-coördinaten worden niet (out-of-the-box) door Google Maps, Mapbox, CartoDB, e.a. ondersteund. Deze diensten gebruiken de `WGS84 / Pseudo-Mercator <https://en.wikipedia.org/wiki/Web_Mercator>`_ projectie. Hoewel ``Pseudo-Mercator`` meter [m] als eenheid heeft, gebruiken Google Maps, Mapbox, CartoDB, e.a. *lengte- en breedtegraden* als coördinaten voor vector features. Deze lengte- en breedtegraden duiden een plek aan op de aarde zoals benaderd door de WGS84 ellipsoïde. Om Nederlandse vector data in bijv. Mapbox te visualiseren moet je RD-coördinaten daarom naar WGS84 transformeren i.p.v. Pseudo-Mercator. **Let op**: dit geldt niet voor rasters. 
 
-Op `mapschool.io <http://mapschool.io/>`_ lees je meer over coordinatenstelsels.
-
-Het transformeren van coördinaten kan in de desktop met :ref:`QGIS <coord-trans-qgis>`, in de browser met :ref:`proj4js <coord-trans-proj4js>` en in de *command line* met :ref:`ogr2ogr <coord-trans-ogr2ogr>`. Om deze tools te gebruiken moet je de EPSG (European Petroleum Survey Group) codes van de coordinatenstelsels weten waartussen je wil transformeren. Deze vindt je op `epsg.io <http://epsg.io/>`_:
+Het transformeren van coördinaten kan in de desktop met :ref:`QGIS <coord-trans-qgis>`, in de browser met :ref:`proj4js <coord-trans-proj4js>` en in de *command line* met :ref:`ogr2ogr <coord-trans-ogr2ogr>`. Om deze tools te gebruiken moet je de EPSG (European Petroleum Survey Group) codes van de coordinatenstelsels weten waartussen je wilt transformeren. Deze vindt je op `epsg.io <http://epsg.io/>`_:
 
 - ``Amersfoort / RD New`` heeft `EPSG code 28992 <http://epsg.io/28992>`_
-- ``Pseudo-Mercator`` is bekend als `EPSG:3857 <http://epsg.io/3857>`_
+- ``Pseudo-Mercator`` heeft `EPSG code 3857 <http://epsg.io/3857>`_
+- ``WGS84`` heeft `EPSG code 4326 <http://epsg.io/4326>`_
 
-**Let op**: Hoewel ``Pseudo-Mercator`` meter als eenheid heeft, gebruiken Google Maps, Mapbox, CartoDB e.a. coördinaten om features op de kaart te tekenen. Hoe zit dat en hoe ga je van RD in meters naar Pseudo-Mercator in graden?
-
-TODO 
+Op `mapschool.io <http://mapschool.io/>`_ lees je meer over coördinatenstelsels en bolcoördinaten.
 
 .. _coord-trans-qgis:
 
