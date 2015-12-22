@@ -3,7 +3,7 @@ Geodata downloaden
 ##################
 
 *******************
-In de desktop: QGIS
+Op de desktop: QGIS
 *******************
 
 Ga als volgt te werk om een deel van de BAG in QGIS te laden en lokaal in een ander coordinatenstelsel op te slaan.
@@ -18,7 +18,7 @@ Ga als volgt te werk om een deel van de BAG in QGIS te laden en lokaal in een an
 8. Klik met de rechtermuisknop op ``bag:panden`` en selecteer ``Save As..``
 9. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
 10. Klik op de ``Browse`` knop en geef aan waar het bestand opgeslagen moet worden
-11. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coordinaten naar ``lat/lng`` te transformeren
+11. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coordinaten naar ``lat/lng`` te transformeren. Zie :ref:`coord_trans` voor meer informatie.
 12. Klik op ``OK``
 
 .. image:: images/qgis-vector-save.png
