@@ -313,11 +313,128 @@ De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bep
 Web Map Tile Services (WMTS)
 ****************************
 
-Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik. De WMTS operaties zijn vergelijkbaar met de overige OGC diensten, echter het *Capabilities* document is uitgebreid met het gebruikte grid (per projectie). 
+Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik. De belangrijkste WMTS GET requests zijn
+
+- **GetCapabilities**: retourneert de *Capabilities* document die de beschikbare kaartlagen en de beschikbare/gebruikte grids (per projectie) beschrijft 
+- **GetTile**: retourneert een kaarttegel als PNG/JPG
 
 Zie de `WMTS speficitatie <http://www.opengeospatial.org/standards/wmts>`_ voor meer informatie. 
 
-Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn (`PDF <(http://www.geonovum.nl/sites/default/files/Nederlandse_richtlijn_tiling_-_versie_1.0.pdf>`_) voor RD_New (EPGS:28992) vastgesteld.
+Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn [`PDF <http://www.geonovum.nl/sites/default/files/nederlandse_richtlijn_tiling_-_versie_1.1.pdf>`_] voor vastgesteld.
+
+GetCapabilities
+===============
+
+De GetCapabilities request haalt de *Capabilities* document van een WMTS endpoint op.
+
+::
+
+    http://geodata.nationaalgeoregister.nl/tiles/service/wmts?REQUEST=GetCapabilities
+
+.. code-block:: xml
+    :linenos:
+    :emphasize-lines: 12, 21, 22, 24, 27, 35
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <Capabilities xmlns="http://www.opengis.net/wmts/1.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd" version="1.0.0">
+        <ows:ServiceIdentification>...</ows:ServiceIdentification>
+        <ows:ServiceProvider>...</ows:ServiceProvider>
+        <ows:OperationsMetadata>
+            <ows:Operation name="GetCapabilities">...</ows:Operation>
+            <ows:Operation name="GetTile">...</ows:Operation>
+            <ows:Operation name="GetFeatureInfo">...</ows:Operation>
+        </ows:OperationsMetadata>
+        <Contents>
+            <Layer>
+                <ows:Title>brtachtergrondkaart</ows:Title>
+                <ows:WGS84BoundingBox>
+                    <ows:LowerCorner>-1.65729160235431 48.0405018704265</ows:LowerCorner>
+                    <ows:UpperCorner>11.2902578747914 55.9136415748388</ows:UpperCorner>
+                </ows:WGS84BoundingBox>
+                <ows:Identifier>brtachtergrondkaart</ows:Identifier>
+                <Style isDefault="true">
+                    <ows:Identifier />
+                </Style>
+                <Format>image/png</Format>
+                <Format>image/png8</Format>
+                <TileMatrixSetLink>
+                    <TileMatrixSet>EPSG:25831:RWS</TileMatrixSet>
+                </TileMatrixSetLink>
+                <TileMatrixSetLink>
+                    <TileMatrixSet>EPSG:28992</TileMatrixSet>
+                </TileMatrixSetLink>
+            </Layer>
+            <Layer>...</Layer>
+            ...
+            <TileMatrixSet>
+                <ows:Identifier>EPSG:28992</ows:Identifier>
+                <ows:SupportedCRS>urn:ogc:def:crs:EPSG::28992</ows:SupportedCRS>
+                <TileMatrix>
+                    <ows:Identifier>EPSG:28992:0</ows:Identifier>
+                    <ScaleDenominator>1.2288E7</ScaleDenominator>
+                    <TopLeftCorner>-285401.92 903402.0</TopLeftCorner>
+                    <TileWidth>256</TileWidth>
+                    <TileHeight>256</TileHeight>
+                    <MatrixWidth>1</MatrixWidth>
+                    <MatrixHeight>1</MatrixHeight>
+                </TileMatrix>
+                <TileMatrix>...</TileMatrix>
+                ...
+            </TileMatrixSet>
+            <TileMatrixSet>...</TileMatrixSet>
+            ...
+        </Contents>
+        <ServiceMetadataURL xlink:href="http://geodata.nationaalgeoregister.nl/tiles/service/wmts?REQUEST=getcapabilities&amp;VERSION=1.0.0" />
+    </Capabilities>
+
+De ``<Contents>`` element (lijn 10) beschrijft de beschikbare kaartlagen. Elk laag heeft een titel (lijn 12), is beschikbaar in een of meerdere formaten (``<Format>`` element op lijn 21 en 22) en in een of meerdere grids (``<TileMatrixSetLink>`` element op lijn 24 en 27). Een grid bestaat uit meerdere ``<TileMatrix>`` elementen c.q. 'zoomniveaus', zie lijn 35. 
+
+GetTile
+=======
+
+De *GetTile* request haalt een kaartbeeld op. De ``TIlEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``tilerow`` parameter is equivalent aan het y-coordinaat en neemt in waarde af narmate ``y`` groter wordt. ``tilecol`` is equivalent aan het x-coordinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``tilematrix`` parameter geeft het zoomniveau weer. Onderstaande request haalt de eerste WMTS tegel op. 
+
+::
+
+   http://geodata.nationaalgeoregister.nl/wmts/?
+   SERVICE=WMTS
+   &REQUEST=GetTile
+   &VERSION=1.0.0
+   &LAYER=brtachtergrondkaart
+   &STYLE=default
+   &TILEMATRIXSET=EPSG:28992
+   &TILEMATRIX=EPSG:28992:0
+   &TILEROW=0
+   &TILECOL=0
+   &FORMAT=image/png8
+
+Het resultaat is een overzicht van Nederland. 
+
+.. image:: images/wmts0-0-0.png
+    :align: center
+    :width: 256
+
+De kaartafbeelding op (row,col) = (4,3) op het vierde zoomniveau laat de omgeving van Dordrecht zien.
+
+::
+
+   http://geodata.nationaalgeoregister.nl/wmts/?
+   SERVICE=WMTS
+   &REQUEST=GetTile
+   &VERSION=1.0.0
+   &LAYER=brtachtergrondkaart
+   &STYLE=default
+   &TILEMATRIXSET=EPSG:28992
+   &TILEMATRIX=EPSG:28992:0
+   &TILEROW=0
+   &TILECOL=0
+   &FORMAT=image/png8
+
+.. image:: images/wmts3-3-4.png
+    :align: center
+    :width: 256
+
+WMTS wordt out-of-the-box door QGIS en OpenLayers ondersteund.
 
 .. _TMS
 
@@ -350,7 +467,7 @@ De TMS *root resource* is de *Capabilities* document die de beschikbare kaartlag
         </TileMaps>
     </TileMapService>
 
-Elke kaart wordt door een ``<TileMap>`` element beschreven. Zo is de *Capabilities* document van bijv. de BRT Achtergrondkaart te vinden op https://www.pdok.nl/nl/service/tms/1.0.0/brtachtergrondkaart@EPSG28992@png. Hierin worden o.a. het bereik van de laag en de beschikbare zoomniveaus beschreven.
+Elke kaart wordt door een ``<TileMap>`` element beschreven. Zo is bijv. de *Capabilities* document van de BRT Achtergrondkaart te vinden op https://www.pdok.nl/nl/service/tms/1.0.0/brtachtergrondkaart@EPSG28992@png. Hierin worden o.a. het bereik van de laag en de beschikbare zoomniveaus beschreven.
 
 .. code-block:: xml
 
@@ -370,15 +487,15 @@ Elke kaart wordt door een ``<TileMap>`` element beschreven. Zo is de *Capabiliti
 
 De eerste afbeelding van de BRT Achtergrondkaart bevindt zich op (z,x,y) = (0,0,0). De bijbehorende URL is https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart@EPSG:28992@png8/0/0/0.png hetgeen een overzicht van Nederland geeft.
 
-.. image:: images/brt0-0-0.png
+.. image:: images/tms0-0-0.png
     :align: center
 
 De kaartafbeelding op (x,y) = (3,3) van de 4de zoomlevel is te vinden op https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart@EPSG:28992@png8/3/3/3.png en toont Dordrecht en omgeving.
 
-.. image:: images/brt3-3-3.png
+.. image:: images/tms3-3-3.png
     :align: center
 
-Hoewel TMS geen OGC standaard is wordt out-of-the-box door Leaflet en OpenLayers ondersteund. Zie :ref:`webapps` voor code voorbeelden.
+Hoewel TMS geen OGC standaard is wordt het out-of-the-box door Leaflet en OpenLayers ondersteund. Zie :ref:`webapps` voor code voorbeelden.
     
 .. _OGC-CSW:
 
