@@ -104,7 +104,20 @@ OpenLayers 3
 WMS
 ===
 
-TODO
+.. code-block:: javascript
+
+    var leefbarheid = new ol.layer.Tile({
+        title: "Leefbaarheidskaart",
+        visible: false,
+        opacity: 0.7,
+        source: new ol.source.TileWMS({
+            url: "https://services.geodan.nl/public/data/ows/MBIZ4280LEEF/org/wms/MBIZ4280LEEF/wms",
+            params: {
+                "LAYERS": "schaalafhankelijke_leefbaarheidskaart",
+                "SRS": "EPSG:3857"
+            }
+        })
+    });
 
 WFS
 ===
@@ -117,7 +130,7 @@ TMS
 .. code-block:: javascript
 	:linenos:
 
-	va extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
+	var extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
 	var resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
 	var projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
 
@@ -171,21 +184,17 @@ CartoDB
 WMS
 ===
 
-TODO
+CartoDB ondersteunt sinds kort het inlezen van WMS/WMTS endpoints. Deze hoeven niet in Pseudo-Mercator beschikbaard te zijn, CartoDB converteert ze indien nodig. Hierbij maken zij gebruik van MapProxy. 
 
-TMS
-===
+Ga als volgt te werk om een Nederlandse WMS/WMTS kaartlaag toe te voegen
 
-TODO
+1. Open een bestaande kaart of maak een nieuwe
+2. Klik op ``Change basemap`` -> ``Yours +``
+3. Kies ``WMS/WMTS`` en plak een geldige WMS/WMTS URL in het tekstveld bijv. die van de PDOK Luchtforo: ``https://geodata1.nationaalgeoregister.nl/luchtfoto/wms``
+4. Klik op ``Get Layers``, vindt de kaartlaag die je wilt toevoegen en klik op ``Add This``
 
-********
-Flamingo
-********
+WMTS
+====
 
-TMS
-===
+Helaas werkt het inlezen van WMTS endpoints, bijv de BRT Achtergrondkaart, **niet**. 
 
-Configuration parameters for the geo content management solution `Flamingo 4 <http://flamingo.b3p.nl/trac/>`_.
-
-.. image:: https://f.cloud.github.com/assets/1814164/350385/7707eab6-a01a-11e2-9d07-0c27a27ec11a.png
-    :width: 800px
