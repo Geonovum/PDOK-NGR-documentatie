@@ -313,14 +313,22 @@ De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bep
 Web Map Tile Services (WMTS)
 ****************************
 
-Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. De tegels worden al dan niet gecached aan serverzijde voor hergebruik. De belangrijkste WMTS GET requests zijn
+Web Map Tile Services zijn vergelijkbaar met WMS, echter in dit geval is het kaartbeeld opgeknipt in tegels volgens een gedefinieerd grid. 
 
-- **GetCapabilities**: retourneert de *Capabilities* document die de beschikbare kaartlagen en de beschikbare/gebruikte grids (per projectie) beschrijft 
+.. figure:: images/tile-pyramid.png
+    :width: 400
+    :align: center
+
+    Bron: `http://webglearth.com <http://data.webglearth.com/doc/webgl-earthch1.html>`_
+
+De tegels worden al dan niet gecached aan serverzijde voor hergebruik. Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn [`PDF <http://www.geonovum.nl/sites/default/files/nederlandse_richtlijn_tiling_-_versie_1.1.pdf>`_] voor vastgesteld.
+
+De belangrijkste WMTS GET requests zijn
+
+- **GetCapabilities**: retourneert de *Capabilities* document die de beschikbare kaartlagen en grids (per projectie) beschrijft 
 - **GetTile**: retourneert een kaarttegel als PNG/JPG
 
 Zie de `WMTS speficitatie <http://www.opengeospatial.org/standards/wmts>`_ voor meer informatie. 
-
-Geonovum heeft ten behoeve van interoperabiliteit binnen Nederland een tiling richtlijn [`PDF <http://www.geonovum.nl/sites/default/files/nederlandse_richtlijn_tiling_-_versie_1.1.pdf>`_] voor vastgesteld.
 
 GetCapabilities
 ===============
@@ -329,7 +337,10 @@ De GetCapabilities request haalt de *Capabilities* document van een WMTS endpoin
 
 ::
 
-    http://geodata.nationaalgeoregister.nl/tiles/service/wmts?REQUEST=GetCapabilities
+    http://geodata.nationaalgeoregister.nl/tiles/service/wmts?
+    REQUEST=GetCapabilities
+
+De ``<Contents>`` element (lijn 10) beschrijft de beschikbare kaartlagen. Elk laag heeft een titel (lijn 12), is beschikbaar in een of meerdere formaten (``<Format>`` element op lijn 21 en 22) en in een of meerdere grids (``<TileMatrixSetLink>`` element op lijn 24 en 27). Een grid bestaat uit meerdere ``<TileMatrix>`` elementen c.q. 'zoomniveaus', zie lijn 35.
 
 .. code-block:: xml
     :linenos:
@@ -387,16 +398,14 @@ De GetCapabilities request haalt de *Capabilities* document van een WMTS endpoin
         <ServiceMetadataURL xlink:href="http://geodata.nationaalgeoregister.nl/tiles/service/wmts?REQUEST=getcapabilities&amp;VERSION=1.0.0" />
     </Capabilities>
 
-De ``<Contents>`` element (lijn 10) beschrijft de beschikbare kaartlagen. Elk laag heeft een titel (lijn 12), is beschikbaar in een of meerdere formaten (``<Format>`` element op lijn 21 en 22) en in een of meerdere grids (``<TileMatrixSetLink>`` element op lijn 24 en 27). Een grid bestaat uit meerdere ``<TileMatrix>`` elementen c.q. 'zoomniveaus', zie lijn 35. 
-
 GetTile
 =======
 
-De *GetTile* request haalt een kaartbeeld op. De ``TIlEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``tilerow`` parameter is equivalent aan het y-coordinaat en neemt in waarde af narmate ``y`` groter wordt. ``tilecol`` is equivalent aan het x-coordinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``tilematrix`` parameter geeft het zoomniveau weer. Onderstaande request haalt de eerste WMTS tegel op. 
+De *GetTile* request haalt een kaartbeeld op. 
 
 ::
 
-   http://geodata.nationaalgeoregister.nl/wmts/?
+   http://geodata.nationaalgeoregister.nl/wmts?
    SERVICE=WMTS
    &REQUEST=GetTile
    &VERSION=1.0.0
@@ -408,13 +417,13 @@ De *GetTile* request haalt een kaartbeeld op. De ``TIlEROW`` en ``TILECOL`` para
    &TILECOL=0
    &FORMAT=image/png8
 
-Het resultaat is een overzicht van Nederland. 
+De ``TIlEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``TILEROW`` parameter is equivalent aan het y-coördinaat en neemt in waarde af naarmate ``y`` groter wordt. ``TILECOL`` parameter is equivalent aan het x-coördinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``TILEMATRIX`` parameter geeft het zoomniveau weer. Bovenstaand request `haalt de bovenste tegel <http://geodata.nationaalgeoregister.nl/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:0&TILEROW=0&TILECOL=0&FORMAT=image/png8>`_ van de tegelpyramide op.
 
 .. image:: images/wmts0-0-0.png
     :align: center
     :width: 256
 
-De kaartafbeelding op (row,col) = (4,3) op het vierde zoomniveau laat de omgeving van Dordrecht zien.
+De kaartafbeelding op (row,col) = (4,3) op het vierde zoomniveau `laat de omgeving van Dordrecht zien <http://geodata.nationaalgeoregister.nl/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:3&TILEROW=4&TILECOL=3&FORMAT=image/png8>`_.
 
 ::
 
@@ -425,9 +434,9 @@ De kaartafbeelding op (row,col) = (4,3) op het vierde zoomniveau laat de omgevin
    &LAYER=brtachtergrondkaart
    &STYLE=default
    &TILEMATRIXSET=EPSG:28992
-   &TILEMATRIX=EPSG:28992:0
-   &TILEROW=0
-   &TILECOL=0
+   &TILEMATRIX=EPSG:28992:3
+   &TILEROW=4
+   &TILECOL=3
    &FORMAT=image/png8
 
 .. image:: images/wmts3-3-4.png
