@@ -21,7 +21,7 @@ Inhoudsopgave
 
    quickstart
    services
-   downloaden
    publiceren
+   downloaden
    handleidingen
    data
