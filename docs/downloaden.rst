@@ -2,9 +2,12 @@
 Geodata downloaden
 ##################
 
+In :ref:`webapps` lees je hoe je de geo APIs in Leaflet en OpenStreetMap kan consumeren. Vaak is het ehcter noodzakelijk om een dataset in zijn geheel te downloaden zodat je het met andere gegevens kan combineren en/of een landsdekkende analyse kan uitvoeren.
+
 *******************
 Op de desktop: QGIS
 *******************
+QGIS stelt je in staat om WFS, WMS en WMTS services te visualiseren, naar andere coordinatenstelsels te transformeren en lokaal op te slaan in een groot aantal bestandstypes. 
 
 Ga als volgt te werk om een deel van de BAG in QGIS te laden en lokaal in een ander coordinatenstelsel op te slaan.
 
@@ -40,4 +43,4 @@ Getting the footprints of the first 15000 BAG buildings from the WFS endpoint as
     WFS:"http://geodata.nationaalgeoregister.nl/bagviewer/wfs"
     bagviewer:pand
 
-You can use :ref:`ogrinfo <ogrinfo>` to discover which layers are contained in a WFS endpoint.
+You can use :ref:`ogrinfo <ogrinfo>` to discover which layers are contained in a WFS endpoint, see the :ref:`ogr2ogr tutorial <ogr2ogr tutorial>`_ for more information. 
