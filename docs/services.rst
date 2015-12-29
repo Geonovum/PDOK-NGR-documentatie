@@ -1,5 +1,7 @@
 .. _CSW specificatie: http://www.opengeospatial.org/standards/cat
 
+.. _services:
+
 ####################
 Geo services en APIs
 ####################
@@ -30,6 +32,8 @@ In de praktijk worden de services zelden direct bevraagd. Het is gebruikelijker 
 
 W*S services en APIs worden ook aangeboden door `data.overheid.nl <https://data.overheid.nl>`_, `Atlas Leefomgeving <http://www.atlasleefomgeving.nl/>`_, `Geoportaal Waterschappen <http://waterschapservices.webgispublisher.nl/Choosemap.aspx>`_, `Ruimtelijkeplannen.nl <http://www.ruimtelijkeplannen.nl/web-roo/roo/?>`_ e.a.
 
+De `GeoServer documentatie <http://docs.geoserver.org/latest/en/user/services/index.html>`_ geeft een uitgebreide en gedetailleerde beschrijving van de OGC geo services en APIs.
+
 
 .. _wfs:
 .. _OGC-WFS:
@@ -44,7 +48,7 @@ De Web Feature Service is een webservice voor het opvragen van geografische vect
 - **DescribeFeatureType**: haalt de beschrijving op van een of meerdere objecten
 - **GetFeature**: haalt een of meerdere geometrieeen en de bijbehorende attributen op. Deze operatie kan gecombineerd worden met ruimtelijke of attribuut filters en een output-formaat keuze (afhankelijk van implementatie: bijv. GML, SHP, JSON, KML, CSV)
 
-Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een volledige beschrijving van WFS.
+Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een volledige beschrijving van de WFS standaard. In de GeoServer `WFS documentatie <http://docs.geoserver.org/latest/en/user/services/wfs/index.html>`_ lees je in detail hoe je WFS endpoints kan bevragen. 
 
 GetCapabilities
 ===============
@@ -89,6 +93,7 @@ De functionaliteit van een WFS endpoint wordt beschreven in een *Capabilities* d
         <fes:Filter_Capabilities>...</fes:Filter_Capabilities>
     </wfs:WFS_Capabilities>
 
+Op de GeoServer `WFS GetCapabilities documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wfs/reference.html#getcapabilities>`_ lees je meer over de componenten van de *Capabilities* document. 
 
 GetFeature
 ==========
@@ -152,6 +157,8 @@ Met de GetFeature request is het mogelijk om geometrieen en attributen op te hal
         ]
     }
 
+Zie de GeoServer `WFS GetFeature documentatie <http://docs.geoserver.org/latest/en/user/services/wfs/reference.html#getfeature>`_ voor een volledige beschrijving van deze request.
+
 .. _wms:
 .. _OGC-WMS:
 .. _OGC_WMS-1.1.1-http-get-map:
@@ -174,7 +181,7 @@ WMS kent minimaal 3 operaties:
 - **GetMap**: retourneert een statisch afbeelding van een kaart
 - **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde plek op de kaart
 
-Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS.
+Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS. In de `GeoSever documentatie <http://docs.geoserver.org/latest/en/user/services/wms/index.html>`_ lees je hoe je WMS concreet kan bevragen.
 
 GetCapabilities
 ===============
@@ -241,6 +248,8 @@ De functionaliteit van een WMS endpoint wordt beschreven in een *Capabilities* d
     </Capability>
     </WMS_Capabilities>
     
+De GeoServer `WMS GetCapabilities documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getcapabilities>`_ beschrijft de verschillende componenten van de *Capabilities* document.
+
 GetMap
 ======
 
@@ -266,10 +275,12 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
     :width: 400
     :align: center
 
+Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getmap>`_ voor een volledig overzicht van deze request.
+
 GetFeatureInfo
 ==============
 
-De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bepaalde plek op de kaart.
+De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bepaalde plek op de kaart. 
 
 ::
 
@@ -306,6 +317,8 @@ De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bep
         ],
         "crs": null
     }
+
+Lees meer over de GetFeatureInfo request op de GeoServer `WMS GetFeatureInfo documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getfeatureinfo>`_.
 
 .. _OGC-WMTS:
 
