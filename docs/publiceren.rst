@@ -4,13 +4,22 @@
 Geodata in web apps
 ###################
 
+`Leaflet <http://leafletjs.com/>`_ en `OpenLayers <http://openlayers.org/>`_ maken het mogelijk om gegevens uit de :ref:`geo services en APIs <services>` te visualiseren op een kaart.
+
+Leaflets minimalistische insteek heeft in korte tijd veel gebruikers en ontwikkelaars aangetrokken die voor een groeiend plugins lijst zorgen. Het wordt door o.a. Mapbox en CartoDB gebruikt. 
+
+OpenLayers is een "`batteries included <http://openlayers.org/en/v3.12.1/examples/>`_" bibliotheek. Het heeft bijv. out-of-the-box ondersteuning voor WebGL, *touch input*, coordinatenstelsels e.a. OL wordt door o.a. PDOK Kaart en de Zwitserse geodata portaal gebruikt. 
 
 *******
 Leaflet
 *******
 
+Blurp: *Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps.*
+
 WMS
 ===
+
+Leaflet kan out-of-the-box WMS endpoints lezen. Gebruik de ``L.tileLayer.wms()`` functie als volgt.
 
 .. code-block:: javascript
 
@@ -27,6 +36,8 @@ WMS
 
 WFS
 ===
+
+Leaflet heeft geen ondersteuning voor WFS. De :ref:`GetFeature request <GetFeature>` kun je als volgt zelf opbouwen.  
 
 .. code-block:: javascript
 
@@ -65,8 +76,29 @@ WFS
 
 Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
 
+
+.. code-block:: javascript
+
+    var wfst = new L.WFST({
+        url: 'http://localhost:1027/geoserver/ows',
+        typeNS: 'bag',
+        typeName: 'pand',
+        geometryField: 'geometry',
+        crs: L.CRS.EPSG4326,
+        style: {
+            color: 'blue',
+            weight: 2
+        }
+    })
+    .addTo(map)
+    .once('load', function () {
+        map.fitBounds(wfst);
+    });
+
 TMS
 ===
+
+De Nederlandse TMS endpoints zijn enkel in de Rijksdriehoekstelsel beschikbaar. Gebruik de `Proj4Leaflet <http://kartena.github.io/Proj4Leaflet/>`_ plugin om deze in Leaflet te visualiseren. Zie onderstaande voorbeeld van `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_.
 
 .. code-block:: javascript
 	:linenos:
@@ -95,11 +127,11 @@ TMS
 	  zoom: 7
 	});
 
-Met dank aan `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_.
-
 ************
 OpenLayers 3
 ************
+
+Blurp: *A high-performance, feature-packed library for all your mapping needs.*
 
 WMS
 ===
@@ -122,10 +154,39 @@ WMS
 WFS
 ===
 
-TODO
+http://openlayers.org/en/v3.12.1/examples/vector-wfs.html
+
+.. code-block:: javascript
+
+    var vector = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            format: new ol.format.GeoJSON(),
+            url: function(extent, resolution, projection) {
+                return 'https://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&' +
+                'version=1.1.0&request=GetFeature&typename=bag:pand&' +
+                'outputFormat=application/json&srsname=EPSG:3857&' +
+                'bbox=' + extent.join(',') + ',EPSG:3857';
+            },
+            strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+                maxZoom: 20
+            }))
+        })
+    });
+
+    var map = new ol.Map({
+        layers: [vector],
+        target: document.getElementById('map'),
+        view: new ol.View({
+            center: [5, 50],
+            center: ol.proj.transform([4.470, 51.9334], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 18
+        })
+    });
 
 TMS
 ===
+
+
 
 .. code-block:: javascript
 	:linenos:
@@ -176,15 +237,14 @@ TMS
 
 Met dank aan `@6artvde <https://github.com/bartvde/PDOK-OpenLayers3>`_.
 
-
 *******
 CartoDB
 *******
 
-WMS
+WMS`
 ===
 
-CartoDB ondersteunt sinds kort het inlezen van WMS/WMTS endpoints. Deze hoeven niet in Pseudo-Mercator beschikbaard te zijn, CartoDB converteert ze indien nodig. Hierbij maken zij gebruik van MapProxy. 
+CartoDB ondersteunt sinds kort het inlezen van WMS endpoints. Deze hoeven niet in Pseudo-Mercator beschikbaard te zijn, CartoDB converteert ze indien nodig. Hierbij maken zij gebruik van MapProxy. 
 
 Ga als volgt te werk om een Nederlandse WMS/WMTS kaartlaag toe te voegen
 
