@@ -50,6 +50,8 @@ De Web Feature Service is een webservice voor het opvragen van geografische vect
 
 Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een volledige beschrijving van de WFS standaard. In de GeoServer `WFS documentatie <http://docs.geoserver.org/latest/en/user/services/wfs/index.html>`_ lees je in detail hoe je WFS endpoints kan bevragen. 
 
+In :ref:`webapps` lees je hoe je WFS in Leaflet en OpenLayers aanspreekt.
+
 GetCapabilities
 ===============
 
@@ -182,6 +184,8 @@ WMS kent minimaal 3 operaties:
 - **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde plek op de kaart
 
 Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS. In de `GeoSever documentatie <http://docs.geoserver.org/latest/en/user/services/wms/index.html>`_ lees je hoe je WMS concreet kan bevragen.
+
+In :ref:`webapps` lees je hoe je WMS in Leaflet en OpenLayers aanspreekt.
 
 GetCapabilities
 ===============
