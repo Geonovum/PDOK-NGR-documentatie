@@ -6,15 +6,13 @@ Geodata in web apps
 
 `Leaflet <http://leafletjs.com/>`_ en `OpenLayers <http://openlayers.org/>`_ maken het mogelijk om gegevens uit de :ref:`geo services en APIs <services>` te visualiseren op een kaart.
 
-Leaflets minimalistische insteek heeft in korte tijd veel gebruikers en ontwikkelaars aangetrokken die voor een groeiend plugins lijst zorgen. Het wordt door o.a. Mapbox en CartoDB gebruikt. 
-
-OpenLayers is een "`batteries included <http://openlayers.org/en/v3.12.1/examples/>`_" bibliotheek. Het heeft bijv. out-of-the-box ondersteuning voor WebGL, *touch input*, coordinatenstelsels e.a. OL wordt door o.a. PDOK Kaart en de Zwitserse geodata portaal gebruikt. 
-
 *******
 Leaflet
 *******
 
-Blurp: *Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps.*
+*Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps.*
+
+Leaflets minimalistische insteek heeft in korte tijd veel gebruikers en ontwikkelaars aangetrokken die voor een `groeiend lijst van plugins <http://leafletjs.com/plugins.html>`_ zorgen. Leaflet wordt door o.a. Mapbox en CartoDB gebruikt. 
 
 WMS
 ===
@@ -23,21 +21,21 @@ Leaflet kan out-of-the-box WMS endpoints lezen. Gebruik de ``L.tileLayer.wms()``
 
 .. code-block:: javascript
 
-	var map = L.map('map').setView([52, 5.3], 7);
+    var map = L.map('map').setView([52, 5.3], 7);
 
-  	var leefbaro = L.tileLayer.wms("https://services.geodan.nl/public/data/ows/MBIZ4280LEEF/org/wms/MBIZ4280LEEF/wms", {
-  	    layers: 'schaalafhankelijke_leefbaarheidskaart',
-  	    format:'image/png',
-  	    transparent: true
-  	});
+    var leefbaro = L.tileLayer.wms("https://services.geodan.nl/public/data/ows/MBIZ4280LEEF/org/wms/MBIZ4280LEEF/wms", {
+        layers: 'schaalafhankelijke_leefbaarheidskaart',
+        format:'image/png',
+        transparent: true
+    });
 
-  	leefbaro.addTo(map);  
+    leefbaro.addTo(map);  
 
 
 WFS
 ===
 
-Leaflet heeft geen ondersteuning voor WFS. De :ref:`GetFeature request <GetFeature>` kun je als volgt zelf opbouwen.  
+Leaflet heeft geen ondersteuning voor WFS. De :ref:`GetFeature request <GetFeature>` kun je als volgt zelf opbouwen.
 
 .. code-block:: javascript
 
@@ -76,21 +74,21 @@ Leaflet heeft geen ondersteuning voor WFS. De :ref:`GetFeature request <GetFeatu
 
 Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
 
+Je kan ook een van de `WFS plugins <http://leafletjs.com/plugins.html>`_ gebruiken. De BAG met bijv. de `WFST <https://github.com/Flexberry/Leaflet-WFST>`_ plugin lezen gaat als volgt.
 
 .. code-block:: javascript
 
     var wfst = new L.WFST({
-        url: 'http://localhost:1027/geoserver/ows',
+        url: 'http://geodata.nationaalgeoregister.nl/bag/wfs',
         typeNS: 'bag',
         typeName: 'pand',
-        geometryField: 'geometry',
         crs: L.CRS.EPSG4326,
         style: {
             color: 'blue',
             weight: 2
         }
     })
-    .addTo(map)
+    .addTo(map) 
     .once('load', function () {
         map.fitBounds(wfst);
     });
@@ -98,40 +96,42 @@ Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documenta
 TMS
 ===
 
-De Nederlandse TMS endpoints zijn enkel in de Rijksdriehoekstelsel beschikbaar. Gebruik de `Proj4Leaflet <http://kartena.github.io/Proj4Leaflet/>`_ plugin om deze in Leaflet te visualiseren. Zie onderstaande voorbeeld van `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_.
+De Nederlandse TMS endpoints zijn enkel in de Rijksdriehoekstelsel beschikbaar. Gebruik de `Proj4Leaflet <http://kartena.github.io/Proj4Leaflet/>`_ plugin om deze in Leaflet te visualiseren. Zie onderstaande voorbeeld van `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_. In :ref:`coord-trans` lees je meer over coördinatentransformaties. 
 
 .. code-block:: javascript
-	:linenos:
+    :linenos:
 
-	// Resoluties (pixels per meter) van de zoomniveaus:
-	var res = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
+    // Resoluties (pixels per meter) van de zoomniveaus:
+    var res = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
 
-	// Juiste projectieparameters voor Rijksdriehoekstelsel (EPSG:28992):
-	var RD = L.CRS.proj4js('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs', new L.Transformation(1, 285401.920, -1, 903401.920));
-	RD.scale = function(zoom) {
-	    return 1 / res[zoom];
-	};
-	var map = new L.Map('map', {
-	  continuousWorld: true,
-	  crs: RD,
-	  layers: [
-	    new L.TileLayer('http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png', {
-	        tms: true,
-	        minZoom: 3,
-	        maxZoom: 13,
-	        attribution: 'Kaartgegevens: © <a href="http://www.cbs.nl">CBS</a>, <a href="http://www.kadaster.nl">Kadaster</a>, <a href="http://openstreetmap.org">OpenStreetMap</a><span class="printhide">-auteurs (<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>).</span>',
-	        continuousWorld: true
-	    })
-	  ],
-	  center: new L.LatLng(53.219231,6.57537),
-	  zoom: 7
-	});
+    // Juiste projectieparameters voor Rijksdriehoekstelsel (EPSG:28992):
+    var RD = L.CRS.proj4js('EPSG:28992', '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs', new L.Transformation(1, 285401.920, -1, 903401.920));
+    RD.scale = function(zoom) {
+        return 1 / res[zoom];
+    };
+    var map = new L.Map('map', {
+      continuousWorld: true,
+      crs: RD,
+      layers: [
+        new L.TileLayer('http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png', {
+            tms: true,
+            minZoom: 3,
+            maxZoom: 13,
+            attribution: 'Kaartgegevens: © <a href="http://www.cbs.nl">CBS</a>, <a href="http://www.kadaster.nl">Kadaster</a>, <a href="http://openstreetmap.org">OpenStreetMap</a><span class="printhide">-auteurs (<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>).</span>',
+            continuousWorld: true
+        })
+      ],
+      center: new L.LatLng(53.219231,6.57537),
+      zoom: 7
+    });
 
 ************
 OpenLayers 3
 ************
 
-Blurp: *A high-performance, feature-packed library for all your mapping needs.*
+*A high-performance, feature-packed library for all your mapping needs.*
+
+OpenLayers is een "`batteries included <http://openlayers.org/en/v3.12.1/examples/>`_" bibliotheek. Het heeft bijv. out-of-the-box ondersteuning voor WebGL, *touch input*, coordinatenstelsels e.a. OL wordt door o.a. `PDOK Kaart <http://kaart.pdok.nl/>`_ en de `Zwitserse geodata portaal <https://map.geo.admin.ch>`_ gebruikt. 
 
 WMS
 ===
@@ -189,51 +189,51 @@ TMS
 
 
 .. code-block:: javascript
-	:linenos:
+    :linenos:
 
-	var extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
-	var resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
-	var projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
+    var extent = [-285401.92,22598.08,595401.9199999999,903401.9199999999];
+    var resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420];
+    var projection = new ol.proj.Projection({code:'EPSG:28992', units:'m', extent: extent});
 
-	var url = 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/';
+    var url = 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/';
 
-	var tileUrlFunction = function(tileCoord, pixelRatio, projection) {
-	  var zxy = tileCoord;
-	  if (zxy[1] < 0 || zxy[2] < 0) {
-	    return "";
-	  }
-	  return url +
-	    zxy[0].toString()+'/'+ zxy[1].toString() +'/'+
-	    zxy[2].toString() +'.png';
-	};
+    var tileUrlFunction = function(tileCoord, pixelRatio, projection) {
+      var zxy = tileCoord;
+      if (zxy[1] < 0 || zxy[2] < 0) {
+        return "";
+      }
+      return url +
+        zxy[0].toString()+'/'+ zxy[1].toString() +'/'+
+        zxy[2].toString() +'.png';
+    };
 
-	var map = new ol.Map({
-	  target: 'map',
-	  layers:  [
-	    new ol.layer.Tile({
-	      source: new ol.source.TileImage({
-	        attributions: [
-	          new ol.Attribution({
-	            html: 'Kaartgegevens: © <a href="http://www.cbs.nl">CBS</a>, <a href="http://www.kadaster.nl">Kadaster</a>, <a href="http://openstreetmap.org">OpenStreetMap</a><span class="printhide">-auteurs (<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>).</span>'
-	          })
-	        ],
-	        projection: projection,
-	        tileGrid: new ol.tilegrid.TileGrid({
-	          origin: [-285401.92,22598.08],
-	          resolutions: resolutions
-	        }),
-	        tileUrlFunction: tileUrlFunction
-	      })
-	    })
-	  ],
-	  view: new ol.View({
-	    minZoom: 3,
-	    maxZoom: 13,
-	    projection: projection,
-	    center: [150000, 450000],
-	    zoom: 3
-	  })
-	});
+    var map = new ol.Map({
+      target: 'map',
+      layers:  [
+        new ol.layer.Tile({
+          source: new ol.source.TileImage({
+            attributions: [
+              new ol.Attribution({
+                html: 'Kaartgegevens: © <a href="http://www.cbs.nl">CBS</a>, <a href="http://www.kadaster.nl">Kadaster</a>, <a href="http://openstreetmap.org">OpenStreetMap</a><span class="printhide">-auteurs (<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>).</span>'
+              })
+            ],
+            projection: projection,
+            tileGrid: new ol.tilegrid.TileGrid({
+              origin: [-285401.92,22598.08],
+              resolutions: resolutions
+            }),
+            tileUrlFunction: tileUrlFunction
+          })
+        })
+      ],
+      view: new ol.View({
+        minZoom: 3,
+        maxZoom: 13,
+        projection: projection,
+        center: [150000, 450000],
+        zoom: 3
+      })
+    });
 
 Met dank aan `@6artvde <https://github.com/bartvde/PDOK-OpenLayers3>`_.
 
