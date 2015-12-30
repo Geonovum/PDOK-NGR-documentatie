@@ -136,6 +136,8 @@ OpenLayers is een "`batteries included <http://openlayers.org/en/v3.12.1/example
 WMS
 ===
 
+OpenLayers ondersteunt WMS out-of-the-box. De leefbaarheidskaart van de `Leefbarometer <http://www.leefbaarometer.nl/home.php>`_ bevraag je als volgt. 
+
 .. code-block:: javascript
 
     var leefbarheid = new ol.layer.Tile({
@@ -150,6 +152,8 @@ WMS
             }
         })
     });
+
+OpenLayers ondersteunt ook het ophalen van de achterliggende gegevens via de :ref:`WMS GetFeatureInfo <getfeatureinfo>` request, zie de `OpenLayers 3 voorbeeldenpagina <http://openlayers.org/en/v3.12.1/examples/>`_ voor meer informatie (zoek op WMS). 
 
 WFS
 ===
@@ -241,7 +245,7 @@ Met dank aan `@6artvde <https://github.com/bartvde/PDOK-OpenLayers3>`_.
 CartoDB
 *******
 
-WMS`
+WMS
 ===
 
 CartoDB ondersteunt sinds kort het inlezen van WMS endpoints. Deze hoeven niet in Pseudo-Mercator beschikbaard te zijn, CartoDB converteert ze indien nodig. Hierbij maken zij gebruik van MapProxy. 

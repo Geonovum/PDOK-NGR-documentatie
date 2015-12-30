@@ -279,7 +279,10 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
     :width: 400
     :align: center
 
-Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getmap>`_ voor een volledig overzicht van deze request.
+Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getmap>`_ voor een volledig overzicht van deze request.\
+
+
+.. _getfeatureinfo:
 
 GetFeatureInfo
 ==============
