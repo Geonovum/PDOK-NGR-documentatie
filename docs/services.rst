@@ -97,10 +97,12 @@ De functionaliteit van een WFS endpoint wordt beschreven in een *Capabilities* d
 
 Op de GeoServer `WFS GetCapabilities documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wfs/reference.html#getcapabilities>`_ lees je meer over de componenten van de *Capabilities* document. 
 
+.. _wfs-getfeature:
+
 GetFeature
 ==========
 
-Met de GetFeature request is het mogelijk om geometrieen en attributen op te halen. De volgende reuest haalt 100 gebouwen op uit de Basisregistratie Adressen en Gebouwen
+Met de GetFeature request is het mogelijk om geometrieën en attributen op te halen. De volgende reuest haalt 100 gebouwen op uit de Basisregistratie Adressen en Gebouwen
 
 :: 
 
@@ -186,6 +188,8 @@ WMS kent minimaal 3 operaties:
 Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS. In de `GeoSever documentatie <http://docs.geoserver.org/latest/en/user/services/wms/index.html>`_ lees je hoe je WMS concreet kan bevragen.
 
 In :ref:`webapps` lees je hoe je WMS in Leaflet en OpenLayers aanspreekt.
+
+.. _wms-getcapabilities:
 
 GetCapabilities
 ===============
@@ -287,7 +291,7 @@ Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/lates
 GetFeatureInfo
 ==============
 
-De *GetFeatureInfo* request haalt de attribuutgegevens van object(en) op een bepaalde plek op de kaart. 
+De *GetFeatureInfo* request haalt  de attribuutgegevens van object(en) op een bepaalde plek op de kaart.
 
 ::
 
