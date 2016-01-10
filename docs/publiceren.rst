@@ -4,7 +4,7 @@
 Geodata in web apps
 ###################
 
-`Leaflet <http://leafletjs.com/>`_ en `OpenLayers <http://openlayers.org/>`_ maken het mogelijk om gegevens uit de :ref:`geo services en APIs <services>` te visualiseren op een kaart.
+`Leaflet <http://leafletjs.com/>`_ en `OpenLayers <http://openlayers.org/>`_ maken het mogelijk om gegevens uit de :ref:`geo services en APIs <services>` te visualiseren op een interactieve kaart.
 
 *******
 Leaflet
@@ -12,12 +12,12 @@ Leaflet
 
 *Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps.*
 
-Leaflets minimalistische insteek heeft in korte tijd veel gebruikers en ontwikkelaars aangetrokken die voor een `groeiend lijst van plugins <http://leafletjs.com/plugins.html>`_ zorgen. Leaflet wordt door o.a. Mapbox en CartoDB gebruikt. 
+Leaflets minimalistische insteek heeft in korte tijd veel gebruikers en ontwikkelaars aangetrokken die voor een `groeiende lijst van plugins <http://leafletjs.com/plugins.html>`_ zorgen. Leaflet wordt door o.a. Mapbox en CartoDB gebruikt.
 
 WMS
 ===
 
-Leaflet kan out-of-the-box WMS endpoints lezen. Gebruik de ``L.tileLayer.wms()`` functie als volgt.
+Leaflet kan out-of-the-box WMS endpoints lezen. Gebruik de ``L.tileLayer.wms()`` functie als volgt
 
 .. code-block:: javascript
 
@@ -31,11 +31,12 @@ Leaflet kan out-of-the-box WMS endpoints lezen. Gebruik de ``L.tileLayer.wms()``
 
     leefbaro.addTo(map);  
 
+.. NOTE:: Dit werkt alleen als de WMS endpoint in de Pseudo-Mercator (ESPG:3857) kaartprojectie beschikbaar is, zie :ref:`coord-trans` voor meer informatie. De :ref:`WMS Capabilities <wms-getcapabilities>` document vermeldt welke coördinatenstelsels ondersteund worden.
 
 WFS
 ===
 
-Leaflet heeft geen ondersteuning voor WFS. De :ref:`GetFeature request <GetFeature>` kun je als volgt zelf opbouwen.
+Leaflet heeft geen out-of-the-box ondersteuning voor WFS. Een eenvoudige :ref:`GetFeature request <wfs-getfeature>` kun je als volgt zelf opbouwen. Onderstaande broncode `staat ook op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
 
 .. code-block:: javascript
 
@@ -72,8 +73,6 @@ Leaflet heeft geen ondersteuning voor WFS. De :ref:`GetFeature request <GetFeatu
         map.setView([center[1], center[0]], 17);
     }
 
-Zie de volledige `code op GitHub <https://github.com/Geonovum/PDOK-NGR-documentatie/blob/gh-pages/examples/quickstart-leaflet.html>`_.
-
 Je kan ook een van de `WFS plugins <http://leafletjs.com/plugins.html>`_ gebruiken. De BAG met bijv. de `WFST <https://github.com/Flexberry/Leaflet-WFST>`_ plugin lezen gaat als volgt.
 
 .. code-block:: javascript
@@ -96,7 +95,7 @@ Je kan ook een van de `WFS plugins <http://leafletjs.com/plugins.html>`_ gebruik
 TMS
 ===
 
-De Nederlandse TMS endpoints zijn enkel in de Rijksdriehoekstelsel beschikbaar. Gebruik de `Proj4Leaflet <http://kartena.github.io/Proj4Leaflet/>`_ plugin om deze in Leaflet te visualiseren. Zie onderstaande voorbeeld van `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_. In :ref:`coord-trans` lees je meer over coördinatentransformaties. 
+Leaflet kan *by default* enkel rasterdata visualiseren die in de Pseudo-Mercator projectie opgeslagen is. De Nederlandse TMS endpoints zijn enkel in de Rijksdriehoekstelsel beschikbaar. De `Proj4Leaflet <http://kartena.github.io/Proj4Leaflet/>`_ plugin stelt je in staat om coördinatenstelses te transformeren. Zie onderstaande voorbeeld van `@emacgillavry <https://github.com/emacgillavry/PDOK-Leaflet/>`_. In :ref:`coord-trans` lees je meer over coördinatentransformaties.
 
 .. code-block:: javascript
     :linenos:
@@ -158,7 +157,7 @@ OpenLayers ondersteunt ook het ophalen van de achterliggende gegevens via de :re
 WFS
 ===
 
-http://openlayers.org/en/v3.12.1/examples/vector-wfs.html
+OpenLayers heeft volwassen ondersteuning voor het lezen van WFS. Onderstaand voorbeeld haalt de BAG panden op die in de huidige extent vallen (`volledige broncode <http://openlayers.org/en/v3.12.1/examples/vector-wfs.html>`_ ).
 
 .. code-block:: javascript
 
@@ -190,7 +189,7 @@ http://openlayers.org/en/v3.12.1/examples/vector-wfs.html
 TMS
 ===
 
-
+OpenLayers heeft geen *native* functionaliteit om TMS te visualiseren, je dient zelf de `TileImage` source te configureren, zie onderstaande `voorbeeld <<https://github.com/bartvde/PDOK-OpenLayers3>`_ van `@6artvde <https://twitter.com/6artvde>`_.
 
 .. code-block:: javascript
     :linenos:
@@ -216,11 +215,6 @@ TMS
       layers:  [
         new ol.layer.Tile({
           source: new ol.source.TileImage({
-            attributions: [
-              new ol.Attribution({
-                html: 'Kaartgegevens: © <a href="http://www.cbs.nl">CBS</a>, <a href="http://www.kadaster.nl">Kadaster</a>, <a href="http://openstreetmap.org">OpenStreetMap</a><span class="printhide">-auteurs (<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>).</span>'
-              })
-            ],
             projection: projection,
             tileGrid: new ol.tilegrid.TileGrid({
               origin: [-285401.92,22598.08],
@@ -239,7 +233,8 @@ TMS
       })
     });
 
-Met dank aan `@6artvde <https://github.com/bartvde/PDOK-OpenLayers3>`_.
+De OpenLayers documentatie geeft een volledige `beschrijving <http://openlayers.org/en/v3.0.0/apidoc/ol.source.TileImage.html>`_ van de `TileImage` bron.
+
 
 *******
 CartoDB
@@ -256,9 +251,3 @@ Ga als volgt te werk om een Nederlandse WMS/WMTS kaartlaag toe te voegen
 2. Klik op ``Change basemap`` -> ``Yours +``
 3. Kies ``WMS/WMTS`` en plak een geldige WMS/WMTS URL in het tekstveld bijv. die van de PDOK Luchtforo: ``https://geodata1.nationaalgeoregister.nl/luchtfoto/wms``
 4. Klik op ``Get Layers``, vindt de kaartlaag die je wilt toevoegen en klik op ``Add This``
-
-WMTS
-====
-
-Helaas werkt het inlezen van WMTS endpoints, bijv de BRT Achtergrondkaart, **niet**. 
-
