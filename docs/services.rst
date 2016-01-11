@@ -50,7 +50,7 @@ De Web Feature Service is een webservice voor het opvragen van geografische vect
 
 Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een volledige beschrijving van de WFS standaard. In de GeoServer `WFS documentatie <http://docs.geoserver.org/latest/en/user/services/wfs/index.html>`_ lees je in detail hoe je WFS endpoints kan bevragen. 
 
-In :ref:`webapps` lees je hoe je WFS in Leaflet en OpenLayers aanspreekt.
+In :ref:`webapps` lees je hoe je WFS in Leaflet en OpenLayers aanspreekt. In :ref:`Geodata downloaden` lees je hoe je WFS data kan downloaden met QGIS.
 
 GetCapabilities
 ===============
@@ -331,6 +331,7 @@ De *GetFeatureInfo* request haalt  de attribuutgegevens van object(en) op een be
 
 Lees meer over de GetFeatureInfo request op de GeoServer `WMS GetFeatureInfo documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getfeatureinfo>`_.
 
+.. _wmts:
 .. _OGC-WMTS:
 
 ****************************
@@ -469,7 +470,7 @@ De kaartafbeelding op (row,col) = (4,3) op het vierde zoomniveau `laat de omgevi
 
 WMTS wordt out-of-the-box door QGIS en OpenLayers ondersteund.
 
-.. _TMS
+.. _TMS:
 
 ***********************
 Tile Map Service (TMS) 
@@ -536,9 +537,9 @@ Hoewel TMS geen OGC standaard is wordt het out-of-the-box door Leaflet en OpenLa
 Atom feeds
 **********
 
-Een aantal landsdekkende datasets worden als downloadbare bestanden aangeboden via Atom feeds. Atom feeds zijn webfeeds die, net zoals RSS feeds, geabonneerde gebruikers automatisch op de hoogte brengen van nieuwe dataset release brengen.
+Een aantal landsdekkende datasets worden als downloadbare bestanden aangeboden via Atom feeds. Atom feeds zijn webfeeds die, net zoals RSS, geabonneerde gebruikers automatisch op de hoogte brengen van nieuwe releases en updates.
 
-Open de Atom feed in een feed reader (bijv. `Feedly <https://feedly.com>`_) of Firefox om de bijgesloten ZIP bestand te downloaden. Indien deze niet beschikbaar zijn is het bestand ook via het ``entry`` -> ``link`` element te downloaden, zie regels 9-10 in onderstaand voorbeeld.
+Open de Atom feed in een feed reader (bijv. `Feedly <https://feedly.com>`_) of Firefox om de bijgesloten ZIP bestanden te downloaden. Indien deze niet beschikbaar zijn is het bestand ook via het ``entry`` -> ``link`` element te downloaden, zie regels 9-10 in onderstaand voorbeeld.
 
 .. code-block:: xml
     :linenos:
