@@ -33,6 +33,8 @@ Ga als volgt te werk om een deel van de BAG in QGIS te laden en lokaal in een an
 
 Het nieuwe bestand kun je in CartoDB of Mapbox Studio gebruiken. KML bestanden kun je rechtstreeks in Google Earth visualiseren.
 
+.. _qgis-pdok-inspire-plugins:
+
 PDOK & INSPIRE plugins
 ======================
 

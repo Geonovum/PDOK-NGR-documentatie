@@ -1,3 +1,8 @@
+.. _PDOK: https://www.pdok.nl
+.. _NGR: http://www.nationaalgeoregister.nl
+.. _data.overheid.nl: https://data.overheid.nl/
+
+
 ######################
 Maak een kaart met ...
 ######################
@@ -27,9 +32,9 @@ Zie de PDOK Kaart `handleiding <http://pdokkaart.readthedocs.org/>`_ voor meer i
 Leaflet
 *******
 
-De geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. komen in twee smaken. De *view* services (WMS, WMTS en TMS) leveren statische kaarbeelden (PNG, JPG) en zijn geschikt voor het visualiseren van achtergrondkaarten. De *download* service - voluit: :ref:`OGC-WFS` - levert geografische vector data (GeoJSON, GML) en de bijbehorende administratieve gegevens.
+De geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. komen in twee smaken. De *view* services (:ref:`WMS <wms>`, :ref:`WMTS <wmts>` en :ref:`TMS <TMS>`) leveren statische kaarbeelden (PNG, JPG) en zijn geschikt voor het visualiseren van achtergrondkaarten. De *download* service - voluit: :ref:`OGC-WFS` - levert geografische vector data (GeoJSON, GML) en de bijbehorende administratieve gegevens.
 
-De download service kunnen we gebruiken om bijv. 100 panden uit de Basisregistratie Adressen en Gebouwen (BAG) op een Leaflet kaart te tonen. 
+De download service kunnen we gebruiken om bijv. 100 panden uit de `Basisregistratie Adressen en Gebouwen (BAG) <http://nationaalgeoregister.nl/geonetwork/srv/dut/search#|aa3b5e6e-7baa-40c0-8972-3353e927ec2f>`_ op een Leaflet kaart te tonen.
 
 De URL van de BAG WFS API is::
 
@@ -44,7 +49,7 @@ Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te
     srsName = EPSG:4326
     outputFormat = json
 
-Het GeoJSON resultaat is `eenvoudig te visualiseren <https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html>`_ in bijv. Leaflet via de ``L.geoJson()`` functie.
+Het `GeoJSON resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_ kun je bijv. in Leaflet `visualiseren <https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html>`_ m.b.v. van de ``L.geoJson()`` functie.
 
 .. <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html"></iframe>
 
@@ -52,30 +57,47 @@ Het GeoJSON resultaat is `eenvoudig te visualiseren <https://cdn.rawgit.com/ndkv
 
     <script src="https://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
 
-Naast het ophalen van features is ondersteunt het WFS het toepassen van filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
+Naast het ophalen van features ondersteunt de WFS API het toepassen van (ruimtelijke) filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
 ****
 QGIS
 ****
 
-QGIS is een open source geografisch informatiesysteem (GIS) welk geografische gegevens kan visualiseren, bewerken en analyseren. QGIS ondersteunt de gangbare geo bestandsformaten zoals Shapefiles, KML, GML, GeoJSON, etc. en de geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. Gegevens kunnen gevisualiseerd, getransformeerd en gedownload worden zodat ze te gebruiken zijn in Mapbox, CartoDB, Google Maps/Earth, e.a.
+`QGIS <http://qgis.org/en/site/>`_ is een open source geografisch informatiesysteem (GIS) welk geografische gegevens kan visualiseren, bewerken en analyseren. QGIS ondersteunt de gangbare geo bestandsformaten zoals Shapefiles, KML, GML, GeoJSON, etc. en de :ref:`geo services en APIs <services>` van `PDOK`_ , `NGR`_, `data.overheid.nl`_, e.a. Gegevens kunnen gevisualiseerd, getransformeerd en gedownload worden zodat ze te gebruiken zijn in Mapbox, CartoDB, Google Maps/Earth, e.a.
 
 .. image:: images/qgis-bag-age.png
     :align: center
 
-
-PDOK plugin - achtergrondkaart
+PDOK/INSPIRE plugins - achtergrondkaart
 ==============================
 
-De QGIS PDOK plugin geeft toegang tot de landsdekkende geo services van die door PDOK beheerd worden. Installer de plugin via het ``Plugins`` -> ``Manage and Install Plugins`` menu. Klik op het oranje ``+PDOK`` knopje links van het ``PDOK Geocoder`` veld om de beschikbare PDOK datasets te zien. Zoek op ``achtergrond`` om een lijst van de beschikbare achtergrondkaarte te zien. 
+De :ref:`PDOK en INSPIRE plugins <qgis-pdok-inspire-plugins>` geven snel en makkelijk toegang tot veel Nederlandse geodata.
+
+Met de PDOK Services Plugin kun je eenvoudig door de geodata van `PDOK`_ zoeken. Installeer de plugin via het ``Plugins`` -> ``Manage and Install Plugins`` menu. Klik op het oranje ``+PDOK`` knopje links van het ``PDOK Geocoder`` veld om de beschikbare PDOK datasets te zien. Zoek op bijv. ``achtergrond`` om een lijst van de beschikbare achtergrondkaarten te zien.
 
 .. image:: images/pdok-plugin.png
     :align: center
 
+WMS / WMTS - Actueel Hoogtebestand Nederland
+============================================
+
+Geodata is bechikbaar in een aantal smaken. *View* services bieden statische kaartbeelden aan, denk bijv. aan de `Google Static Maps API <https://developers.google.com/maps/documentation/static-maps/>`_. Ze zijn geschikt voor het tonen van achtergrondkaarten en landsdekkende datasets zoals de `Actueel Hoogtebestand Nederland <http://nationaalgeoregister.nl/geonetwork/srv/dut/search#|c00b2d04-1e54-41c6-9b87-c226798361c0>`_. Ga als volgt te werk om de AHN2 :ref:`view service <wms>` aan te spreken in QGIS.
+
+1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WMS / WMTS Layer``
+2. Klik op ``New``
+3. Vul een naam in in bij ``Name``
+4. Plak de WMS URL (``http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms``) in het ``URL`` veld en klik op ``OK``
+5. Klik op ``Connect``
+6. Kies een van de lagen en klik op ``Add``
+
+Klik op ``View`` -> ``Identify Features`` en klik op de kaart om de hoogte op te halen.
+
+In :ref:`services` lees je meer over de verschillende *view* services. :ref:`webapps` laat zien hoe je *view* services in Leaflet en OpenLayers kan laden.
+
 WFS - Zeer kwetsbare gebieden
 =============================
 
-Ga als volgt te werk om services die niet door PDOK beheerd worden (bijv. `Zeer kwetsbare gebieden <https://data.overheid.nl/data/dataset/zeer-kwetsbare-gebieden>`_) aan te spreken: 
+*Download* services a.k.a. WFS leveren vector data als o.a. GeoJSON. Ga als volgt te werk om de :ref:`*download* service <services>` van bijv. de `Zeer kwetsbare gebieden <https://data.overheid.nl/data/dataset/zeer-kwetsbare-gebieden>`_) dataset aan te spreken in QGIS:
 
 1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WFS Layer``
 2. Klik op ``New``
@@ -86,24 +108,13 @@ Ga als volgt te werk om services die niet door PDOK beheerd worden (bijv. `Zeer 
 7. De gekozen laag verschijnt in de ``Layers`` pane
 8. Klik met de rechtermuisknop op de laag en selecteer ``Zoom to layer``
 
-WMS / WMTS - Actueel Hoogtebestand Nederland
-============================================
-
-1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WMS / WMTS Layer``
-2. Klik op ``New``
-3. Vul een naam in in bij ``Name`` 
-4. Plak de WMS URL (``http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms``) in het ``URL`` veld en klik op ``OK``
-5. Klik op ``Connect``
-6. Kies een van de lagen en klik op ``Add``
-
-QGIS ondersteunt de WMS GetFeatureInfo request. Hiermee kun je de waarde van een pixel (in dit geval de hoogte uit de AHN) opvragen. Klik op ``View`` -> ``Identify Features`` -> locatie op de kaart.
-
+In :ref:`wfs` lees je meer over de verschillende *view* services. :ref:`webapps` laat zien hoe je *download* services in Leaflet en OpenLayers kan laden. 
 
 *******************
 CartoDB (en Mapbox)
 *******************
 
-De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. moeten ze getransformeerd worden naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel.
+De Nederlandse geo services en APIs leveren, volgens de geldende standaarden, gegevens als Geography Markup Language (GML) in het Nederlandse Rijksdriehoekscoordinatenstelsel (RD). Om ze geschikt te maken voor Mapbox, CartoDB, Google Maps e.a. :ref:`dienen ze getransformeerd te worden <coord-trans>` naar Shapefiles/GeoJSON en het WGS84 coordinatenstelsel.
 
 .. raw:: html
 
