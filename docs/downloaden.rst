@@ -4,6 +4,8 @@ Geodata downloaden
 
 In :ref:`webapps` lees je hoe je de geo APIs in Leaflet en OpenStreetMap kan consumeren. Vaak is het ehcter noodzakelijk om een dataset in zijn geheel te downloaden zodat je het met andere gegevens kan combineren en/of een landsdekkende analyse kan uitvoeren.
 
+.. _downloaden-qgis:
+
 *******************
 Op de desktop: QGIS
 *******************
