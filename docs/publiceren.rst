@@ -189,7 +189,7 @@ OpenLayers heeft volwassen ondersteuning voor het lezen van WFS. Onderstaand voo
 TMS
 ===
 
-OpenLayers heeft geen *native* functionaliteit om TMS te visualiseren, je dient zelf de `TileImage` source te configureren, zie onderstaande `voorbeeld <<https://github.com/bartvde/PDOK-OpenLayers3>`_ van `@6artvde <https://twitter.com/6artvde>`_.
+OpenLayers heeft geen *native* functionaliteit om TMS te visualiseren, je dient zelf de `TileImage` source te configureren, zie onderstaande `voorbeeld <https://github.com/bartvde/PDOK-OpenLayers3>`_ van `@6artvde <https://twitter.com/6artvde>`_.
 
 .. code-block:: javascript
     :linenos:
