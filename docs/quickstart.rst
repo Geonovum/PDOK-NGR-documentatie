@@ -7,7 +7,9 @@
 Maak een kaart met ...
 ######################
 
-De webservices en APIs van PDOK, NGR, e.a. zijn op verschillende manieren te bekijken en downloaden. Deze pagina laat een aantal manieren zien.
+De geo services en APIs van `PDOK`_, `NGR`_, `data.overheid.nl`_, e.a. komen in een aantal smaken. De **view** services (:ref:`WMS <wms>`, :ref:`WMTS <wmts>` en :ref:`TMS <TMS>`) leveren statische kaarbeelden (PNG, JPG) en zijn geschikt voor het visualiseren van achtergrondkaarten en grote landsdekkende datasets zoals de `Actueel Hoogtebestand Nederland <http://nationaalgeoregister.nl/geonetwork/srv/dut/search#|c00b2d04-1e54-41c6-9b87-c226798361c0>`_. De **download** service (:ref:`WFS <OGC-WFS>`) levert geografische vector data en de bijbehorende administratieve gegevens in bijv. GeoJSON.
+
+De webservices en APIs van PDOK, NGR, e.a. zijn op verschillende manieren te bekijken en downloaden.
 
 **********
 PDOK Kaart
@@ -32,15 +34,13 @@ Zie de PDOK Kaart `handleiding <http://pdokkaart.readthedocs.org/>`_ voor meer i
 Leaflet
 *******
 
-De geo services en APIs van PDOK, NGR, data.overheid.nl, e.a. komen in twee smaken. De *view* services (:ref:`WMS <wms>`, :ref:`WMTS <wmts>` en :ref:`TMS <TMS>`) leveren statische kaarbeelden (PNG, JPG) en zijn geschikt voor het visualiseren van achtergrondkaarten. De *download* service - voluit: :ref:`OGC-WFS` - levert geografische vector data (GeoJSON, GML) en de bijbehorende administratieve gegevens.
-
 De download service kunnen we gebruiken om bijv. 100 panden uit de `Basisregistratie Adressen en Gebouwen (BAG) <http://nationaalgeoregister.nl/geonetwork/srv/dut/search#|aa3b5e6e-7baa-40c0-8972-3353e927ec2f>`_ op een Leaflet kaart te tonen.
 
 De URL van de BAG WFS API is::
 
     http://geodata.nationaalgeoregister.nl/bag/wfs
 
-Deze vind je o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te filtreren op ``Downloadbare data``. De eerste 100 gebouwen uit de BAG halen we middels een HTTP GET request op in combinatie met de volgende query parameters::
+Je vindt deze o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te filtreren op ``Downloadbare data``. De eerste 100 gebouwen uit de BAG halen we middels een HTTP GET request op in combinatie met de volgende query parameters::
 
     service = WFS
     request = GetFeature
@@ -81,7 +81,7 @@ Met de PDOK Services Plugin kun je eenvoudig door de geodata van `PDOK`_ zoeken.
 WMS / WMTS - Actueel Hoogtebestand Nederland
 ============================================
 
-Geodata is bechikbaar in een aantal smaken. *View* services bieden statische kaartbeelden aan, denk bijv. aan de `Google Static Maps API <https://developers.google.com/maps/documentation/static-maps/>`_. Ze zijn geschikt voor het tonen van achtergrondkaarten en landsdekkende datasets zoals de `Actueel Hoogtebestand Nederland <http://nationaalgeoregister.nl/geonetwork/srv/dut/search#|c00b2d04-1e54-41c6-9b87-c226798361c0>`_. Ga als volgt te werk om de AHN2 :ref:`view service <wms>` aan te spreken in QGIS.
+Ga als volgt te werk om de :ref:`view service <wms>` van de `Actueel Hoogtebestand Nederland <http://nationaalgeoregister.nl/geonetwork/srv/dut/search#|c00b2d04-1e54-41c6-9b87-c226798361c0>`_ dataset aan te spreken in QGIS.
 
 1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WMS / WMTS Layer``
 2. Klik op ``New``
@@ -97,7 +97,7 @@ In :ref:`services` lees je meer over de verschillende *view* services. :ref:`web
 WFS - Zeer kwetsbare gebieden
 =============================
 
-*Download* services a.k.a. WFS leveren vector data als o.a. GeoJSON. Ga als volgt te werk om de :ref:`*download* service <services>` van bijv. de `Zeer kwetsbare gebieden <https://data.overheid.nl/data/dataset/zeer-kwetsbare-gebieden>`_) dataset aan te spreken in QGIS:
+Ga als volgt te werk om de :ref:`download service <wfs>` van bijv. de `Zeer kwetsbare gebieden <https://data.overheid.nl/data/dataset/zeer-kwetsbare-gebieden>`_ dataset aan te spreken in QGIS:
 
 1. In het hoofdmenu klik op ``Layer``-> ``Add Layer`` -> ``Add WFS Layer``
 2. Klik op ``New``
