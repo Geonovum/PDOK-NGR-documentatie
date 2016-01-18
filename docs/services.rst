@@ -1,3 +1,5 @@
+.. NOTE:: Deze pagina geeft een globaal overzicht van de OGC standaarden en services. Het hoofddoel is deze te `demystificeren <https://speakerdeck.com/ndkv/open-geo-data-in-the-netherlands-and-beyond?slide=10>`_. Raadpleeg de `documentatie van GeoServer <http://docs.geoserver.org/latest/en/user/services/index.html>`_ voor een volledige beschrijving. Is onderstaande te beknopt opgeschreven of heb je ideeën/suggesties hoe het beter kan? :ref:`Laat het ons weten! <doel-feedback>`
+
 .. _CSW specificatie: http://www.opengeospatial.org/standards/cat
 
 .. _services:
@@ -220,22 +222,14 @@ De functionaliteit van een WMS endpoint wordt beschreven in een *Capabilities* d
         <Layer>
             <Title>Actueel Hoogtebestand Nederland 2</Title>
             <Abstract>Actueel Hoogtebestand Nederland 2</Abstract>
-            <!-- Limited list of EPSG projections: -->
-            <CRS>EPSG:25831</CRS>
-            <CRS>EPSG:25832</CRS>
+            ...
             <CRS>EPSG:28992</CRS>
-            <CRS>EPSG:3034</CRS>
-            <CRS>EPSG:3035</CRS>
             <CRS>EPSG:3857</CRS>
-            <CRS>EPSG:4258</CRS>
             <CRS>EPSG:4326</CRS>
-            <CRS>CRS:84</CRS>
+            ...
             <EX_GeographicBoundingBox>...</EX_GeographicBoundingBox>
-            <BoundingBox CRS="CRS:84" minx="3.2012587672031283" miny="50.72814376700224" maxx="7.273799656562079" maxy="53.55490608251144"/>
             <BoundingBox CRS="EPSG:4326" minx="50.72814376700224" miny="3.2012587672031283" maxx="53.55490608251144" maxy="7.273799656562079"/>
             ...
-            <Layer queryable="1" opaque="0">...</Layer>
-            <Layer queryable="1" opaque="0">...</Layer>
             <Layer queryable="1" opaque="0">...</Layer>
             <Layer queryable="1" opaque="0">
                 <Name>ahn2_5m</Name>
@@ -283,7 +277,7 @@ Dit `resulteert <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&req
     :width: 400
     :align: center
 
-Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getmap>`_ voor een volledig overzicht van deze request.\
+Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/latest/en/user/services/wms/reference.html#getmap>`_ voor een volledig overzicht van deze request.
 
 
 .. _getfeatureinfo:
