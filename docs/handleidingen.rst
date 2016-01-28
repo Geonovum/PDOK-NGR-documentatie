@@ -1,3 +1,5 @@
+.. NOTE:: Staat de handeling die je wilt verrich niet bij? Heb je tips, suggesties of heb je een fout ontdekt? :ref:`Laat het ons weten! <doel-feedback>`
+
 #############
 Handleidingen
 #############

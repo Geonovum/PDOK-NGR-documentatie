@@ -1,4 +1,4 @@
-.. NOTE:: Deze pagina geeft een globaal overzicht van de OGC standaarden en services. Het hoofddoel is deze te `demystificeren <https://speakerdeck.com/ndkv/open-geo-data-in-the-netherlands-and-beyond?slide=10>`_. Raadpleeg de `documentatie van GeoServer <http://docs.geoserver.org/latest/en/user/services/index.html>`_ voor een volledige beschrijving. Is onderstaande te beknopt opgeschreven of heb je ideeën/suggesties hoe het beter kan? :ref:`Laat het ons weten! <doel-feedback>`
+.. NOTE:: Deze pagina geeft een globaal overzicht van de OGC standaarden en services. Het hoofddoel is deze te `demystificeren <https://speakerdeck.com/ndkv/open-geo-data-in-the-netherlands-and-beyond?slide=10>`_. Raadpleeg de `documentatie van GeoServer <http://docs.geoserver.org/latest/en/user/services/index.html>`_ voor een volledige beschrijving. Is onderstaande te beknopt opgeschreven of heb je ideeën/suggesties hoe het beter kan? Mis je cruciale informatie om aan de slag te kunnen? :ref:`Laat het ons weten! <doel-feedback>`
 
 .. _CSW specificatie: http://www.opengeospatial.org/standards/cat
 

@@ -49,7 +49,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'PDOK / NGR'
+project = u'PDOK / NGR documentatie'
 # copyright = u'2013, Simeon Nedkov'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -57,7 +57,7 @@ project = u'PDOK / NGR'
 # built documents.
 #
 # The short X.Y version.
-version = '0.1'
+version = 'latest'
 # The full version, including alpha/beta/rc tags.
 # release = '0.1'
 
@@ -165,7 +165,7 @@ html_static_path = ['_static']
 #html_show_sphinx = True
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-#html_show_copyright = True
+html_show_copyright = False
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
