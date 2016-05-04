@@ -10,12 +10,12 @@ Deze services worden ook aangeboden door `data.overheid.nl <https://data.overhei
 
 .. _doel-feedback:
 
-Doel en feedback
-================
+Doel, feedback en bijdragen
+===========================
 
-Het doel van de documentatie is om gebruikers handvaten te geven om snel aan de slag kunnen met Nederlandse geodata. Het geeft kort en bondig overzicht van de basisfaciliteiten- en functionaliteiten en verwijst z.s.m. naar uitgebreidere infromatiebronnen.
+Het doel van de documentatie is om gebruikers handvaten te geven om snel aan de slag te kunnen met Nederlandse geodata. Het geeft kort en bondig overzicht van de basisfaciliteiten- en functionaliteiten van PDOK en NGR en verwijst z.s.m. naar uitgebreidere infromatiebronnen.
 
-De documentatie is ontwikkeld in opdracht van `Geonovum <http://www.geonovum.nl/>`_ en wordt beheerd door `@SimeonNedkov <https://twitter.com/simeonnedkov>`_ op `GitHub <https://www.github.com/geonovum/PDOK-NGR-documentatie>`_.
+Heb je feedback over de documentatie of vragen over (het gebruik van) de geo-APIs? Post een `issue in de bug tracker <https://github.com/Geonovum/PDOK-NGR-documentatie/issues>`_, een bericht op `het forum <http://pdokforum.geonovum.nl>`_, stuur een email naar *s punt nedkov at geonovum punt nl* of een tweet naar `@SimeonNedkov <https://twitter.com/simeonnedkov>`_.
 
 Dit is een **open source** project, je kan op de volgende manieren **bijdragen**:
 
@@ -23,7 +23,17 @@ Dit is een **open source** project, je kan op de volgende manieren **bijdragen**
 - voorstellen en suggesties voor verbeteringen en/of uitbreidingen indienen in de `issue tracker <https://github.com/Geonovum/PDOK-NGR-documentatie/issues>`_.
 - uitbreidingen aan de documentatie, voorbeelden, handleidingen, etc. insturen via `GitHub pull requests <https://github.com/Geonovum/PDOK-NGR-documentatie/pulls?q=is%3Apr+is%3Aclosed>`_.
 
-Heb je feedback of vragen over (het gebruik van) de geo-APIs maar geen GitHub account? Stuur een tweet naar `@SimeonNedkov <https://twitter.com/simeonnedkov>`_ of een mail naar *s punt nedkov at geonovum punt nl*.
+Aan deze documentatie hebben bijgedragen:
+
+- `@6artvde <https://twitter.com/6artvde>`_
+- `@emacgillavry <https://twitter.com/emacgillavry>`_
+- `@FrieseWoudloper <https://twitter.com/FrieseWoudloper>`_
+- `@geogoeroe <https://twitter.com/geogoeroe>`_
+- `@gisnederland <https://twitter.com/gisnederland>`_
+- `@thijsbrentjens <https://twitter.com/thijsbrentjens>`_
+- `@pvangenuchten <https://twitter.com/pvangenuchten>`_
+
+De documentatie is ontwikkeld in opdracht van `Geonovum <http://www.geonovum.nl/>`_ en wordt beheerd door `@SimeonNedkov <https://twitter.com/simeonnedkov>`_.
 
 .. NOTE:: Deze website gebruikt `Piwik <https://piwik.org/>`_ om bezoekersaantallen te registreren. We anonimiseren IP adressen en respecteren uw `Do Not Track <http://donottrack.us/>`_ instellingen.
 
