@@ -285,7 +285,7 @@ Zie de GeoServer `WMS GetMap documentatiepagina <http://docs.geoserver.org/lates
 GetFeatureInfo
 ==============
 
-De *GetFeatureInfo* request haalt  de attribuutgegevens van object(en) op een bepaalde plek op de kaart.
+De *GetFeatureInfo* request haalt de attribuutgegevens op van object(en) op een bepaalde plek op de kaart. Onderstaande request haalt een hoogtewaarde uit de AHN.
 
 ::
 
