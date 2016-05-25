@@ -104,7 +104,7 @@ Op de GeoServer `WFS GetCapabilities documentatiepagina <http://docs.geoserver.o
 GetFeature
 ==========
 
-Met de GetFeature request is het mogelijk om geometrieën en attributen op te halen. De volgende reuest haalt 100 gebouwen op uit de Basisregistratie Adressen en Gebouwen
+Met de GetFeature request is het mogelijk om geometrieën en attributen op te halen. De volgende request haalt 100 gebouwen op uit de Basisregistratie Adressen en Gebouwen
 
 :: 
 
