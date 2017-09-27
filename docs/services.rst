@@ -22,7 +22,7 @@ Elk W*S dienst heeft een URL die met HTTP GET en POST requests bevraagd wordt. D
 
 De services ondersteunen een aantal requests waarmee het mogelijk is om kaartbeelden en vector data op te vragen, filters toe te passen en ruimtelijke analyses uit te voeren. 
 
-De eigenschappen van een service zijn in de *Capabilities* document beschreven. De ``GetCapabitlies`` request haalt deze als volgt op::
+De eigenschappen van een service zijn in de *Capabilities* document beschreven. De ``GetCapabilities`` request haalt deze als volgt op::
 
     http://mygeoserver.example.com/ogc-service?
     service=WMS/WFS/WMTS/WCS
