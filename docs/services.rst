@@ -24,7 +24,7 @@ De services ondersteunen een aantal requests waarmee het mogelijk is om kaartbee
 
 De eigenschappen van een service zijn in de *Capabilities* document beschreven. De ``GetCapabitlies`` request haalt deze als volgt op::
 
-    http://geo.data.nl/ogc-service?
+    http://mygeoserver.example.com/ogc-service?
     service=WMS/WFS/WMTS/WCS
     request=GetCapabilities
 
@@ -476,7 +476,7 @@ De Tiled Web Service geeft toegang tot opgeknipte kaartafbeeldingen (c.q. tegels
 
 ::
 
-    http://geodata.server.nl/tms/<tms_versie_nummer>/<naam_van_kaart>@<coordinatenstelsel>@<bestandsformaat>/<z>/<x>/<y>.<bestandsfromaat>
+    http://geoserver.example.com/tms/<tms_versie_nummer>/<naam_van_kaart>@<coordinatenstelsel>@<bestandsformaat>/<z>/<x>/<y>.<bestandsfromaat>
 
 waarbij ``z``, ``x``, ``y`` de coordinaten van een kaartafbeelding zijn. Zie de `OSGeo TMS specificatie <http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification>`_ voor meer informatie.
 
