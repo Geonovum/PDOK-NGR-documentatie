@@ -30,7 +30,7 @@ De eigenschappen van een service zijn in de *Capabilities* document beschreven. 
 
 In de praktijk worden de services zelden direct bevraagd. Het is gebruikelijker om ze via bijv. OpenLayers, :ref:`Leaflet <quickstart-leaflet>`, QGIS, ogr2ogr, `Python <https://pypi.python.org/pypi/OWSLib>`_, etc. te benaderen.
 
-**Het overgrote deel van de gegevens in het** `NGR <http://www.nationaalgeoregister.nl>`_ **is als WMS/WFS beschikbaar, evenals de** `landsdekkende datasets <https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls>`_ **die door** `PDOK <https://www.pdok.nl>`_ **beheerd worden.**
+**Het overgrote deel van de gegevens in het** `NGR <http://www.nationaalgeoregister.nl>`_ **is als WMS/WFS/WCS beschikbaar, evenals de** `landsdekkende datasets <https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls>`_ **die door** `PDOK <https://www.pdok.nl>`_ **beheerd worden.**
 
 W*S services en APIs worden ook aangeboden door `data.overheid.nl <https://data.overheid.nl>`_, `Atlas Leefomgeving <http://www.atlasleefomgeving.nl/>`_, `Geoportaal Waterschappen <http://waterschapservices.webgispublisher.nl/Choosemap.aspx>`_, `Ruimtelijkeplannen.nl <http://www.ruimtelijkeplannen.nl/web-roo/roo/?>`_ e.a.
 
@@ -525,8 +525,8 @@ De kaartafbeelding op (x,y) = (3,3) van de 4de zoomlevel is te vinden op https:/
 
 Hoewel TMS geen OGC standaard is wordt het out-of-the-box door Leaflet en OpenLayers ondersteund. Zie :ref:`webapps` voor code voorbeelden.
     
-.. _OGC-CSW:
 
+.. _inspire_atom:
 **********
 Atom feeds
 **********
@@ -559,7 +559,16 @@ De Atom feeds van PDOK zijn te vinden op https://www.pdok.nl/en/products/pdok-do
 
 Atom feeds in het NGR zijn te vinden door het Online Bronnen filter ``Atom`` te gebruiken en/of het zoekresultaat te filtreren op ``Downloadbare bestanden``.
 
+.. _OGC-WCS:
+***********************************
+Web Coverage Service (WCS)
+***********************************
 
+Het WCS protocol kan gebruikt worden om multi dimensionale raster data over internet te ontsluiten. PDOK biedt bijvooreeld het Algemeen Hoogte bestand Nederland aan als WCS. Lees meer op http://www.opengeospatial.org/standards/wcs. Voor het ontsluiten van WCS kan bijvoorbeeld QGIS of gvSIG gebruikt worden. GDAL en Rasdaman bieden bibliotheken om analyses op CSW uit te voeren. Voor het ontsluiten van raster bestanden als WCS kan bijvoorbeeld GeoServer of Mapserver gebruikt worden. 
+
+INSPIRE werkt aan technical guidelines voor het opzetten van een download service op basis van WCS https://ies-svn.jrc.ec.europa.eu/attachments/download/947/Study_WCS_INSPIRE_v0.3.pdf
+
+.. _OGC-CSW:
 ***********************************
 Catalogue Service for the Web (CSW)
 ***********************************
