@@ -113,6 +113,8 @@ De PDOK services kennen alleen een maximum van 15.000 objecten per request. Dat 
 
 Maar niet altijd. En soms wil je juist de WFS bevragen, met een filter erbij bijvoorbeeld. Dus wat doe je dan als je meer dan die 15.000 objecten wil ophalen? Dan komt een van de handige WFS 2.0.0 functies van pas: ResponsePaging.
 
+.. _wfs-response-paging:
+
 WFS 2.0 ResponsePaging
 ======================
 

@@ -46,10 +46,11 @@ Je vindt deze o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en t
     request = GetFeature
     typeName = bag:pand
     count = 100
+    startIndex = 0
     srsName = EPSG:4326
     outputFormat = json
 
-Het `GeoJSON resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_ kun je bijv. in Leaflet `visualiseren <https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html>`_ m.b.v. van de ``L.geoJson()`` functie.
+Het `GeoJSON resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=100&startIndex=0&outputFormat=json>`_ kun je bijv. in Leaflet `visualiseren <https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html>`_ m.b.v. van de ``L.geoJson()`` functie.
 
 .. <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html"></iframe>
 
