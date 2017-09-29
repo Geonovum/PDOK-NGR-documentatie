@@ -52,7 +52,7 @@ De Web Feature Service is een webservice voor het opvragen van geografische vect
 
 Zie de `specificatie <http://www.opengeospatial.org/standards/wfs>`_ voor een volledige beschrijving van de WFS standaard. In de GeoServer `WFS documentatie <http://docs.geoserver.org/latest/en/user/services/wfs/index.html>`_ lees je in detail hoe je WFS endpoints kan bevragen. 
 
-In :ref:`webapps` lees je hoe je WFS in Leaflet en OpenLayers aanspreekt. In :ref:`Geodata downloaden` lees je hoe je WFS data kan downloaden met QGIS.
+In :ref:`webapps` lees je hoe je WFS in Leaflet en OpenLayers aanspreekt. In :ref:`downloaden-qgis` lees je hoe je WFS data kan downloaden met QGIS.
 
 GetCapabilities
 ===============
@@ -118,6 +118,7 @@ Met de GetFeature request is het mogelijk om geometrieën en attributen op te ha
 
 `Resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&startIndex=0&outputFormat=json>`_: een GeoJSON document met daarin de polygonen van de voetafdruk en attributen van elk gebouw.
 Voor meer informatie over de `count` en `startIndex` parameters, zie onze `handleiding <wfs-response-paging>`_.
+
 .. code-block:: javascript
 
     {
@@ -188,9 +189,9 @@ WMS kent minimaal 3 operaties:
 - **GetMap**: retourneert een statisch afbeelding van een kaart
 - **GetFeatureInfo**: geeft attribuutgegevens van een object op een bepaalde plek op de kaart
 
-Zie de `specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving van WMS. In de `GeoSever documentatie <http://docs.geoserver.org/latest/en/user/services/wms/index.html>`_ lees je hoe je WMS concreet kan bevragen.
+Zie de `WMS specificatie <http://www.opengeospatial.org/standards/wms>`_ voor een volledige beschrijving. In de `GeoServer documentatie <http://docs.geoserver.org/latest/en/user/services/wms/index.html>`_ lees je hoe je WMS concreet kan bevragen.
 
-In :ref:`webapps` lees je hoe je WMS in Leaflet en OpenLayers aanspreekt.
+In :ref:`webapps` lees je hoe je WMS met behulp van Leaflet en OpenLayers aanspreekt.
 
 .. _wms-getcapabilities:
 
@@ -205,7 +206,7 @@ De functionaliteit van een WMS endpoint wordt beschreven in een *Capabilities* d
     service=WMS&
     request=GetCapabilities
 
-`Resultaat <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=WMS&request=GetCapabilities>`_: een XML document waarin o.a. de opgeslagen data types, lagen beschreven worden, ondersteunde coordinatenstelsels, etc.
+`Resultaat <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=WMS&request=GetCapabilities>`_: een XML document waarin o.a. de opgeslagen data types, lagen beschreven worden, ondersteunde coördinatenstelsels, etc.
 
 .. code-block:: xml
     :linenos:
@@ -437,7 +438,7 @@ De *GetTile* request haalt een kaartbeeld op.
    &TILECOL=0
    &FORMAT=image/png8
 
-De ``TIlEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``TILEROW`` parameter is equivalent aan het y-coördinaat en neemt in waarde af naarmate ``y`` groter wordt. ``TILECOL`` parameter is equivalent aan het x-coördinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``TILEMATRIX`` parameter geeft het zoomniveau weer. Bovenstaand request `haalt de bovenste tegel <http://geodata.nationaalgeoregister.nl/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:0&TILEROW=0&TILECOL=0&FORMAT=image/png8>`_ van de tegelpyramide op.
+De ``TILEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``TILEROW`` parameter is equivalent aan het y-coördinaat en neemt in waarde af naarmate ``y`` groter wordt. ``TILECOL`` parameter is equivalent aan het x-coördinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``TILEMATRIX`` parameter geeft het zoomniveau weer. Bovenstaand request `haalt de bovenste tegel <http://geodata.nationaalgeoregister.nl/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:0&TILEROW=0&TILECOL=0&FORMAT=image/png8>`_ van de tegelpyramide op.
 
 .. image:: images/wmts0-0-0.png
     :align: center
@@ -477,9 +478,9 @@ De Tiled Web Service geeft toegang tot opgeknipte kaartafbeeldingen (c.q. tegels
 
 ::
 
-    http://geoserver.example.com/tms/<tms_versie_nummer>/<naam_van_kaart>@<coordinatenstelsel>@<bestandsformaat>/<z>/<x>/<y>.<bestandsfromaat>
+    http://geoserver.example.com/tms/<tms_versie_nummer>/<naam_van_kaart>@<coördinatenstelsel>@<bestandsformaat>/<z>/<x>/<y>.<bestandsfromaat>
 
-waarbij ``z``, ``x``, ``y`` de coordinaten van een kaartafbeelding zijn. Zie de `OSGeo TMS specificatie <http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification>`_ voor meer informatie.
+waarbij ``z``, ``x``, ``y`` de coördinaten van een kaartafbeelding zijn. Zie de `OSGeo TMS specificatie <http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification>`_ voor meer informatie.
 
 De TMS *root resource* is de *Capabilities* document die de beschikbare kaartlagen en de bijbehorende URLs beschrijft. De *Capabilities* document van bijv. het Nationaal GeoRegister TMS endpoint bevindt zich op https://geodata.nationaalgeoregister.nl/tms/1.0.0/
 
@@ -528,6 +529,7 @@ Hoewel TMS geen OGC standaard is wordt het out-of-the-box door Leaflet en OpenLa
     
 
 .. _inspire_atom:
+
 **********
 Atom feeds
 **********
@@ -561,6 +563,7 @@ De Atom feeds van PDOK zijn te vinden op https://www.pdok.nl/en/products/pdok-do
 Atom feeds in het NGR zijn te vinden door het Online Bronnen filter ``Atom`` te gebruiken en/of het zoekresultaat te filtreren op ``Downloadbare bestanden``.
 
 .. _OGC-WCS:
+
 ***********************************
 Web Coverage Service (WCS)
 ***********************************
@@ -570,6 +573,7 @@ Het WCS protocol kan gebruikt worden om multi dimensionale raster data over inte
 INSPIRE werkt aan technical guidelines voor het opzetten van een download service op basis van WCS https://ies-svn.jrc.ec.europa.eu/attachments/download/947/Study_WCS_INSPIRE_v0.3.pdf
 
 .. _OGC-CSW:
+
 ***********************************
 Catalogue Service for the Web (CSW)
 ***********************************
@@ -649,7 +653,7 @@ De belangrijkste aanpasbare parameters van dit request zijn:
 * ``elementSetName`` -- Mogelijke waardes: ``full``, ``summary``
 * ``constraint`` -- de toe te passen filter, zie `Zoeken via filters`_.
 * ``resultType`` -- bepaalt wat er teruggestuurd wordt: resultaten of aantal records die voldoen aan de ``constraint`` filter. Mogelijke waardes: ``results``, ``hits``
-* ``startPosition`` -- bepaalt waar de resultatenlijst start. In combinatie met ``maxRecords`` is het mogelijk om resultaten in delen op te vragen, zie het `GetRecord responses in delen opvragen`_ voorbeeld.
+* ``startPosition`` -- bepaalt waar de resultatenlijst start. In combinatie met ``maxRecords`` is het mogelijk om resultaten in delen op te vragen, zie het `GetRecord resultaten in delen opvragen`_ voorbeeld.
 
 .. NOTE:: Het NGR ondersteunt enkel ``application/xml`` als waarde voor ``outputFormat``. Zie de *GetRecords* request specificatie in de *Capabilities* document.
 
@@ -750,7 +754,7 @@ Eerste 10 metadata records ophalen
     constraint=AnyText+LIKE+%27%25water%25%27
 
 GetRecord resultaten in delen opvragen
--------------------------------------
+--------------------------------------
 
 Het NGR bevat veel metadata records. Door de ``maxRecords`` en ``startPosition`` parameters te gebruiken kan je de metadata records in delen opvragen. Na het ophalen van de eerste 10 records (zie vorige voorbeeld) halen we de volgende 10 records binnen door ``startPosition`` de waarde 10 toe te kennen. `Derde blok van tien records <http://nationaalgeoregister.nl/geonetwork/srv/dut/inspire?service=CSW&version=2.0.2&request=GetRecords&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.opengis.net/cat/csw/2.0.2&outputFormat=application/xml&maxRecords=10&startposition=21&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&constraint=AnyText+LIKE+%27%25water%25%27>`_ halen we binnen met ``maxRecords=10`` en ``startposition=21``.
 

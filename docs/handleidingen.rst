@@ -1,3 +1,6 @@
+.. _bag: https://www.kadaster.nl/wat-is-de-bag
+.. _NGR_WFS: http://www.nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/search?facet.q=protocol%2FOGC%253AWFS&isChild=%27false%27&resultType=details&fast=index&_content_type=json&from=1&to=20&sortBy=relevance
+
 .. NOTE:: Staat de handeling die je wilt verrichten er niet bij? Heb je tips, suggesties of heb je een fout ontdekt? :ref:`Laat het ons weten! <doel-feedback>`
 
 #############
@@ -20,7 +23,7 @@ De PDOK BAG Geocoder plugin voor QGIS is zet adressen om naar coördinaten op de
 .. image:: images/qgis-geocoder.png
     :align: center
 
-Klein nadeeltje van de PDOK Geocoder is dat ie coordinaten in het Nederlandse coordinatenstelsel retourneert. CartoDB, Mapbox, Google Maps, etc. verwachten coordinaten in lat/lng. In :ref:`coord-trans` lees je hoe je coördinaten kan transformeren in o.a. QGIS.
+Klein nadeeltje van de PDOK Geocoder is dat ie coördinaten in het Nederlandse coördinatenstelsel retourneert. CartoDB, Mapbox, Google Maps, etc. verwachten coördinaten in lat/lng. In :ref:`coord-trans` lees je hoe je coördinaten kan transformeren in o.a. QGIS.
 
 Via een API
 ===========
@@ -41,7 +44,7 @@ Coördinatentransformaties
 
 Nederlandse geodata gebruiken het `Rijksdriehoekscoördinatenstelsel <https://nl.wikipedia.org/wiki/Rijksdriehoeksco%C3%B6rdinaten>`_, ook wel bekend als ``Amersfoort / RD New``. RD-coördinaten worden niet (out-of-the-box) door Google Maps, Mapbox, CartoDB, e.a. ondersteund. Deze diensten gebruiken de `WGS84 / Pseudo-Mercator <https://en.wikipedia.org/wiki/Web_Mercator>`_ projectie. Hoewel ``Pseudo-Mercator`` meter [m] als eenheid heeft, gebruiken Google Maps, Mapbox, CartoDB, e.a. *lengte- en breedtegraden* als coördinaten voor vector features. Deze lengte- en breedtegraden duiden een plek aan op de aarde zoals benaderd door de WGS84 ellipsoïde. Om Nederlandse vector data in bijv. Mapbox te visualiseren moet je RD-coördinaten daarom naar WGS84 transformeren i.p.v. Pseudo-Mercator. **Let op**: dit geldt niet voor rasters.
 
-Het transformeren van coördinaten kan in de desktop met :ref:`QGIS <coord-trans-qgis>`, in de browser met :ref:`proj4js <coord-trans-proj4js>` en in de *command line* met :ref:`ogr2ogr <coord-trans-ogr2ogr>`. Om deze tools te gebruiken moet je de EPSG (European Petroleum Survey Group) codes van de coordinatenstelsels weten waartussen je wilt transformeren. Deze vindt je op `epsg.io <http://epsg.io/>`_:
+Het transformeren van coördinaten kan in de desktop met :ref:`QGIS <coord-trans-qgis>`, in de browser met :ref:`proj4js <coord-trans-proj4js>` en in de *command line* met :ref:`ogr2ogr <coord-trans-ogr2ogr>`. Om deze tools te gebruiken moet je de EPSG (European Petroleum Survey Group) codes van de coördinatenstelsels weten waartussen je wilt transformeren. Deze vindt je op `epsg.io <http://epsg.io/>`_:
 
 - ``Amersfoort / RD New`` heeft `EPSG code 28992 <http://epsg.io/28992>`_
 - ``Pseudo-Mercator`` heeft `EPSG code 3857 <http://epsg.io/3857>`_
@@ -57,7 +60,7 @@ Op de desktop: QGIS
 1. Klik met de rechtermuisknop op de laag die je wilt transformeren en selecteer ``Save As..``
 2. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
 3. Klik op de ``Browse`` knop en geef aan waar het bestand opgeslagen moet worden
-4. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coordinaten naar ``lat/lng`` te transformeren
+4. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coördinaten naar ``lat/lng`` te transformeren
 5. Klik op ``OK``
 
 .. image:: images/qgis-vector-save.png
@@ -68,11 +71,11 @@ Op de desktop: QGIS
 In de browser: proj4js
 ======================
 
-`proj4js <http://proj4js.org/>`_ is een JavaScript bibliotheek voor het transformeren van coördinaten. 
+De JavaScript bibliotheek `proj4js <http://proj4js.org/>`_ is gemaakt voor het transformeren van coördinaten.
 
 .. code-block:: javascript
 
-    // definitie van de Nederlandse coordinatenstelsel
+    // definitie van de Nederlandse coördinatenstelsel
     var RD = "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs";
 
     // World Geodetic System, in gebruik door Google Maps, Mapbox, CartoDB, e.a.
@@ -86,11 +89,14 @@ In de browser: proj4js
 In de terminal: ogr2ogr
 =======================
 
-ogr2ogr is een command line utility die een groot aantal geodata formats kan lezen en schrijven. Omzetten van coordinaten in het Nederlandse coordinatenstelsel naar WGS84 gaat als volgt 
+Het programma `ogr2ogr` is een command line utility die een groot aantal geodata formats kan lezen en schrijven. Omzetten van coördinaten in het Nederlandse coördinatenstelsel naar WGS84 gaat als volgt
 
 ::
 
     ogr2ogr -f GeoJSON target.geojson source_RD.geojson -s_src EPSG:28992 -t_srs EPSG:4326
+
+
+.. _wfs-pagination:
 
 ******************
 WFS - pagination
@@ -109,7 +115,7 @@ Conform de WFS specificatie gaat het ophalen met GetFeature requests. Bijvoorbee
     request=GetFeature&
     typename=provincies
 
-De PDOK services kennen alleen een maximum van 15.000 objecten per request. Dat mag, bijvoorbeeld om de belasting op de servers te beperken en te voorkomen dat iemand niet (per ongeluk) alle data ophaalt in zijn browser. Voor datasets van enige omvang betekent dit alleen dat je die niet helemaal in één keer via de WFS kan ophalen. In sommige gevallen kan je je wenden tot de data dumps, te downloaden via ATOM feeds. Zie `<http://geodata.nationaalgeoregister.nl/atom/index.xml>`_
+De PDOK services kennen alleen een maximum van 1000 objecten per request. Dat mag, bijvoorbeeld om de belasting op de servers te beperken en te voorkomen dat iemand niet (per ongeluk) alle data ophaalt in zijn browser. Voor datasets van enige omvang betekent dit alleen dat je die niet helemaal in één keer via de WFS kan ophalen. In sommige gevallen kan je je wenden tot de data dumps, te downloaden via ATOM feeds. Zie `<http://geodata.nationaalgeoregister.nl/atom/index.xml>`_
 
 Maar niet altijd. En soms wil je juist de WFS bevragen, met een filter erbij bijvoorbeeld. Dus wat doe je dan als je meer dan die 15.000 objecten wil ophalen? Dan komt een van de handige WFS 2.0.0 functies van pas: ResponsePaging.
 
@@ -168,10 +174,10 @@ Of slimmer nog, vraag voordat je daadwerkelijk data gaat ophalen met *resulttype
 In dit geval is het `antwoord <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&version=2.0.0&request=GetFeature&typename=bag:ligplaats&resulttype=hits>`_ 11757.
 
 ****************************
-WFS - JSON als output format
+WFS - output formaat
 ****************************
 
-GML is voor veel webontwikkelaars niet de eerste keus. JSON en GeoJSON voor geodata lijken de standaard te worden. Maar een WFS geeft standaard (keurig conform de specs) GML terug op een GetFeature reques. Wederom niet getreurd. Ook het GeoJSON formaat is beschikbaar bij de WFSen die PDOK aanbiedt. Gebruik daarvoor de parameter *outputformat=json* bij een GetFeature request en je krijgt GeoJSON terug. Voorbeeld:
+GML is voor veel webontwikkelaars niet de eerste keus. JSON en GeoJSON voor geodata lijken de standaard te worden. Maar een WFS geeft standaard (keurig conform de specs) GML terug op een GetFeature request. Wederom niet getreurd. Ook het GeoJSON formaat is beschikbaar bij de WFSen die PDOK aanbiedt. Gebruik daarvoor de parameter `outputformat=json` bij een GetFeature request en je krijgt GeoJSON terug. Voorbeeld:
 
 ::
 
@@ -183,7 +189,7 @@ GML is voor veel webontwikkelaars niet de eerste keus. JSON en GeoJSON voor geod
     count=100&
     startindex=100&
     outputformat=json 
-    
+
 Tot slot: een PDOK WFS steunt nog meer formaten. Zie daarvoor het stukje XML over het outputFormat van het GetFeature-deel in uit de Capabilities van een WFS. Dit Capabilities document is op te vragen via bijvoorbeeld:
 
 ::
@@ -204,7 +210,7 @@ Tip van Edward MacGillavry (Webmapper): voeg ``srsName=EPSG:4326`` parameter aan
 ogr2ogr en de BAG (EN)
 **********************
 
-This tutorial shows how to get datasets from the Dutch national geoportal through WFS using the GDAL/OGR toolset.  
+This tutorial shows how to get datasets from the Dutch national geoportal through WFS using the GDAL/OGR toolset.
 
 The GDAL/OGR library is the Swiss army knife for handling geospatial data. GDAL provides functions to read, write and transform raster files (e.g. GeoTIFF). OGR provides the same functionality for vector data.
 
@@ -221,30 +227,32 @@ Easiest way to get it on Windows is through the `OSGeo4W <http://trac.osgeo.org/
 
 Basisregistratie Adressen en Gebouwen
 =====================================
+The *Basisregistratie Addressen en Gebouwen* is a Dutch law in which it is declared and regulated that all address and building information needs to be freely available to it's citizens.
+Litterally translated it means "Base registration Addresses and Buildings" and is abbreviated as *BAG*.
 
 .. NOTE::
 
     This tutorial assumes you are familar with the Web Feature Service. Not sure what that is? Review it :ref:`here <wfs>`. 
 
-In this tutorial we will work with the :ref:`Bassisregistratie Adressen en Gebouwen dataset <bag>`. It contains, amongst others, the footrpints of all the Dutch buildings. It's the basis for this `CitySDK <http://citysdk.waag.nl/buildings/>`_ visualisation. The BAG WFS endpoint is located at::
+In this tutorial we will work with the `Basisregistratie Adressen en Gebouwen dataset (in Dutch) <bag>`_. It contains, amongst others, the footprints of all the Dutch buildings. It's the base for the `CitySDK <http://citysdk.waag.nl/buildings/>`_ visualisation. The BAG WFS endpoint is located at::
 
     http://geodata.nationaalgeoregister.nl/bag/wfs
 
 .. WARNING::
 
-    This particular service is limited to serving a maximum of 15000 features per request. If you need more you'll have to obtain the whole dataset from the ATOM feed or through ExtractNL. 
+    This particular service is limited to serving a maximum of 1000 features per request. If you need more you'll have to obtain the whole dataset from the ATOM feed or through ExtractNL.
 
 .. NOTE::
 
-    Although the focus of this tutorial is on the BAG, the demonstrated worklfow and commands can be used to query any WFS endpoint. See ... for more information on how to search specifically for WFS endpoints in the register.  
+    Although the focus of this tutorial is on the BAG, the demonstrated worklfow and commands can be used to query any WFS endpoint. See NGR_WFS_ for all WFS endpoints in the register.
 
-We'll first investigate the endpoint with the *ogrinfo* utility and retrieve the data with the *ogr2ogr* utility.  
+We'll first investigate the endpoint with the *ogrinfo* utility and retrieve the data with the *ogr2ogr* utility.
 
 .. _ogrinfo:
 
 Investigating the data source with ogrinfo 
 ==========================================
-The *ogrinfo* utility retrieves the metadata of a service. It tells us which layers are available in the service, how many features they contin, in which coordinate reference system is the data stored, etc.
+The *ogrinfo* utility retrieves the metadata of a service. It tells us which layers are available in the service, how many features they contin, in which coördinate reference system is the data stored, etc.
 
 ::
 
@@ -277,11 +285,11 @@ where the enumerated items represent the available layers and their type. The bu
 
     $ ogrinfo -so WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" bag:pand
 
-The result is the number of features contained in the layer, a listing of their attributes, the coordinate reference system of the layer and a bounding box of the features.
+The result is the number of features contained in the layer, a listing of their attributes, the coördinate reference system of the layer and a bounding box of the features.
 
 .. NOTE::
 
-    Observe the afore mentioned limit: the reported number of features is 15000. There are, of course, more than 15000 buildings in the Netherlands.  
+    Observe the afore mentioned limit: the reported number of features is 15000. There are, of course, more than 15000 buildings in the Netherlands.
 
 
 Getting data with ogr2ogr
@@ -298,10 +306,10 @@ Getting the footprints of the first 15000 buildings as GeoJSON is achieved as::
     bag:pand
 
 
-Transforming - coordinates and formats
+Transforming - coördinates and formats
 ======================================
 
-ogr2ogr's primary function is to transform vector data into different formats and coordinate reference systems. We can do the same with the WFS source; transforming the data from the Dutch coordinate system to lat/lng is done as::
+ogr2ogr's primary function is to transform vector data into different formats and coördinate reference systems. We can do the same with the WFS source; transforming the data from the Dutch coördinate system to lat/lng is done as::
 
     $ ogr2ogr -f GeoJSON footprints.geojson WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" -t_srs EPSG:4326 bag:pand
 

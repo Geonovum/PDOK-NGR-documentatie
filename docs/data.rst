@@ -16,6 +16,7 @@ Naam                                                               URL
 ================================================================== ========================================================
 
 .. _data-ngr:
+
 *********************
 Nationaal GeoRegister
 *********************
@@ -27,6 +28,7 @@ Nationaal GeoRegister
 **Toegang tot vector data**: filtreer Brontype op: ``dataset`` of ``service``. Filtreer Online Bronnen op: ``OGC:WFS``, ``ATOM``.
 
 .. _data-pdok:
+
 ************************************
 Publieke Dienstverlening op de Kaart
 ************************************

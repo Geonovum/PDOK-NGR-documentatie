@@ -70,7 +70,7 @@ QGIS
     :align: center
 
 PDOK/INSPIRE plugins - achtergrondkaart
-==============================
+=======================================
 
 De :ref:`PDOK en INSPIRE plugins <qgis-pdok-inspire-plugins>` geven snel en makkelijk toegang tot veel Nederlandse geodata.
 
