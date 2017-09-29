@@ -113,10 +113,11 @@ Met de GetFeature request is het mogelijk om geometrieën en attributen op te ha
     request=GetFeature&
     typeName=bag:pand&
     count=100&
+    startIndex=0&
     outputFormat=json
 
-`Resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&outputFormat=json>`_: een GeoJSON document met daarin de polygonen van de voetafdruk en attributen van elk gebouw.
-
+`Resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=10&startIndex=0&outputFormat=json>`_: een GeoJSON document met daarin de polygonen van de voetafdruk en attributen van elk gebouw.
+Voor meer informatie over de `count` en `startIndex` parameters, zie onze `handleiding <wfs-response-paging>`_.
 .. code-block:: javascript
 
     {
