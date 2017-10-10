@@ -1,5 +1,3 @@
-.. _bag: https://www.kadaster.nl/wat-is-de-bag
-.. _NGR_WFS: http://www.nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/search?facet.q=protocol%2FOGC%253AWFS&isChild=%27false%27&resultType=details&fast=index&_content_type=json&from=1&to=20&sortBy=relevance
 
 .. NOTE:: Staat de handeling die je wilt verrichten er niet bij? Heb je tips, suggesties of heb je een fout ontdekt? :ref:`Laat het ons weten! <doel-feedback>`
 
@@ -115,9 +113,9 @@ Conform de WFS specificatie gaat het ophalen met GetFeature requests. Bijvoorbee
     request=GetFeature&
     typename=provincies
 
-De PDOK services kennen alleen een maximum van 1000 objecten per request. Dat mag, bijvoorbeeld om de belasting op de servers te beperken en te voorkomen dat iemand niet (per ongeluk) alle data ophaalt in zijn browser. Voor datasets van enige omvang betekent dit alleen dat je die niet helemaal in één keer via de WFS kan ophalen. In sommige gevallen kan je je wenden tot de data dumps, te downloaden via ATOM feeds. Zie `<http://geodata.nationaalgeoregister.nl/atom/index.xml>`_
+De PDOK services kennen alleen een maximum van 1.000 objecten per request. Dat mag, bijvoorbeeld om de belasting op de servers te beperken en te voorkomen dat iemand niet (per ongeluk) alle data ophaalt in zijn browser. Voor datasets van enige omvang betekent dit alleen dat je die niet helemaal in één keer via de WFS kan ophalen. In sommige gevallen kan je je wenden tot de data dumps, te downloaden via ATOM feeds. Zie `<http://geodata.nationaalgeoregister.nl/atom/index.xml>`_
 
-Maar niet altijd. En soms wil je juist de WFS bevragen, met een filter erbij bijvoorbeeld. Dus wat doe je dan als je meer dan die 15.000 objecten wil ophalen? Dan komt een van de handige WFS 2.0.0 functies van pas: ResponsePaging.
+Maar niet altijd. En soms wil je juist de WFS bevragen, met een filter erbij bijvoorbeeld. Dus wat doe je dan als je meer dan die 1.000 objecten wil ophalen? Dan komt een van de handige WFS 2.0.0 functies van pas: ResponsePaging.
 
 .. _wfs-response-paging:
 
@@ -234,17 +232,17 @@ Litterally translated it means "Base registration Addresses and Buildings" and i
 
     This tutorial assumes you are familar with the Web Feature Service. Not sure what that is? Review it :ref:`here <wfs>`. 
 
-In this tutorial we will work with the `Basisregistratie Adressen en Gebouwen dataset (in Dutch) <bag>`_. It contains, amongst others, the footprints of all the Dutch buildings. It's the base for the `CitySDK <http://citysdk.waag.nl/buildings/>`_ visualisation. The BAG WFS endpoint is located at::
+In this tutorial we will work with the `Basisregistratie Adressen en Gebouwen dataset (in Dutch) <https://www.kadaster.nl/wat-is-de-bag>`_. It contains, amongst others, the footprints of all the Dutch buildings. It's the base for the `CitySDK <http://citysdk.waag.nl/buildings/>`_ visualisation. The BAG WFS endpoint is located at::
 
     http://geodata.nationaalgeoregister.nl/bag/wfs
 
 .. WARNING::
 
-    This particular service is limited to serving a maximum of 1000 features per request. If you need more you'll have to obtain the whole dataset from the ATOM feed or through ExtractNL.
+    This particular service is limited to serving a maximum of 1.000 features per request. If you need more you'll have to obtain the whole dataset from the ATOM feed or through ExtractNL.
 
 .. NOTE::
 
-    Although the focus of this tutorial is on the BAG, the demonstrated worklfow and commands can be used to query any WFS endpoint. See NGR_WFS_ for all WFS endpoints in the register.
+    Although the focus of this tutorial is on the BAG, the demonstrated worklfow and commands can be used to query any WFS endpoint. See `NGR WFS <http://www.nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/search?facet.q=protocol%2FOGC%253AWFS&isChild=%27false%27&resultType=details&fast=index&_content_type=json&from=1&to=20&sortBy=relevance>`_ for all WFS endpoints in the register.
 
 We'll first investigate the endpoint with the *ogrinfo* utility and retrieve the data with the *ogr2ogr* utility.
 
@@ -252,7 +250,7 @@ We'll first investigate the endpoint with the *ogrinfo* utility and retrieve the
 
 Investigating the data source with ogrinfo 
 ==========================================
-The *ogrinfo* utility retrieves the metadata of a service. It tells us which layers are available in the service, how many features they contin, in which coördinate reference system is the data stored, etc.
+The *ogrinfo* utility retrieves the metadata of a service. It tells us which layers are available in the service, how many features they contin, in which coordinate reference system is the data stored, etc.
 
 ::
 
@@ -285,11 +283,11 @@ where the enumerated items represent the available layers and their type. The bu
 
     $ ogrinfo -so WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" bag:pand
 
-The result is the number of features contained in the layer, a listing of their attributes, the coördinate reference system of the layer and a bounding box of the features.
+The result is the number of features contained in the layer, a listing of their attributes, the coordinate reference system of the layer and a bounding box of the features.
 
 .. NOTE::
 
-    Observe the afore mentioned limit: the reported number of features is 15000. There are, of course, more than 15000 buildings in the Netherlands.
+    Observe the afore mentioned limit: the reported number of features is 1.000. There are, of course, more than 1.000 buildings in the Netherlands.
 
 
 Getting data with ogr2ogr
@@ -299,17 +297,17 @@ The* ogr2ogr* utility allows for reading and writing of many different vector fo
 
     ogr2ogr -f output_format destination source layer
 
-Getting the footprints of the first 15000 buildings as GeoJSON is achieved as::
+Getting the footprints of the first 1.000 buildings as GeoJSON is achieved as::
 
     $ ogr2ogr -f GeoJSON footprints.geojson
     WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs"
     bag:pand
 
 
-Transforming - coördinates and formats
+Transforming - coordinates and formats
 ======================================
 
-ogr2ogr's primary function is to transform vector data into different formats and coördinate reference systems. We can do the same with the WFS source; transforming the data from the Dutch coördinate system to lat/lng is done as::
+ogr2ogr's primary function is to transform vector data into different formats and coordinate reference systems. We can do the same with the WFS source; transforming the data from the Dutch coordinate system to lat/lng is done as::
 
     $ ogr2ogr -f GeoJSON footprints.geojson WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" -t_srs EPSG:4326 bag:pand
 
