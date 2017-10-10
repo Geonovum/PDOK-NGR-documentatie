@@ -27,7 +27,7 @@ Ga als volgt te werk om een deel van de BAG in QGIS te laden en lokaal in een an
 8. Klik met de rechtermuisknop op ``bag:panden`` en selecteer ``Save As..``
 9. Kies ESRI Shapefile, GeoJSON of KML uit het ``Format`` menu
 10. Klik op de ``Browse`` knop en geef aan waar het bestand opgeslagen moet worden
-11. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coördinaten naar ``lat/lng`` te transformeren. Zie :ref:`coord_trans` voor meer informatie.
+11. Kies ``EPSG:4326 - WGS84`` uit het ``CRS`` menu om de coördinaten naar ``lat/lng`` te transformeren. Zie :ref:`coord-trans` voor meer informatie.
 12. Klik op ``OK``
 
 .. image:: images/qgis-vector-save.png
@@ -68,7 +68,7 @@ Getting the footprints of the first 15000 BAG buildings from the WFS endpoint as
     WFS:"http://geodata.nationaalgeoregister.nl/bagviewer/wfs"
     bagviewer:pand
 
-You can use :ref:`ogrinfo <ogrinfo>` to discover which layers are contained in a WFS endpoint, see the :ref:`ogr2ogr tutorial <ogr2ogr tutorial>`_ for more information.
+You can use :ref:`ogrinfo` to discover which layers are contained in a WFS endpoint, see the :ref:`ogr2ogr tutorial` for more information.
 
 .. ****************************
 .. ATOM
