@@ -478,49 +478,53 @@ De Tiled Web Service geeft toegang tot opgeknipte kaartafbeeldingen (c.q. tegels
 
 ::
 
-    http://geoserver.example.com/tms/<tms_versie_nummer>/<naam_van_kaart>@<coördinatenstelsel>@<bestandsformaat>/<z>/<x>/<y>.<bestandsfromaat>
+    http://geoserver.example.com/tms/<tms_versie_nummer>/<naam_van_kaart>/<coördinatenstelsel>/<bestandsformaat>/<z>/<x>/<y>.<bestandsfromaat>
 
 waarbij ``z``, ``x``, ``y`` de coördinaten van een kaartafbeelding zijn. Zie de `OSGeo TMS specificatie <http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification>`_ voor meer informatie.
 
-De TMS *root resource* is de *Capabilities* document die de beschikbare kaartlagen en de bijbehorende URLs beschrijft. De *Capabilities* document van bijv. het Nationaal GeoRegister TMS endpoint bevindt zich op https://geodata.nationaalgeoregister.nl/tms/1.0.0/
+De TMS *root resource* is de *Capabilities* document die de beschikbare kaartlagen en de bijbehorende URLs beschrijft. De *Capabilities* document van bijv. het Nationaal GeoRegister TMS endpoint bevindt zich op https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/
 
 .. code-block:: xml
     
-    <TileMapService version="1.0.0" services="https://geodata.nationaalgeoregister.nl/tiles/">
+    <TileMapService version="1.0.0" services="https://geodata.nationaalgeoregister.nl/tiles/service">
         <Title>Tile Map Service</Title>
-        <Abstract>A Tile Map Service served by GeoWebCache</Abstract>
+        <Abstract>Tile Map Services</Abstract>
         <TileMaps>
-            <TileMap title="brtachtergrondkaart" srs="EPSG:25831" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A25831%3ARWS@png"/><TileMap title="brtachtergrondkaart" srs="EPSG:25831" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A25831%3ARWS@png8"/>
-            <TileMap title="brtachtergrondkaart" srs="EPSG:28992" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A28992@png"/>
-            <TileMap title="brtachtergrondkaart" srs="EPSG:28992" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A28992@png8"/><TileMap title="brtachtergrondkaartgrijs" srs="EPSG:25831" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaartgrijs@EPSG%3A25831%3ARWS@png"/>
+            ...
+            <TileMap title="brtachtergrondkaart" srs="EPSG:28992" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992"/>
+            <TileMap title="brtachtergrondkaart" srs="EPSG:25831" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:25831:RWS"/>
+            <TileMap title="brtachtergrondkaart" srs="OSGEO:41001" profile="global-mercator" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:3857"/>
+            <TileMap title="brtachtergrondkaartgrijs" srs="EPSG:28992" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaartgrijs/EPSG:28992"/>
             ...
         </TileMaps>
     </TileMapService>
 
-Elke kaart wordt door een ``<TileMap>`` element beschreven. Zo is bijv. de *Capabilities* document van de BRT Achtergrondkaart te vinden op https://www.pdok.nl/nl/service/tms/1.0.0/brtachtergrondkaart@EPSG28992@png. Hierin worden o.a. het bereik van de laag en de beschikbare zoomniveaus beschreven.
+Elke kaart wordt door een ``<TileMap>`` element beschreven. Zo is bijv. de *Capabilities* document van de BRT Achtergrondkaart te vinden op https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992. Hierin worden o.a. het bereik van de laag en de beschikbare zoomniveaus beschreven.
 
 .. code-block:: xml
 
-    <TileMap version="1.0.0" tilemapservice="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0">
+    <TileMap version="1.0.0">
         <Title>brtachtergrondkaart</Title>
         <Abstract/>
         <SRS>EPSG:28992</SRS>
-        <BoundingBox minx="-285401.92" miny="22598.08" maxx="595401.9199999999" maxy="903401.9199999999"/>
-        <Origin x="-285401.92" y="22598.08"/>
-        <TileFormat width="256" height="256" mime-type="image/png" extension="png8"/>
+        <BoundingBox minx="-285401.92" miny="22598.08" maxx="595401.92" maxy="903401.92" />
+        <Origin x="-285401.92" y="22598.08" />
+        <TileFormat width="256" height="256" mime-type="image/png" extension="png" />
         <TileSets profile="local">
-            <TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A28992@png8/0" units-per-pixel="3440.64" order="0"/>
-            <TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A28992@png8/1" units-per-pixel="1720.32" order="1"/>
-            <TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart@EPSG%3A28992@png8/2" units-per-pixel="860.16" order="2"/>
+            <TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/0" units-per-pixel="3440.64" order="0" />
+            <TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/1" units-per-pixel="1720.32" order="1" />
+            <TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/2" units-per-pixel="860.16" order="2" />
+            ...
         </TileSets>
     </TileMap>
 
-De eerste afbeelding van de BRT Achtergrondkaart bevindt zich op (z,x,y) = (0,0,0). De bijbehorende URL is https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart@EPSG:28992@png8/0/0/0.png hetgeen een overzicht van Nederland geeft.
+
+De eerste afbeelding van de BRT Achtergrondkaart bevindt zich op (z,x,y) = (0,0,0). De bijbehorende URL is https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/0/0/0.png hetgeen een overzicht van Nederland geeft.
 
 .. image:: images/tms0-0-0.png
     :align: center
 
-De kaartafbeelding op (x,y) = (3,3) van de 4de zoomlevel is te vinden op https://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart@EPSG:28992@png8/3/3/3.png en toont Dordrecht en omgeving.
+De kaartafbeelding op (x,y) = (3,3) van de 4de zoomlevel is te vinden op https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/3/3/3.png en toont Dordrecht en omgeving.
 
 .. image:: images/tms3-3-3.png
     :align: center
