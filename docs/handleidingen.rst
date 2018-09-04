@@ -91,7 +91,7 @@ Het programma `ogr2ogr` is een command line utility die een groot aantal geodata
 
 ::
 
-    ogr2ogr -f GeoJSON target.geojson source_RD.geojson -s_src EPSG:28992 -t_srs EPSG:4326
+    ogr2ogr -f GeoJSON target.geojson source_RD.geojson -s_srs EPSG:28992 -t_srs EPSG:4326
 
 
 .. _wfs-pagination:
