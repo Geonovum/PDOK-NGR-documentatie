@@ -326,7 +326,9 @@ ogr2ogr supports filtering of datasources through a simple *-where* clause as we
     FROM 'bag:pand'" 
     -t_srs EPSG:4326
 
-TODO: add bounding box query
+bounding box query:
+
+    $ ogr2ogr -f GeoJSON footprints.geojson WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs?bbox=232425,583269,234365,584240" bag:pand
 
 Next steps: visualising and publishing data
 ===========================================
