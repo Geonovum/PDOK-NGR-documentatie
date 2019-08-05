@@ -128,7 +128,7 @@ Dit kan je heel simpel opgeven per request met de paramaters *count* (die maxFea
 
 ::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?
     service=WFS&
     version=2.0.0&
     request=GetFeature&
@@ -140,7 +140,7 @@ En de volgende 100 en weer 100:
 
 ::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?
     service=WFS&
     version=2.0.0&
     request=GetFeature&
@@ -148,7 +148,7 @@ En de volgende 100 en weer 100:
     count=100&
     startindex=100
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?
     service=WFS&
     version=2.0.0&
     request=GetFeature&
@@ -162,14 +162,14 @@ Of slimmer nog, vraag voordat je daadwerkelijk data gaat ophalen met *resulttype
 
 ::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?
     service=WFS&
     version=2.0.0&
     request=GetFeature&
     typename=bag:ligplaats&
     resulttype=hits
 
-In dit geval is het `antwoord <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&version=2.0.0&request=GetFeature&typename=bag:ligplaats&resulttype=hits>`_ 11757.
+In dit geval is het `antwoord <https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?service=WFS&version=2.0.0&request=GetFeature&typename=bag:ligplaats&resulttype=hits>`_ 11757.
 
 ****************************
 WFS - output formaat
@@ -179,7 +179,7 @@ GML is voor veel webontwikkelaars niet de eerste keus. JSON en GeoJSON voor geod
 
 ::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs?
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?
     service=WFS&
     version=2.0.0&
     request=GetFeature&
@@ -192,7 +192,7 @@ Tot slot: een PDOK WFS steunt nog meer formaten. Zie daarvoor het stukje XML ove
 
 ::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1
     service=WFS&
     request=GetCapabilities
 
@@ -234,7 +234,7 @@ Litterally translated it means "Base registration Addresses and Buildings" and i
 
 In this tutorial we will work with the `Basisregistratie Adressen en Gebouwen dataset (in Dutch) <https://www.kadaster.nl/wat-is-de-bag>`_. It contains, amongst others, the footprints of all the Dutch buildings. It's the base for the `CitySDK <http://citysdk.waag.nl/buildings/>`_ visualisation. The BAG WFS endpoint is located at::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs
+    https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1
 
 .. WARNING::
 
@@ -265,7 +265,7 @@ where
 
 ::
 
-    $ ogrinfo -so WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs"
+    $ ogrinfo -so WFS:"https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1"
 
 which results in::
 
@@ -281,7 +281,7 @@ which results in::
 
 where the enumerated items represent the available layers and their type. The building footprints are contained in the 2nd layer and are of type *Polygon*. We can use *ogrinfo* to investigate a specific layer by appending its name at the end of the previous command as::
 
-    $ ogrinfo -so WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" bag:pand
+    $ ogrinfo -so WFS:"https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1" bag:pand
 
 The result is the number of features contained in the layer, a listing of their attributes, the coordinate reference system of the layer and a bounding box of the features.
 
@@ -300,7 +300,7 @@ The* ogr2ogr* utility allows for reading and writing of many different vector fo
 Getting the footprints of the first 1.000 buildings as GeoJSON is achieved as::
 
     $ ogr2ogr -f GeoJSON footprints.geojson
-    WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs"
+    WFS:"https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1"
     bag:pand
 
 
@@ -309,7 +309,7 @@ Transforming - coordinates and formats
 
 ogr2ogr's primary function is to transform vector data into different formats and coordinate reference systems. We can do the same with the WFS source; transforming the data from the Dutch coordinate system to lat/lng is done as::
 
-    $ ogr2ogr -f GeoJSON footprints.geojson WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" -t_srs EPSG:4326 bag:pand
+    $ ogr2ogr -f GeoJSON footprints.geojson WFS:"https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1" -t_srs EPSG:4326 bag:pand
 
 ogr2ogr can also transform between file formats. Transforming e.g. a shapefile into a GeoJSON file is done as::
 
@@ -321,14 +321,14 @@ Filtering
 ogr2ogr supports filtering of datasources through a simple *-where* clause as well as sophisticated SQL queries. Retrieving a single column from the footprints dataset through SQL is done as::
 
     $ ogr2ogr -f GeoJSON gemeenten_2011_84.geojson 
-    WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs" 
+    WFS:"https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1" 
     -sql "SELECT CAST('bouwjaar') AS integer 
     FROM 'bag:pand'" 
     -t_srs EPSG:4326
 
 bounding box query:
 
-    $ ogr2ogr -f GeoJSON footprints.geojson WFS:"http://geodata.nationaalgeoregister.nl/bag/wfs?bbox=232425,583269,234365,584240" bag:pand
+    $ ogr2ogr -f GeoJSON footprints.geojson WFS:"https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?bbox=232425,583269,234365,584240" bag:pand
 
 Next steps: visualising and publishing data
 ===========================================
