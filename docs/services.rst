@@ -293,6 +293,7 @@ De *GetFeatureInfo* request haalt de attribuutgegevens op van object(en) op een 
 
   http://geodata.nationaalgeoregister.nl/ahn2/wms?
   service=wms&
+  version=1.3.0&
   request=getfeatureinfo&
   layers=ahn2_5m&
   bbox=13014,306243,286599,623492&
@@ -304,6 +305,8 @@ De *GetFeatureInfo* request haalt de attribuutgegevens op van object(en) op een 
   info_format=application/json&
   x=353&
   y=145
+  
+  
 
 `Resultaat <http://geodata.nationaalgeoregister.nl/ahn2/wms?service=wms&request=getfeatureinfo&layers=ahn2_5m&bbox=13014,306243,286599,623492&width=400&height=500&format=image/png&srs=EPSG:28992&query_layers=ahn2_5m&info_format=application/json&x=353&y=145>`_: een JSON document met daarin de waarde van de pixel op de gespecificeerde positie. De waarde van de pixel op ``x = 353, y = 145`` stelt in dit geval een hoogte voor en is gelijk aan 17.518 m.
 
