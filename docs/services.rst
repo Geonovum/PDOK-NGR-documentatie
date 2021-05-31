@@ -429,7 +429,7 @@ De *GetTile* request haalt een kaartbeeld op.
 
 ::
 
-   http://geodata.nationaalgeoregister.nl/wmts?
+   https://geodata.nationaalgeoregister.nl/tiles/service/wmts?
    SERVICE=WMTS
    &REQUEST=GetTile
    &VERSION=1.0.0
@@ -441,7 +441,7 @@ De *GetTile* request haalt een kaartbeeld op.
    &TILECOL=0
    &FORMAT=image/png8
 
-De ``TILEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``TILEROW`` parameter is equivalent aan het y-coördinaat en neemt in waarde af naarmate ``y`` groter wordt. ``TILECOL`` parameter is equivalent aan het x-coördinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``TILEMATRIX`` parameter geeft het zoomniveau weer. Bovenstaand request `haalt de bovenste tegel <http://geodata.nationaalgeoregister.nl/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:0&TILEROW=0&TILECOL=0&FORMAT=image/png8>`_ van de tegelpyramide op.
+De ``TILEROW`` en ``TILECOL`` parameters specificeren welk tegel opgehaald moet worden. De ``TILEROW`` parameter is equivalent aan het y-coördinaat en neemt in waarde af naarmate ``y`` groter wordt. ``TILECOL`` parameter is equivalent aan het x-coördinaat en neemt in waarde toe als ``x`` groeit. Het laatste getal van de ``TILEMATRIX`` parameter geeft het zoomniveau weer. Bovenstaand request `haalt de bovenste tegel <https://geodata.nationaalgeoregister.nl/tiles/service/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:0&TILEROW=0&TILECOL=0&FORMAT=image/png8>`_ van de tegelpyramide op.
 
 .. image:: images/wmts0-0-0.png
     :align: center
