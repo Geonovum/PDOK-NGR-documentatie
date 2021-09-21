@@ -27,10 +27,11 @@
             // load OpenStreetMap basemap
             var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
             basemap.addTo(map);
-
-            var url = 'https://geodata.nationaalgeoregister.nl/bag/wfs?';
+		
+            var url = 'https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1?';
             var params = 'request=GetFeature&';
-            params += 'service=WFS&';
+            params += 'version=2.0.0&';
+            params += 'service=wfs&';
             params += 'typeName=bag:pand&';
             params += 'count=100&';
             params += 'outputFormat=json&';
