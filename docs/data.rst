@@ -7,7 +7,6 @@ Nederland kent een rijk aanbod aan georegisters- en dataportalen. Op deze pagina
 ================================================================== ========================================================
 Naam                                                               URL
 ================================================================== ========================================================
-:ref:`Nationaal GeoRegister <data-ngr>`                            http://nationaalgeoregister.nl/geonetwork/srv/dut/search
 :ref:`Publieke Dienstverlening op de Kaart <data-pdok>`            https://www.pdok.nl
 :ref:`data.overheid.nl <data-overheid.nl>`                         https://data.overheid.nl/
 :ref:`Provinciaal GeoRegister <data-pgr>`                          http://www.provinciaalgeoregister.nl/georegister/
@@ -48,18 +47,6 @@ data.overheid.nl
 **URL:** https://data.overheid.nl/
 
 **Toegang tot vector data:** filtreer op ``download``, ``ogc:wfs``, ``ogc:kml``, ``ogc:gml``, ``inspire atom``, ``SHAPE``
-
-.. _data-pgr:
-
-***********************
-Provinciaal GeoRegister
-***********************
-
-*Het Provinciaal GeoRegister (PGR) is een digitaal register, waarin provincies hun provinciale geo-informatie op een duidelijke en gestructureerde wijze vindbaar maken.*
-
-**URL:** http://www.provinciaalgeoregister.nl/georegister/
-
-**Toegang tot vector data:** Het PGR biedt enkel downloadbare ``GML`` en ``SHAPE`` bestanden die per email gestuurd worden. Deze bestanden kun je m.b.v. :ref:`QGIS <downloaden-qgis>` transformeren naar bijv. GeoJSON.
 
 .. _data-atlas-leefomgeving:
 
