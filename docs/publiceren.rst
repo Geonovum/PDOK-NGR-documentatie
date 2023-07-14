@@ -46,26 +46,34 @@ Leaflet heeft geen out-of-the-box ondersteuning voor WFS. Een eenvoudige :ref:`G
         map = L.map('map');
         
         // load OpenStreetMap basemap
-        var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+        const basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
         basemap.addTo(map);
-
-        var url = 'http://geodata.nationaalgeoregister.nl/bag/wfs?';
-        var params = 'request=GetFeature&';
-        params += 'service=WFS&';
-        params += 'typeName=bag:pand&';
-        params += 'count=100&';
-        params += 'outputFormat=json&';
-        params += 'srsName=EPSG:4326';
-
-        $.getJSON(url + params, function(data) {
-            loadGeometry(data);
+        const params = new URLSearchParams({
+            request: "GetFeature",
+            service: "WFS",
+            typeName: "bag:pand",
+            count: "100",
+            outputFormat: "json",
+            srsName: "EPSG:4326", // output coördinatensysteem
+            bbox: [
+                6.569 - 0.001,
+                53.232 - 0.001,
+                6.569 + 0.001,
+                53.232 + 0.001,
+                "urn:ogc:def:rs:EPSG::4326" // input coördinatensysteem
+            ].join(","),
+            version: "2.0.0"
         });
+        const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString();
+        fetch(url)
+            .then(response => response.json())
+            .then(loadGeometry)
     };
 
     function loadGeometry(data) {
-        $.each(data.features, function(index, geometry) {
-            L.geoJson(geometry).addTo(map);
-        });
+        for (const feature of data.features) {
+            L.geoJson(feature.geometry).addTo(map);
+        }
 
         var center = data.features[0].geometry.coordinates[0][0];
 
