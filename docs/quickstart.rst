@@ -38,7 +38,7 @@ De download service kunnen we gebruiken om bijv. 100 panden uit de `Basisregistr
 
 De URL van de BAG WFS API is::
 
-    http://geodata.nationaalgeoregister.nl/bag/wfs
+    https://service.pdok.nl/lv/bag/wfs/v2_0
 
 Je vindt deze o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en te filtreren op ``Downloadbare data``. De eerste 100 gebouwen uit de BAG halen we middels een HTTP GET request op in combinatie met de volgende query parameters::
 
@@ -52,11 +52,72 @@ Je vindt deze o.a. in het Nationaal GeoRegister door te zoeken naar ``BAG`` en t
 
 Het `GeoJSON resultaat <http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=100&startIndex=0&outputFormat=json>`_ kun je bijv. in Leaflet `visualiseren <https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html>`_ m.b.v. van de ``L.geoJson()`` functie.
 
-.. <iframe width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" src="https://cdn.rawgit.com/ndkv/a9f903c1579ff7609638/raw/01e13989c298330715b8b59194bd1f6512ab475b/index.html"></iframe>
+.. code-block:: html
 
-.. raw:: html
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+                  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+                  crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                    crossorigin=""></script>
 
-    <script src="https://gist.github.com/ndkv/a9f903c1579ff7609638.js"></script>
+            <style>
+                body {
+                    height: 100vh;
+                    margin: 0;
+                    display: flex;
+                    align-items: stretch;
+                }
+                #map {
+                    flex-grow: 1;
+                }
+            </style>
+        </head>
+
+        <body>
+            <div id="map"></div>
+
+            <script type="text/javascript">
+                const map = L.map('map');
+                map.setView([53.232, 6.569], 16);
+
+                // load OpenStreetMap basemap
+                const basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+                basemap.addTo(map);
+
+                const params = new URLSearchParams({
+                    request: "GetFeature",
+                    service: "WFS",
+                    typeName: "bag:pand",
+                    count: "100",
+                    outputFormat: "json",
+                    srsName: "EPSG:4326", // output coördinatensysteem
+                    bbox: [
+                        6.569 - 0.001,
+                        53.232 - 0.001,
+                        6.569 + 0.001,
+                        53.232 + 0.001,
+                        "urn:ogc:def:rs:EPSG::4326" // input coördinatensysteem
+                    ].join(","),
+                    version: "2.0.0"
+                });
+
+                const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString();
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        for (const feature of json.features) {
+                            L.geoJson(feature.geometry).addTo(map);
+                        }
+                    })
+            </script>
+        </body>
+    </html>
 
 Naast het ophalen van features ondersteunt de WFS API het toepassen van (ruimtelijke) filters en het uitvoeren van eenvoudige ruimtelijke analyses, zie de :ref:`WFS documentatie <OGC-WFS>` voor meer informatie.
 
